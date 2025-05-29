@@ -1,0 +1,245 @@
+% GNUPLOT: LaTeX picture with Postscript
+\begingroup
+  \fontfamily{cmss}%
+  \selectfont
+  \makeatletter
+  \providecommand\color[2][]{%
+    \GenericError{(gnuplot) \space\space\space\@spaces}{%
+      Package color not loaded in conjunction with
+      terminal option `colourtext'%
+    }{See the gnuplot documentation for explanation.%
+    }{Either use 'blacktext' in gnuplot or load the package
+      color.sty in LaTeX.}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\includegraphics[2][]{%
+    \GenericError{(gnuplot) \space\space\space\@spaces}{%
+      Package graphicx or graphics not loaded%
+    }{See the gnuplot documentation for explanation.%
+    }{The gnuplot epslatex terminal needs graphicx.sty or graphics.sty.}%
+    \renewcommand\includegraphics[2][]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \@ifundefined{ifGPcolor}{%
+    \newif\ifGPcolor
+    \GPcolortrue
+  }{}%
+  \@ifundefined{ifGPblacktext}{%
+    \newif\ifGPblacktext
+    \GPblacktextfalse
+  }{}%
+  % define a \g@addto@macro without @ in the name:
+  \let\gplgaddtomacro\g@addto@macro
+  % define empty templates for all commands taking text:
+  \gdef\gplbacktext{}%
+  \gdef\gplfronttext{}%
+  \makeatother
+  \ifGPblacktext
+    % no textcolor at all
+    \def\colorrgb#1{}%
+    \def\colorgray#1{}%
+  \else
+    % gray or color?
+    \ifGPcolor
+      \def\colorrgb#1{\color[rgb]{#1}}%
+      \def\colorgray#1{\color[gray]{#1}}%
+      \expandafter\def\csname LTw\endcsname{\color{white}}%
+      \expandafter\def\csname LTb\endcsname{\color{black}}%
+      \expandafter\def\csname LTa\endcsname{\color{black}}%
+      \expandafter\def\csname LT0\endcsname{\color[rgb]{1,0,0}}%
+      \expandafter\def\csname LT1\endcsname{\color[rgb]{0,1,0}}%
+      \expandafter\def\csname LT2\endcsname{\color[rgb]{0,0,1}}%
+      \expandafter\def\csname LT3\endcsname{\color[rgb]{1,0,1}}%
+      \expandafter\def\csname LT4\endcsname{\color[rgb]{0,1,1}}%
+      \expandafter\def\csname LT5\endcsname{\color[rgb]{1,1,0}}%
+      \expandafter\def\csname LT6\endcsname{\color[rgb]{0,0,0}}%
+      \expandafter\def\csname LT7\endcsname{\color[rgb]{1,0.3,0}}%
+      \expandafter\def\csname LT8\endcsname{\color[rgb]{0.5,0.5,0.5}}%
+    \else
+      % gray
+      \def\colorrgb#1{\color{black}}%
+      \def\colorgray#1{\color[gray]{#1}}%
+      \expandafter\def\csname LTw\endcsname{\color{white}}%
+      \expandafter\def\csname LTb\endcsname{\color{black}}%
+      \expandafter\def\csname LTa\endcsname{\color{black}}%
+      \expandafter\def\csname LT0\endcsname{\color{black}}%
+      \expandafter\def\csname LT1\endcsname{\color{black}}%
+      \expandafter\def\csname LT2\endcsname{\color{black}}%
+      \expandafter\def\csname LT3\endcsname{\color{black}}%
+      \expandafter\def\csname LT4\endcsname{\color{black}}%
+      \expandafter\def\csname LT5\endcsname{\color{black}}%
+      \expandafter\def\csname LT6\endcsname{\color{black}}%
+      \expandafter\def\csname LT7\endcsname{\color{black}}%
+      \expandafter\def\csname LT8\endcsname{\color{black}}%
+    \fi
+  \fi
+    \setlength{\unitlength}{0.0500bp}%
+    \ifx\gptboxheight\undefined%
+      \newlength{\gptboxheight}%
+      \newlength{\gptboxwidth}%
+      \newsavebox{\gptboxtext}%
+    \fi%
+    \setlength{\fboxrule}{0.5pt}%
+    \setlength{\fboxsep}{1pt}%
+    \definecolor{tbcol}{rgb}{1,1,1}%
+\begin{picture}(10080.00,5760.00)%
+    \gplgaddtomacro\gplbacktext{%
+    }%
+    \gplgaddtomacro\gplfronttext{%
+      \csname LTb\endcsname%%
+      \put(631,5474){\makebox(0,0){\strut{}-1.5}}%
+      \put(1260,5474){\makebox(0,0){\strut{}-1.0}}%
+      \put(1889,5474){\makebox(0,0){\strut{}-0.5}}%
+      \put(2519,5474){\makebox(0,0){\strut{}0.0}}%
+      \put(1260,5777){\makebox(0,0){\strut{}U vs SHE (V)}}%
+      \put(-110,3971){\makebox(0,0)[r]{\strut{}$8$}}%
+      \put(-110,4423){\makebox(0,0)[r]{\strut{}$10$}}%
+      \put(-110,4875){\makebox(0,0)[r]{\strut{}$12$}}%
+      \put(-110,5327){\makebox(0,0)[r]{\strut{}$14$}}%
+      \put(-566,4536){\rotatebox{-270.00}{\makebox(0,0){\strut{}pH}}}%
+      \colorrgb{0.00,0.00,0.00}%%
+      \put(1865,4536){\rotatebox{-71.53}{\makebox(0,0){\strut{}0V vs RHE}}}%
+      \csname LTb\endcsname%%
+      \put(403,5108){\makebox(0,0){\strut{}Ag}}%
+    }%
+    \gplgaddtomacro\gplbacktext{%
+    }%
+    \gplgaddtomacro\gplfronttext{%
+      \csname LTb\endcsname%%
+      \put(3655,5474){\makebox(0,0){\strut{}-1.5}}%
+      \put(4284,5474){\makebox(0,0){\strut{}-1.0}}%
+      \put(4913,5474){\makebox(0,0){\strut{}-0.5}}%
+      \put(5543,5474){\makebox(0,0){\strut{}0.0}}%
+      \put(4284,5777){\makebox(0,0){\strut{}U vs SHE (V)}}%
+      \put(2914,3971){\makebox(0,0)[r]{\strut{}}}%
+      \put(2914,4423){\makebox(0,0)[r]{\strut{}}}%
+      \put(2914,4875){\makebox(0,0)[r]{\strut{}}}%
+      \put(2914,5327){\makebox(0,0)[r]{\strut{}}}%
+      \colorrgb{0.00,0.00,0.00}%%
+      \put(4889,4536){\rotatebox{-71.53}{\makebox(0,0){\strut{}0V vs RHE}}}%
+      \csname LTb\endcsname%%
+      \put(3427,5108){\makebox(0,0){\strut{}Au}}%
+    }%
+    \gplgaddtomacro\gplbacktext{%
+    }%
+    \gplgaddtomacro\gplfronttext{%
+      \csname LTb\endcsname%%
+      \put(6679,5474){\makebox(0,0){\strut{}-1.5}}%
+      \put(7308,5474){\makebox(0,0){\strut{}-1.0}}%
+      \put(7937,5474){\makebox(0,0){\strut{}-0.5}}%
+      \put(8567,5474){\makebox(0,0){\strut{}0.0}}%
+      \put(7308,5777){\makebox(0,0){\strut{}U vs SHE (V)}}%
+      \put(5938,3971){\makebox(0,0)[r]{\strut{}}}%
+      \put(5938,4423){\makebox(0,0)[r]{\strut{}}}%
+      \put(5938,4875){\makebox(0,0)[r]{\strut{}}}%
+      \put(5938,5327){\makebox(0,0)[r]{\strut{}}}%
+      \put(9082,3745){\makebox(0,0)[l]{\strut{}$10^{-10}$}}%
+      \put(9082,4272){\makebox(0,0)[l]{\strut{}$10^{-8}$}}%
+      \put(9082,4799){\makebox(0,0)[l]{\strut{}$10^{-6}$}}%
+      \put(9082,5327){\makebox(0,0)[l]{\strut{}$10^{-4}$}}%
+      \put(9808,4536){\rotatebox{-270.00}{\makebox(0,0){\strut{}H* Coverage}}}%
+      \colorrgb{0.00,0.00,0.00}%%
+      \put(7913,4536){\rotatebox{-71.53}{\makebox(0,0){\strut{}0V vs RHE}}}%
+      \csname LTb\endcsname%%
+      \put(6451,5108){\makebox(0,0){\strut{}Cu}}%
+    }%
+    \gplgaddtomacro\gplbacktext{%
+    }%
+    \gplgaddtomacro\gplfronttext{%
+      \csname LTb\endcsname%%
+      \put(631,3602){\makebox(0,0){\strut{}}}%
+      \put(1260,3602){\makebox(0,0){\strut{}}}%
+      \put(1889,3602){\makebox(0,0){\strut{}}}%
+      \put(2519,3602){\makebox(0,0){\strut{}}}%
+      \put(-110,2099){\makebox(0,0)[r]{\strut{} 8}}%
+      \put(-110,2551){\makebox(0,0)[r]{\strut{}10}}%
+      \put(-110,3003){\makebox(0,0)[r]{\strut{}12}}%
+      \put(-110,3455){\makebox(0,0)[r]{\strut{}14}}%
+      \put(-566,2664){\rotatebox{-270.00}{\makebox(0,0){\strut{}pH}}}%
+      \colorrgb{1.00,1.00,1.00}%%
+      \put(1865,2664){\rotatebox{-71.53}{\makebox(0,0){\strut{}0V vs RHE}}}%
+      \colorrgb{1.00,1.00,1.00}%%
+      \put(403,3236){\makebox(0,0){\strut{}Ir}}%
+    }%
+    \gplgaddtomacro\gplbacktext{%
+    }%
+    \gplgaddtomacro\gplfronttext{%
+      \csname LTb\endcsname%%
+      \put(3655,3602){\makebox(0,0){\strut{}}}%
+      \put(4284,3602){\makebox(0,0){\strut{}}}%
+      \put(4913,3602){\makebox(0,0){\strut{}}}%
+      \put(5543,3602){\makebox(0,0){\strut{}}}%
+      \put(2914,2099){\makebox(0,0)[r]{\strut{}}}%
+      \put(2914,2551){\makebox(0,0)[r]{\strut{}}}%
+      \put(2914,3003){\makebox(0,0)[r]{\strut{}}}%
+      \put(2914,3455){\makebox(0,0)[r]{\strut{}}}%
+      \colorrgb{1.00,1.00,1.00}%%
+      \put(4889,2664){\rotatebox{-71.53}{\makebox(0,0){\strut{}0V vs RHE}}}%
+      \colorrgb{1.00,1.00,1.00}%%
+      \put(3427,3236){\makebox(0,0){\strut{}Ni}}%
+    }%
+    \gplgaddtomacro\gplbacktext{%
+    }%
+    \gplgaddtomacro\gplfronttext{%
+      \csname LTb\endcsname%%
+      \put(6679,3602){\makebox(0,0){\strut{}}}%
+      \put(7308,3602){\makebox(0,0){\strut{}}}%
+      \put(7937,3602){\makebox(0,0){\strut{}}}%
+      \put(8567,3602){\makebox(0,0){\strut{}}}%
+      \put(5938,2099){\makebox(0,0)[r]{\strut{}}}%
+      \put(5938,2551){\makebox(0,0)[r]{\strut{}}}%
+      \put(5938,3003){\makebox(0,0)[r]{\strut{}}}%
+      \put(5938,3455){\makebox(0,0)[r]{\strut{}}}%
+      \put(9082,1873){\makebox(0,0)[l]{\strut{}$10^{-2}$}}%
+      \put(9082,2664){\makebox(0,0)[l]{\strut{}$10^{-1}$}}%
+      \put(9082,3455){\makebox(0,0)[l]{\strut{}$10^{0}$}}%
+      \put(9676,2664){\rotatebox{-270.00}{\makebox(0,0){\strut{}H* Coverage}}}%
+      \colorrgb{1.00,1.00,1.00}%%
+      \put(7913,2664){\rotatebox{-71.53}{\makebox(0,0){\strut{}0V vs RHE}}}%
+      \colorrgb{1.00,1.00,1.00}%%
+      \put(6451,3236){\makebox(0,0){\strut{}Pd}}%
+    }%
+    \gplgaddtomacro\gplbacktext{%
+    }%
+    \gplgaddtomacro\gplfronttext{%
+      \csname LTb\endcsname%%
+      \put(631,1730){\makebox(0,0){\strut{}}}%
+      \put(1260,1730){\makebox(0,0){\strut{}}}%
+      \put(1889,1730){\makebox(0,0){\strut{}}}%
+      \put(2519,1730){\makebox(0,0){\strut{}}}%
+      \put(-110,227){\makebox(0,0)[r]{\strut{} 8}}%
+      \put(-110,679){\makebox(0,0)[r]{\strut{}10}}%
+      \put(-110,1131){\makebox(0,0)[r]{\strut{}12}}%
+      \put(-110,1583){\makebox(0,0)[r]{\strut{}14}}%
+      \put(-566,792){\rotatebox{-270.00}{\makebox(0,0){\strut{}pH}}}%
+      \colorrgb{1.00,1.00,1.00}%%
+      \put(1865,792){\rotatebox{-71.53}{\makebox(0,0){\strut{}0V vs RHE}}}%
+      \colorrgb{1.00,1.00,1.00}%%
+      \put(403,1364){\makebox(0,0){\strut{}Pt}}%
+    }%
+    \gplgaddtomacro\gplbacktext{%
+    }%
+    \gplgaddtomacro\gplfronttext{%
+      \csname LTb\endcsname%%
+      \put(3655,1730){\makebox(0,0){\strut{}}}%
+      \put(4284,1730){\makebox(0,0){\strut{}}}%
+      \put(4913,1730){\makebox(0,0){\strut{}}}%
+      \put(5543,1730){\makebox(0,0){\strut{}}}%
+      \put(2914,227){\makebox(0,0)[r]{\strut{}}}%
+      \put(2914,679){\makebox(0,0)[r]{\strut{}}}%
+      \put(2914,1131){\makebox(0,0)[r]{\strut{}}}%
+      \put(2914,1583){\makebox(0,0)[r]{\strut{}}}%
+      \put(6058,1){\makebox(0,0)[l]{\strut{}$10^{-2}$}}%
+      \put(6058,792){\makebox(0,0)[l]{\strut{}$10^{-1}$}}%
+      \put(6058,1583){\makebox(0,0)[l]{\strut{}$10^{0}$}}%
+      \put(6652,792){\rotatebox{-270.00}{\makebox(0,0){\strut{}H* Coverage}}}%
+      \colorrgb{1.00,1.00,1.00}%%
+      \put(4889,792){\rotatebox{-71.53}{\makebox(0,0){\strut{}0V vs RHE}}}%
+      \colorrgb{1.00,1.00,1.00}%%
+      \put(3427,1364){\makebox(0,0){\strut{}Rh}}%
+    }%
+    \gplbacktext
+    \put(0,0){\includegraphics[width={504.00bp},height={288.00bp}]{Figure_Coverage}}%
+    \gplfronttext
+  \end{picture}%
+\endgroup

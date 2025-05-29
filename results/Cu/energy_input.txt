@@ -1,0 +1,7 @@
+surface_name	site_name	species_name	formation_energy	frequencies	reference
+None	gas	H2	0.000000000000	[]	GK calc
+None	gas	H2O	0.000000000000	[]	GK_calc
+Cu	111	H	0.18113034625172775	[]	
+Cu	111	H-H	1.403392481677135	[]	
+Cu	111	H2O-ele	1.4633185029941287	[]	
+Cu	111	H2OHele	1.4200392408385993	[]	

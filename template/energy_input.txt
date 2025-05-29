@@ -1,0 +1,7 @@
+surface_name	site_name	species_name	formation_energy	frequencies	reference
+None	gas	H2	0.000000000000	[]	GK calc
+None	gas	H2O	0.000000000000	[]	GK_calc
+$surf	111	H	$H_ads_energy	[]	
+$surf	111	H-H	$Tafel_barrier	[]	
+$surf	111	H2O-ele	$Volmer_barrier	[]	
+$surf	111	H2OHele	$Heyrovsky_barrier	[]	

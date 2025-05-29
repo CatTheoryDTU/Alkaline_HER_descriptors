@@ -1,0 +1,324 @@
+
+
+*******************************************************************************
+Mon Mar 31 14:29:25 2025
+
+
+FIT:    data read from "<paste PZCs.txt HBEs.txt volmers.txt" u 1:2:3
+        format = x:y:z
+        #datapoints = 8
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f2(x,y)
+	f2(x,y)=f22*(-0.58*(x-4.4)+y)+f23
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   f22           f23          
+   0 1.0620960428e+00   0.00e+00  7.86e-01    1.000000e+00   1.000000e+00
+   4 1.1886008178e-02  -4.71e-09  7.86e-05    4.122615e-01   8.335524e-01
+
+After 4 iterations the fit converged.
+final sum of squares of residuals : 0.011886
+rel. change during last iteration : -4.71408e-14
+
+degrees of freedom    (FIT_NDF)                        : 6
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.0445084
+variance of residuals (reduced chisquare) = WSSR/ndf   : 0.001981
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+f22             = 0.412262         +/- 0.03342      (8.106%)
+f23             = 0.833552         +/- 0.0162       (1.943%)
+
+correlation matrix of the fit parameters:
+                f22    f23    
+f22             1.000 
+f23            -0.237  1.000 
+
+
+*******************************************************************************
+Mon Mar 31 14:29:25 2025
+
+
+FIT:    data read from "<paste PZCs.txt HBEs.txt heyrovskys.txt" u 1:2:3
+        format = x:y:z
+        #datapoints = 8
+        residuals are weighted equally (unit weight)
+
+function used for fitting: g2(x,y)
+	g2(x,y)=g22*(-0.58*(x-4.4)+y)+g23
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   g22           g23          
+   0 5.1172945595e+00   0.00e+00  7.86e-01    1.000000e+00   1.000000e+00
+   4 3.1584661977e-02  -1.64e-08  7.86e-05   -6.766696e-01   1.080915e+00
+
+After 4 iterations the fit converged.
+final sum of squares of residuals : 0.0315847
+rel. change during last iteration : -1.6433e-13
+
+degrees of freedom    (FIT_NDF)                        : 6
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.0725542
+variance of residuals (reduced chisquare) = WSSR/ndf   : 0.00526411
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+g22             = -0.67667         +/- 0.05448      (8.051%)
+g23             = 1.08091          +/- 0.0264       (2.443%)
+
+correlation matrix of the fit parameters:
+                g22    g23    
+g22             1.000 
+g23            -0.237  1.000 
+
+
+*******************************************************************************
+Mon Mar 31 14:29:25 2025
+
+
+FIT:    data read from "<paste PZCs.txt HBEs.txt tafels.txt" u 1:2:3
+        format = x:y:z
+        #datapoints = 8
+        residuals are weighted equally (unit weight)
+
+function used for fitting: h2(x,y)
+	h2(x,y)=h22*(-0.58*(x-4.4)+y)+h23
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   h22           h23          
+   0 2.1595005962e+00   0.00e+00  7.86e-01    1.000000e+00   1.000000e+00
+   3 2.1742091888e-01  -4.48e-01  7.86e-04    1.536164e-01   8.073629e-01
+
+After 3 iterations the fit converged.
+final sum of squares of residuals : 0.217421
+rel. change during last iteration : -4.47974e-06
+
+degrees of freedom    (FIT_NDF)                        : 6
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.19036
+variance of residuals (reduced chisquare) = WSSR/ndf   : 0.0362368
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+h22             = 0.153616         +/- 0.1429       (93.04%)
+h23             = 0.807363         +/- 0.06927      (8.58%)
+
+correlation matrix of the fit parameters:
+                h22    h23    
+h22             1.000 
+h23            -0.237  1.000 
+
+
+*******************************************************************************
+Mon Mar 31 14:33:16 2025
+
+
+FIT:    data read from "<paste PZCs.txt HBEs.txt volmers.txt" u 1:2:3
+        format = x:y:z
+        #datapoints = 8
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f2(x,y)
+	f2(x,y)=f22*(-0.58*(x-4.4)+y)+f23
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   f22           f23          
+   0 1.0620960428e+00   0.00e+00  7.86e-01    1.000000e+00   1.000000e+00
+   4 1.1886008178e-02  -4.71e-09  7.86e-05    4.122615e-01   8.335524e-01
+
+After 4 iterations the fit converged.
+final sum of squares of residuals : 0.011886
+rel. change during last iteration : -4.71408e-14
+
+degrees of freedom    (FIT_NDF)                        : 6
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.0445084
+variance of residuals (reduced chisquare) = WSSR/ndf   : 0.001981
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+f22             = 0.412262         +/- 0.03342      (8.106%)
+f23             = 0.833552         +/- 0.0162       (1.943%)
+
+correlation matrix of the fit parameters:
+                f22    f23    
+f22             1.000 
+f23            -0.237  1.000 
+
+
+*******************************************************************************
+Mon Mar 31 14:33:16 2025
+
+
+FIT:    data read from "<paste PZCs.txt HBEs.txt heyrovskys.txt" u 1:2:3
+        format = x:y:z
+        #datapoints = 8
+        residuals are weighted equally (unit weight)
+
+function used for fitting: g2(x,y)
+	g2(x,y)=g22*(-0.58*(x-4.4)+y)+g23
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   g22           g23          
+   0 5.1172945595e+00   0.00e+00  7.86e-01    1.000000e+00   1.000000e+00
+   4 3.1584661977e-02  -1.64e-08  7.86e-05   -6.766696e-01   1.080915e+00
+
+After 4 iterations the fit converged.
+final sum of squares of residuals : 0.0315847
+rel. change during last iteration : -1.6433e-13
+
+degrees of freedom    (FIT_NDF)                        : 6
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.0725542
+variance of residuals (reduced chisquare) = WSSR/ndf   : 0.00526411
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+g22             = -0.67667         +/- 0.05448      (8.051%)
+g23             = 1.08091          +/- 0.0264       (2.443%)
+
+correlation matrix of the fit parameters:
+                g22    g23    
+g22             1.000 
+g23            -0.237  1.000 
+
+
+*******************************************************************************
+Mon Mar 31 14:33:16 2025
+
+
+FIT:    data read from "<paste PZCs.txt HBEs.txt tafels.txt" u 1:2:3
+        format = x:y:z
+        #datapoints = 8
+        residuals are weighted equally (unit weight)
+
+function used for fitting: h2(x,y)
+	h2(x,y)=h22*(-0.58*(x-4.4)+y)+h23
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   h22           h23          
+   0 2.1595005962e+00   0.00e+00  7.86e-01    1.000000e+00   1.000000e+00
+   3 2.1742091888e-01  -4.48e-01  7.86e-04    1.536164e-01   8.073629e-01
+
+After 3 iterations the fit converged.
+final sum of squares of residuals : 0.217421
+rel. change during last iteration : -4.47974e-06
+
+degrees of freedom    (FIT_NDF)                        : 6
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.19036
+variance of residuals (reduced chisquare) = WSSR/ndf   : 0.0362368
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+h22             = 0.153616         +/- 0.1429       (93.04%)
+h23             = 0.807363         +/- 0.06927      (8.58%)
+
+correlation matrix of the fit parameters:
+                h22    h23    
+h22             1.000 
+h23            -0.237  1.000 
+
+
+*******************************************************************************
+Wed May 21 01:12:34 2025
+
+
+FIT:    data read from "<paste PZCs.txt HBEs.txt volmers.txt" u 1:2:3
+        format = x:y:z
+        #datapoints = 8
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f2(x,y)
+	f2(x,y)=f22*(-0.58*(x-4.4)+y)+f23
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   f22           f23          
+   0 1.0656721156e+00   0.00e+00  7.86e-01    1.000000e+00   1.000000e+00
+   4 1.3682355328e-02  -4.20e-09  7.86e-05    4.078084e-01   8.360871e-01
+
+After 4 iterations the fit converged.
+final sum of squares of residuals : 0.0136824
+rel. change during last iteration : -4.1966e-14
+
+degrees of freedom    (FIT_NDF)                        : 6
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.0477535
+variance of residuals (reduced chisquare) = WSSR/ndf   : 0.00228039
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+f22             = 0.407808         +/- 0.03586      (8.792%)
+f23             = 0.836087         +/- 0.01738      (2.078%)
+
+correlation matrix of the fit parameters:
+                f22    f23    
+f22             1.000 
+f23            -0.237  1.000 
+
+
+*******************************************************************************
+Wed May 21 01:12:34 2025
+
+
+FIT:    data read from "<paste PZCs.txt HBEs.txt heyrovskys.txt" u 1:2:3
+        format = x:y:z
+        #datapoints = 8
+        residuals are weighted equally (unit weight)
+
+function used for fitting: g2(x,y)
+	g2(x,y)=g22*(-0.58*(x-4.4)+y)+g23
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   g22           g23          
+   0 5.1172945595e+00   0.00e+00  7.86e-01    1.000000e+00   1.000000e+00
+   4 3.1584661977e-02  -1.64e-08  7.86e-05   -6.766696e-01   1.080915e+00
+
+After 4 iterations the fit converged.
+final sum of squares of residuals : 0.0315847
+rel. change during last iteration : -1.6433e-13
+
+degrees of freedom    (FIT_NDF)                        : 6
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.0725542
+variance of residuals (reduced chisquare) = WSSR/ndf   : 0.00526411
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+g22             = -0.67667         +/- 0.05448      (8.051%)
+g23             = 1.08091          +/- 0.0264       (2.443%)
+
+correlation matrix of the fit parameters:
+                g22    g23    
+g22             1.000 
+g23            -0.237  1.000 
+
+
+*******************************************************************************
+Wed May 21 01:12:34 2025
+
+
+FIT:    data read from "<paste PZCs.txt HBEs.txt tafels.txt" u 1:2:3
+        format = x:y:z
+        #datapoints = 8
+        residuals are weighted equally (unit weight)
+
+function used for fitting: h2(x,y)
+	h2(x,y)=h22*(-0.58*(x-4.4)+y)+h23
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   h22           h23          
+   0 2.1338039269e+00   0.00e+00  7.86e-01    1.000000e+00   1.000000e+00
+   3 1.8838998419e-01  -6.04e-01  7.86e-04    9.422050e-02   8.563511e-01
+
+After 3 iterations the fit converged.
+final sum of squares of residuals : 0.18839
+rel. change during last iteration : -6.04085e-06
+
+degrees of freedom    (FIT_NDF)                        : 6
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.177196
+variance of residuals (reduced chisquare) = WSSR/ndf   : 0.0313983
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+h22             = 0.0942205        +/- 0.133        (141.2%)
+h23             = 0.856351         +/- 0.06448      (7.53%)
+
+correlation matrix of the fit parameters:
+                h22    h23    
+h22             1.000 
+h23            -0.237  1.000 

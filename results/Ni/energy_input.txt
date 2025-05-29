@@ -1,0 +1,7 @@
+surface_name	site_name	species_name	formation_energy	frequencies	reference
+None	gas	H2	0.000000000000	[]	GK calc
+None	gas	H2O	0.000000000000	[]	GK_calc
+Ni	111	H	-0.18538673751584822	[]	
+Ni	111	H-H	0.6959944816771912	[]	
+Ni	111	H2O-ele	1.1253340000001555	[]	
+Ni	111	H2OHele	1.4423722408386255	[]	

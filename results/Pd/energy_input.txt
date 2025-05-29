@@ -1,0 +1,7 @@
+surface_name	site_name	species_name	formation_energy	frequencies	reference
+None	gas	H2	0.000000000000	[]	GK calc
+None	gas	H2O	0.000000000000	[]	GK_calc
+Pd	111	H	-0.17547920549771545	[]	
+Pd	111	H-H	0.5417624816768939	[]	
+Pd	111	H2O-ele	1.2715114371254743	[]	
+Pd	111	H2OHele	1.5375192408382132	[]	
