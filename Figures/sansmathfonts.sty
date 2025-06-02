@@ -1,0 +1,278 @@
+% sansmathfonts.sty
+%
+% Provides complete sans serif math fonts
+%
+% author: Ariel Barton
+%
+% Copyright Ariel Barton, 2013--2024
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either
+% version 1.3c of this license or (at your option) any
+% later version.
+% The latest version of the license is in
+%    http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of
+% LaTeX version 2003/06/01 or later.
+%
+% This work has the LPPL maintenance status "author-maintained".
+%
+% The complete list of files considered part of this work is in
+% the file `sansmathfonts.pdf' and its source code `sansmathfonts.tex'.
+%
+
+
+%Feedback to submitter: (delete this)
+%
+%   For your _next_ update please make the following changes in
+%   sansmathfonts.tex :
+%    -> update or delete the old date in line 25
+%    -> append ‘c’ to ‘1.3’ in line 479 to make the license statements
+%       consistent throughout the package.
+%
+%   Also the copyright statements could/should be extended to the
+%   current year.
+%
+%   Finally: The most practical and least error-prone access to CTAN’s
+%   upload page is via https://ctan.org/pkg/sansmathfonts, clicking on
+%   the “Upload” button at the top.  This way, many of the fields are
+%   already prefilled correctly.
+
+
+\ProvidesPackage{sansmathfonts}[2024/10/15]
+
+\newif \ifmath@sansmathfonts \math@sansmathfontstrue
+\newif \iftext@sansmathfonts \text@sansmathfontstrue
+\newif \ifI@sansmathfonts \I@sansmathfontsfalse
+
+\DeclareOption{notmath} {\math@sansmathfontsfalse}
+\DeclareOption{onlytext}{\math@sansmathfontsfalse}
+\DeclareOption{onlymath}{\text@sansmathfontsfalse}
+\DeclareOption{nottext} {\text@sansmathfontsfalse}
+\DeclareOption{I}{\I@sansmathfontstrue}
+\DeclareOption{AMS}{
+	\newcommand\sanshbar{\hbar}
+	\newcommand\sanshslash{\hslash}
+	\newcommand\sansmho{\mho}
+	\newcommand\sanseth{\eth}
+	\newcommand\sansbackepsilon{\backepsilon}
+}
+\DeclareOption{letters}{
+	\newcommand\sansalpha{\alpha}
+	\newcommand\sansbeta{\beta}
+	\newcommand\sansgamma{\gamma}
+	\newcommand\sansdelta{\delta}
+	\newcommand\sansepsilon{\epsilon}
+	\newcommand\sanszeta{\zeta}
+	\newcommand\sanseta{\eta}
+	\newcommand\sanstheta{\theta}
+	\newcommand\sansiota{\iota}
+	\newcommand\sanskappa{\kappa}
+	\newcommand\sanslambda{\lambda}
+	\newcommand\sansmu{\mu}
+	\newcommand\sansnu{\nu}
+	\newcommand\sansxi{\xi}
+	\newcommand\sanspi{\pi}
+	\newcommand\sansrho{\rho}
+	\newcommand\sanssigma{\sigma}
+	\newcommand\sanstau{\tau}
+	\newcommand\sansupsilon{\upsilon}
+	\newcommand\sansphi{\phi}
+	\newcommand\sanschi{\chi}
+	\newcommand\sanspsi{\psi}
+	\newcommand\sansomega{\omega}
+	\newcommand\sansvarepsilon{\varepsilon}
+	\newcommand\sansvartheta{\vartheta}
+	\newcommand\sansvarpi{\varpi}
+	\newcommand\sansvarrho{\varrho}
+	\newcommand\sansvarsigma{\varsigma}
+	\newcommand\sansvarphi{\varphi}
+	\newcommand\sansstar{\star}
+	\newcommand\sanspartial{\partial}
+	\newcommand\sansflat{\flat}
+	\newcommand\sansnatural{\natural}
+	\newcommand\sanssharp{\sharp}
+	\newcommand\sanssmile{\smile}
+	\newcommand\sansfrown{\frown}
+	\newcommand\sansell{\ell}
+	\newcommand\sanswp{\wp}
+}
+
+\ProcessOptions
+
+\def\OTOne@sansmathfonts{OT1}
+\def\TOne@sansmathfonts{T1}
+\def\U@sansmathfonts{U}
+
+\ifx\OTOne@sansmathfonts \f@encoding \else
+\ifx\U@sansmathfonts \f@encoding \else
+	\I@sansmathfontsfalse
+	\PackageWarning{sansmathfonts}
+		{The [I] package option is only 
+		compatible with the OT1 and U font encodings. 
+		To use the [I] option, please use the fontenc 
+		package with OT1 encoding: \string\usepackage[OT1]\string{fontenc\string}}
+	\ifx\TOne@sansmathfonts \f@encoding \else 
+		\text@sansmathfontsfalse
+		\PackageWarning{sansmathfonts}
+		{Sans serif text fonts are only provided for OT1, T1, and U font 
+			encodings. I will not change the sans serif text font.}
+	\fi
+\fi\fi
+
+\let\sfdefault@sansmathfonts\sfdefault
+\def\Usfdefault@sansmathfonts{cmss}
+\iftext@sansmathfonts
+	\def\sfdefault@sansmathfonts{xcmss}
+	\def\Usfdefault@sansmathfonts{xcmss}
+	\ifI@sansmathfonts
+		\def\sfdefault@sansmathfonts{cmsmf}%
+		\def\Usfdefault@sansmathfonts{cmsmf}%
+	\fi
+\fi
+
+\ifmath@sansmathfonts
+
+	% Turn off Beamer math replacements
+	\@ifpackageloaded{beamerbasefont}{\usefonttheme{professionalfonts}}{}
+	
+	% Sans serif math
+	% Code borrowed from fontmath.ltx 
+	% (edited; cmr->cmsmf, cmm->cmssm, cmsy->cmsssy, cmex->cmssex)
+	\DeclareFontSubstitution{OML}{cmssm}{m}{it}
+	\DeclareFontSubstitution{OMS}{cmsssy}{m}{n}
+	\DeclareFontSubstitution{OMX}{cmssex}{m}{n}
+	\DeclareFontSubstitution{U}{\Usfdefault@sansmathfonts}{m}{n}
+	\DeclareSymbolFont{operators}   {OT1}{cmsmf} {m}{n}
+	\DeclareSymbolFont{letters}     {OML}{cmssm} {m}{it}
+	\DeclareSymbolFont{symbols}     {OMS}{cmsssy}{m}{n}
+	\DeclareSymbolFont{largesymbols}{OMX}{cmssex}{m}{n}
+	\SetSymbolFont{operators}{bold}{OT1}{cmsmf} {bx}{n}
+	\SetSymbolFont{letters}  {bold}{OML}{cmssm} {b}{it}
+	\SetSymbolFont{symbols}  {bold}{OMS}{cmsssy}{b}{n}
+	
+	% Code borrowed from concmath.sty (amsfonts/amssymb option)
+	\AtBeginDocument{%
+		\@ifpackageloaded{amsfonts}{%
+			\DeclareSymbolFont{AMSa}{U}{ssmsa}{m}{n}
+			\DeclareSymbolFont{AMSb}{U}{ssmsb}{m}{n}
+		}{
+			\ifdefined\sansmho
+				\PackageError{sansmathfonts}
+				{Please load the {amsfonts} package if you want AMS symbols.}
+				{The [AMS] package option for {sansmathfonts} is primarily 
+					designed for use with the [onlytext]/[notmath] options, 
+					and expects you to load an AMS package if you want
+					AMS symbols that match surrounding math.}
+			\fi
+		}%
+		\@ifpackageloaded{esint}{%
+		\DeclareSymbolFont{largesymbolsA}{U}{ssesint}{m}{n}
+		}{}
+		%
+		\ifx\OTOne@sansmathfonts \f@encoding \else 
+		\ifx\U@sansmathfonts \f@encoding \else 
+			\ifI@sansmathfonts
+				\PackageError{sansmathfonts}
+				{The [I] package option is only compatible with 
+					the OT1 and U font encodings. To use the [I] option,
+					please use the fontenc package with OT1 encoding:
+					\string\usepackage[OT1]\string{fontenc\string}}
+				{Please do not use the [I] option for the sansmathfonts 
+					package, or select your font encoding before you load 
+					the sansmathfonts package.}
+			\fi
+			\ifx\TOne@sansmathfonts \f@encoding \else 
+			\iftext@sansmathfonts
+				\PackageError{sansmathfonts}
+					{Sans serif text fonts are only
+						provided for OT1, T1, and U font encodings.}
+					{Please use the [onlymath] option for the sansmathfonts 
+						package, or select your font encoding before you 	
+						load the sansmathfonts package.}
+			\fi \fi
+		\fi \fi
+		}	
+	
+	% beamer currently sets 
+	% \mathrm to upright serif and
+	% \mathit to slanted sans serif.
+	% They should be consistent,
+	% and the setup should be such that if you aren't paying attention,
+	% then you get the font of the rest of the letters,
+	% that is, sans serif.
+	
+	% Code borrowed from fontmath.ltx 
+	% (edited; cmr->cmsmf)
+	\DeclareSymbolFontAlphabet{\mathrm}    {operators}
+	\DeclareSymbolFontAlphabet{\mathnormal}{letters}
+	\DeclareSymbolFontAlphabet{\mathcal}   {symbols}
+	\DeclareMathAlphabet      {\mathbf}{OT1}{cmsmf}{bx}{n}
+	\DeclareMathAlphabet      {\mathit}{OT1}{cmsmf}{m}{it}
+	\DeclareMathAlphabet      {\mathtt}{OT1}{cmtt}{m}{n}
+	\SetMathAlphabet\mathsf{bold}{OT1}{cmsmf}{bx}{n}
+	\SetMathAlphabet\mathit{bold}{OT1}{cmsmf}{bx}{it}
+\else
+	\ifdefined\sansmho
+		\DeclareSymbolFont{sansAMSb}{U}{ssmsb}{m}{n}
+		\begingroup \catcode`\"=12
+		\let\sansmho\undefined        \DeclareMathSymbol{\sansmho}        {\mathord}{sansAMSb}{"66}
+		\let\sanseth\undefined        \DeclareMathSymbol{\sanseth}        {\mathord}{sansAMSb}{"67}
+		\let\sanshslash\undefined     \DeclareMathSymbol{\sanshslash}     {\mathord}{sansAMSb}{"7D}
+		\let\sanshbar\undefined       \DeclareMathSymbol{\sanshbar}       {\mathord}{sansAMSb}{"7E}
+		\let\sansbackepsilon\undefined\DeclareMathSymbol{\sansbackepsilon}{\mathrel}{sansAMSb}{"7F}
+		\endgroup
+	\fi
+	\ifdefined\sansalpha
+		\DeclareSymbolFont{sansletters}     {OML}{cmssm} {m}{it}
+		\let\sansalpha\undefined      \DeclareMathSymbol{\sansalpha}      {\mathord}{sansletters}{11}
+		\let\sansbeta\undefined       \DeclareMathSymbol{\sansbeta}       {\mathord}{sansletters}{12}
+		\let\sansgamma\undefined      \DeclareMathSymbol{\sansgamma}      {\mathord}{sansletters}{13}
+		\let\sansdelta\undefined      \DeclareMathSymbol{\sansdelta}      {\mathord}{sansletters}{14}
+		\let\sansepsilon\undefined    \DeclareMathSymbol{\sansepsilon}    {\mathord}{sansletters}{15}
+		\let\sanszeta\undefined       \DeclareMathSymbol{\sanszeta}       {\mathord}{sansletters}{16}
+		\let\sanseta\undefined        \DeclareMathSymbol{\sanseta}        {\mathord}{sansletters}{17}
+		\let\sanstheta\undefined      \DeclareMathSymbol{\sanstheta}      {\mathord}{sansletters}{18}
+		\let\sansiota\undefined       \DeclareMathSymbol{\sansiota}       {\mathord}{sansletters}{19}
+		\let\sanskappa\undefined      \DeclareMathSymbol{\sanskappa}      {\mathord}{sansletters}{20}
+		\let\sanslambda\undefined     \DeclareMathSymbol{\sanslambda}     {\mathord}{sansletters}{21}
+		\let\sansmu\undefined         \DeclareMathSymbol{\sansmu}         {\mathord}{sansletters}{22}
+		\let\sansnu\undefined         \DeclareMathSymbol{\sansnu}         {\mathord}{sansletters}{23}
+		\let\sansxi\undefined         \DeclareMathSymbol{\sansxi}         {\mathord}{sansletters}{24}
+		\let\sanspi\undefined         \DeclareMathSymbol{\sanspi}         {\mathord}{sansletters}{25}
+		\let\sansrho\undefined        \DeclareMathSymbol{\sansrho}        {\mathord}{sansletters}{26}
+		\let\sanssigma\undefined      \DeclareMathSymbol{\sanssigma}      {\mathord}{sansletters}{27}
+		\let\sanstau\undefined        \DeclareMathSymbol{\sanstau}        {\mathord}{sansletters}{28}
+		\let\sansupsilon\undefined    \DeclareMathSymbol{\sansupsilon}    {\mathord}{sansletters}{29}
+		\let\sansphi\undefined        \DeclareMathSymbol{\sansphi}        {\mathord}{sansletters}{30}
+		\let\sanschi\undefined        \DeclareMathSymbol{\sanschi}        {\mathord}{sansletters}{31}
+		\let\sanspsi\undefined        \DeclareMathSymbol{\sanspsi}        {\mathord}{sansletters}{32}
+		\let\sansomega\undefined      \DeclareMathSymbol{\sansomega}      {\mathord}{sansletters}{33}
+		\let\sansvarepsilon\undefined \DeclareMathSymbol{\sansvarepsilon} {\mathord}{sansletters}{34}
+		\let\sansvartheta\undefined   \DeclareMathSymbol{\sansvartheta}   {\mathord}{sansletters}{35}
+		\let\sansvarpi\undefined      \DeclareMathSymbol{\sansvarpi}      {\mathord}{sansletters}{36}
+		\let\sansvarrho\undefined     \DeclareMathSymbol{\sansvarrho}     {\mathord}{sansletters}{37}
+		\let\sansvarsigma\undefined   \DeclareMathSymbol{\sansvarsigma}   {\mathord}{sansletters}{38}
+		\let\sansvarphi\undefined     \DeclareMathSymbol{\sansvarphi}     {\mathord}{sansletters}{39}
+		\let\sansstar\undefined       \DeclareMathSymbol{\sansstar}       {\mathord}{sansletters}{63}
+		\let\sanspartial\undefined    \DeclareMathSymbol{\sanspartial}    {\mathord}{sansletters}{64}
+		\let\sansflat\undefined       \DeclareMathSymbol{\sansflat}       {\mathord}{sansletters}{91}
+		\let\sansnatural\undefined    \DeclareMathSymbol{\sansnatural}    {\mathord}{sansletters}{92}
+		\let\sanssharp\undefined      \DeclareMathSymbol{\sanssharp}      {\mathord}{sansletters}{93}
+		\let\sanssmile\undefined      \DeclareMathSymbol{\sanssmile}      {\mathord}{sansletters}{94}
+		\let\sansfrown\undefined      \DeclareMathSymbol{\sansfrown}      {\mathord}{sansletters}{95}
+		\let\sansell\undefined        \DeclareMathSymbol{\sansell}        {\mathord}{sansletters}{96}
+		\let\sanswp\undefined         \DeclareMathSymbol{\sanswp}         {\mathord}{sansletters}{125}
+	\fi
+\fi
+
+\DeclareMathAlphabet      {\mathserif}{OT1}{cmr}{m}{n}
+\DeclareMathAlphabet      {\mathsf}{OT1}{cmsmf}{m}{n}
+
+%\DeclareFontFamilySubstitution{TS1}{xcmss}{cmss}
+%\DeclareFontFamilySubstitution{TS1}{cmsmf}{cmss}
+
+% Use the improved sans family
+% (provides sans serif small caps fonts)
+\let\sfdefault\sfdefault@sansmathfonts
+

@@ -6,7 +6,8 @@
 #grep ".._intercept =" fit_lsv.dat | awk '{print $3}' > i0s.txt
 #awk '{print $2-$1+4.0144772408+0.097}' vacuum_energies.txt > vac_HBEs.txt
 #awk '{print $3-$1+4.0144772408+0.097+0.105}' vacuum_energies.txt > vac_Htops.txt
-for plotfile in figure_potential_activation_energies figure_coverage figure_catmap_activationenergies figure_log_current square_true_activity_volcano 2x2_volcano
+# 3c and 3b are actually for figure 2, not updating
+for plotfile in figure_potential_activation_energies figure_coverage_periodic_table figure_catmap_activationenergies figure_log_current square_true_activity_volcano 2x2_volcano figure_3c figure_3b
 do 
 	gnuplot $plotfile\.plot
 	outfile=`grep "^set output" $plotfile.plot | awk -F '\"' '{print $2}'`

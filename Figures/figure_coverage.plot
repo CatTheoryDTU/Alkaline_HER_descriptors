@@ -15,7 +15,7 @@ set yrange [7:14]
 set xtics scale 0.5 #font ticsfont
 set ytics scale 0.5 nomirror #font ticsfont
 
-set multiplot layout 3,3 margins 0.10, 0.85, 0.05, 0.85 spacing 0.02, 0.03
+set multiplot layout 3,3 columnsfirst margins 0.10, 0.85, 0.05, 0.85 spacing 0.02, 0.03
 # title "Coverage" #font "Helvetica,16"
 set pm3d map explicit noborder
 unset surface; set pm3d at b; set view map

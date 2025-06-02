@@ -18,7 +18,7 @@ FILE = "numbers.txt"
 array numbers[10]
 stats FILE u (numbers[int($0+1)] = $1) 
 array elements = ["Ag","Au","Cu","Ir","Ni","Pd","Pt","Rh","Fe","W"]
-set multiplot layout 1,2 margins 0.05, 0.95, 0.25, 0.85 # title "Activation Energies"
+set multiplot layout 1,2 margins 0.15, 0.95, 0.25, 0.85 # title "Activation Energies"
 set title font subtitlefont
 set title "Volmer" #offset 0,graph -0.1
 array coeffs_a[10]

@@ -130,12 +130,15 @@ ax1.tick_params(direction='in')
 ax2.tick_params(direction='in')
 ax3.tick_params(direction='in')
 ys=[r2s_pzc_volmer,r2s_hbe_volmer,r2s_htop_volmer,r2s_hbepzc_volmer,r2s_coup_volmer,r2s_hdiff_volmer]
+np.savetxt('fig5a.txt',np.array(ys).T)
+np.savetxt('fig5x.txt',potentials)
 for i,y in enumerate(ys):
     ax1.plot(potentials,y,colors[i]+linestyles[i])
 ax1.set_xlabel(r'U vs SHE (V)')
 ax1.set_ylabel(r'Descriptor Strength, R$^2$')
 ax1.set_title('Volmer')
 ys=[r2s_pzc_heyrovsky,r2s_hbe_heyrovsky,r2s_htop_heyrovsky,r2s_hbepzc_heyrovsky,r2s_coup_heyrovsky,r2s_hdiff_heyrovsky]
+np.savetxt('fig5b.txt',np.array(ys).T)
 for i,y in enumerate(ys):
     ax2.plot(potentials,y,colors[i]+linestyles[i])
 ax2.set_xlabel(r'U vs SHE (V)')
@@ -151,6 +154,7 @@ for x in [xpzc,xhbe,xhtop,combined_hbepzc,xcoup,xhdiff]:
     #print(ys[-1])
 for i,y in enumerate(ys):
     ax3.plot(potentials,y*np.ones(np.shape(potentials)),colors[i]+linestyles[i])
+np.savetxt('fig5c.txt',(np.array(ys).reshape(6,1)*np.ones((1,101))).T)
 ax3.set_xlabel(r'U vs SHE (V)')
 ax3.set_title('Tafel')
 axs=[ax1,ax2,ax3]

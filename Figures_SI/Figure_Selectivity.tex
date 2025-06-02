@@ -1,0 +1,304 @@
+% GNUPLOT: LaTeX picture with Postscript
+\documentclass{minimal}
+% Set font size
+\makeatletter
+\def\@ptsize{1}
+\InputIfFileExists{size11.clo}{}{%
+   \GenericError{(gnuplot) \space\space\space\@spaces}{%
+      Gnuplot Error: File `size11.clo' not found! Could not set font size%
+   }{See the gnuplot documentation for explanation.%
+   }{For using a font size a file `size<fontsize>.clo' has to exist.
+        Falling back ^^Jto default fontsize 10pt.}%
+  \def\@ptsize{0}
+  \input{size10.clo}%
+}%
+\makeatother
+\renewcommand*\rmdefault{cmss}%
+% Load packages
+\usepackage{calc}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+\makeatletter
+% Select an appropriate default driver (from TeXLive graphics.cfg)
+\begingroup
+  \chardef\x=0 %
+  % check pdfTeX
+  \@ifundefined{pdfoutput}{}{%
+    \ifcase\pdfoutput
+    \else
+      \chardef\x=1 %
+    \fi
+  }%
+  % check VTeX
+  \@ifundefined{OpMode}{}{%
+    \chardef\x=2 %
+  }%
+\expandafter\endgroup
+\ifcase\x
+  % default case
+  \PassOptionsToPackage{dvips}{geometry}
+\or
+  % pdfTeX is running in pdf mode
+  \PassOptionsToPackage{pdftex}{geometry}
+\else
+  % VTeX is running
+  \PassOptionsToPackage{vtex}{geometry}
+\fi
+\makeatother
+% Set papersize
+\usepackage[papersize={504.00bp,216.00bp},text={504.00bp,216.00bp}]{geometry}
+% No page numbers and no paragraph indentation
+\pagestyle{empty}
+\setlength{\parindent}{0bp}%
+% Load configuration file
+\InputIfFileExists{gnuplot.cfg}{%
+  \typeout{Using configuration file gnuplot.cfg}%
+}{%
+ \typeout{No configuration file gnuplot.cfg found.}%
+}%
+%
+\begin{document}
+\begingroup
+  \makeatletter
+  \providecommand\color[2][]{%
+    \GenericError{(gnuplot) \space\space\space\@spaces}{%
+      Package color not loaded in conjunction with
+      terminal option `colourtext'%
+    }{See the gnuplot documentation for explanation.%
+    }{Either use 'blacktext' in gnuplot or load the package
+      color.sty in LaTeX.}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\includegraphics[2][]{%
+    \GenericError{(gnuplot) \space\space\space\@spaces}{%
+      Package graphicx or graphics not loaded%
+    }{See the gnuplot documentation for explanation.%
+    }{The gnuplot epslatex terminal needs graphicx.sty or graphics.sty.}%
+    \renewcommand\includegraphics[2][]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \@ifundefined{ifGPcolor}{%
+    \newif\ifGPcolor
+    \GPcolortrue
+  }{}%
+  \@ifundefined{ifGPblacktext}{%
+    \newif\ifGPblacktext
+    \GPblacktextfalse
+  }{}%
+  % define a \g@addto@macro without @ in the name:
+  \let\gplgaddtomacro\g@addto@macro
+  % define empty templates for all commands taking text:
+  \gdef\gplbacktext{}%
+  \gdef\gplfronttext{}%
+  \makeatother
+  \ifGPblacktext
+    % no textcolor at all
+    \def\colorrgb#1{}%
+    \def\colorgray#1{}%
+  \else
+    % gray or color?
+    \ifGPcolor
+      \def\colorrgb#1{\color[rgb]{#1}}%
+      \def\colorgray#1{\color[gray]{#1}}%
+      \expandafter\def\csname LTw\endcsname{\color{white}}%
+      \expandafter\def\csname LTb\endcsname{\color{black}}%
+      \expandafter\def\csname LTa\endcsname{\color{black}}%
+      \expandafter\def\csname LT0\endcsname{\color[rgb]{1,0,0}}%
+      \expandafter\def\csname LT1\endcsname{\color[rgb]{0,1,0}}%
+      \expandafter\def\csname LT2\endcsname{\color[rgb]{0,0,1}}%
+      \expandafter\def\csname LT3\endcsname{\color[rgb]{1,0,1}}%
+      \expandafter\def\csname LT4\endcsname{\color[rgb]{0,1,1}}%
+      \expandafter\def\csname LT5\endcsname{\color[rgb]{1,1,0}}%
+      \expandafter\def\csname LT6\endcsname{\color[rgb]{0,0,0}}%
+      \expandafter\def\csname LT7\endcsname{\color[rgb]{1,0.3,0}}%
+      \expandafter\def\csname LT8\endcsname{\color[rgb]{0.5,0.5,0.5}}%
+    \else
+      % gray
+      \def\colorrgb#1{\color{black}}%
+      \def\colorgray#1{\color[gray]{#1}}%
+      \expandafter\def\csname LTw\endcsname{\color{white}}%
+      \expandafter\def\csname LTb\endcsname{\color{black}}%
+      \expandafter\def\csname LTa\endcsname{\color{black}}%
+      \expandafter\def\csname LT0\endcsname{\color{black}}%
+      \expandafter\def\csname LT1\endcsname{\color{black}}%
+      \expandafter\def\csname LT2\endcsname{\color{black}}%
+      \expandafter\def\csname LT3\endcsname{\color{black}}%
+      \expandafter\def\csname LT4\endcsname{\color{black}}%
+      \expandafter\def\csname LT5\endcsname{\color{black}}%
+      \expandafter\def\csname LT6\endcsname{\color{black}}%
+      \expandafter\def\csname LT7\endcsname{\color{black}}%
+      \expandafter\def\csname LT8\endcsname{\color{black}}%
+    \fi
+  \fi
+    \setlength{\unitlength}{0.0500bp}%
+    \ifx\gptboxheight\undefined%
+      \newlength{\gptboxheight}%
+      \newlength{\gptboxwidth}%
+      \newsavebox{\gptboxtext}%
+    \fi%
+    \setlength{\fboxrule}{0.5pt}%
+    \setlength{\fboxsep}{1pt}%
+    \definecolor{tbcol}{rgb}{1,1,1}%
+\begin{picture}(10080.00,4320.00)%
+    \gplgaddtomacro\gplbacktext{%
+    }%
+    \gplgaddtomacro\gplfronttext{%
+      \csname LTb\endcsname%%
+      \put(1605,3835){\makebox(0,0){\strut{}-1.5}}%
+      \put(2201,3835){\makebox(0,0){\strut{}-1.0}}%
+      \put(2797,3835){\makebox(0,0){\strut{}-0.5}}%
+      \put(2201,4144){\makebox(0,0){\strut{}U vs SHE (V)}}%
+      \put(846,2759){\makebox(0,0)[r]{\strut{}$8$}}%
+      \put(846,3063){\makebox(0,0)[r]{\strut{}$10$}}%
+      \put(846,3367){\makebox(0,0)[r]{\strut{}$12$}}%
+      \put(846,3671){\makebox(0,0)[r]{\strut{}$14$}}%
+      \put(397,3139){\rotatebox{-270.00}{\makebox(0,0){\strut{}pH}}}%
+      \colorrgb{0.00,0.00,0.00}%%
+      \put(2774,3139){\rotatebox{-65.53}{\makebox(0,0){\strut{}0V vs RHE}}}%
+      \put(1247,2911){\makebox(0,0)[l]{\strut{}\small \shortstack[l]{{Heyrovsky} \\ {Dominant}}}}%
+      \csname LTb\endcsname%%
+      \put(1344,3452){\makebox(0,0){\strut{}Ag}}%
+    }%
+    \gplgaddtomacro\gplbacktext{%
+    }%
+    \gplgaddtomacro\gplfronttext{%
+      \csname LTb\endcsname%%
+      \put(4192,3835){\makebox(0,0){\strut{}-1.5}}%
+      \put(4788,3835){\makebox(0,0){\strut{}-1.0}}%
+      \put(5384,3835){\makebox(0,0){\strut{}-0.5}}%
+      \put(4788,4144){\makebox(0,0){\strut{}U vs SHE (V)}}%
+      \put(3433,2759){\makebox(0,0)[r]{\strut{}}}%
+      \put(3433,3063){\makebox(0,0)[r]{\strut{}}}%
+      \put(3433,3367){\makebox(0,0)[r]{\strut{}}}%
+      \put(3433,3671){\makebox(0,0)[r]{\strut{}}}%
+      \colorrgb{0.00,0.00,0.00}%%
+      \put(5361,3139){\rotatebox{-65.53}{\makebox(0,0){\strut{}0V vs RHE}}}%
+      \csname LTb\endcsname%%
+      \put(3931,3452){\makebox(0,0){\strut{}Au}}%
+    }%
+    \gplgaddtomacro\gplbacktext{%
+    }%
+    \gplgaddtomacro\gplfronttext{%
+      \csname LTb\endcsname%%
+      \put(6779,3835){\makebox(0,0){\strut{}-1.5}}%
+      \put(7375,3835){\makebox(0,0){\strut{}-1.0}}%
+      \put(7971,3835){\makebox(0,0){\strut{}-0.5}}%
+      \put(7375,4144){\makebox(0,0){\strut{}U vs SHE (V)}}%
+      \put(6020,2759){\makebox(0,0)[r]{\strut{}}}%
+      \put(6020,3063){\makebox(0,0)[r]{\strut{}}}%
+      \put(6020,3367){\makebox(0,0)[r]{\strut{}}}%
+      \put(6020,3671){\makebox(0,0)[r]{\strut{}}}%
+      \put(9010,2607){\makebox(0,0)[l]{\strut{}-10}}%
+      \put(9010,2873){\makebox(0,0)[l]{\strut{}-5}}%
+      \put(9010,3139){\makebox(0,0)[l]{\strut{}+0}}%
+      \put(9010,3405){\makebox(0,0)[l]{\strut{}+5}}%
+      \put(9010,3671){\makebox(0,0)[l]{\strut{}+10}}%
+      \put(9710,3139){\rotatebox{-270.00}{\makebox(0,0){\strut{}$Log(\frac{R_{Taf}}{R_{Hey}})$}}}%
+      \colorrgb{0.00,0.00,0.00}%%
+      \put(7948,3139){\rotatebox{-65.53}{\makebox(0,0){\strut{}0V vs RHE}}}%
+      \csname LTb\endcsname%%
+      \put(6518,3452){\makebox(0,0){\strut{}Cu}}%
+    }%
+    \gplgaddtomacro\gplbacktext{%
+    }%
+    \gplgaddtomacro\gplfronttext{%
+      \csname LTb\endcsname%%
+      \put(1605,2640){\makebox(0,0){\strut{}}}%
+      \put(2201,2640){\makebox(0,0){\strut{}}}%
+      \put(2797,2640){\makebox(0,0){\strut{}}}%
+      \put(846,1564){\makebox(0,0)[r]{\strut{} 8}}%
+      \put(846,1868){\makebox(0,0)[r]{\strut{}10}}%
+      \put(846,2172){\makebox(0,0)[r]{\strut{}12}}%
+      \put(846,2476){\makebox(0,0)[r]{\strut{}14}}%
+      \put(397,1944){\rotatebox{-270.00}{\makebox(0,0){\strut{}pH}}}%
+      \colorrgb{1.00,1.00,1.00}%%
+      \put(2774,1944){\rotatebox{-65.53}{\makebox(0,0){\strut{}0V vs RHE}}}%
+      \put(1247,1716){\makebox(0,0)[l]{\strut{}\small \shortstack[l]{{           Tafel} \\ {Dominant}}}}%
+      \colorrgb{1.00,1.00,1.00}%%
+      \put(1344,2257){\makebox(0,0){\strut{}Ir}}%
+    }%
+    \gplgaddtomacro\gplbacktext{%
+    }%
+    \gplgaddtomacro\gplfronttext{%
+      \csname LTb\endcsname%%
+      \put(4192,2640){\makebox(0,0){\strut{}}}%
+      \put(4788,2640){\makebox(0,0){\strut{}}}%
+      \put(5384,2640){\makebox(0,0){\strut{}}}%
+      \put(3433,1564){\makebox(0,0)[r]{\strut{}}}%
+      \put(3433,1868){\makebox(0,0)[r]{\strut{}}}%
+      \put(3433,2172){\makebox(0,0)[r]{\strut{}}}%
+      \put(3433,2476){\makebox(0,0)[r]{\strut{}}}%
+      \colorrgb{1.00,1.00,1.00}%%
+      \put(5361,1944){\rotatebox{-65.53}{\makebox(0,0){\strut{}0V vs RHE}}}%
+      \colorrgb{1.00,1.00,1.00}%%
+      \put(3931,2257){\makebox(0,0){\strut{}Ni}}%
+    }%
+    \gplgaddtomacro\gplbacktext{%
+    }%
+    \gplgaddtomacro\gplfronttext{%
+      \csname LTb\endcsname%%
+      \put(6779,2640){\makebox(0,0){\strut{}}}%
+      \put(7375,2640){\makebox(0,0){\strut{}}}%
+      \put(7971,2640){\makebox(0,0){\strut{}}}%
+      \put(6020,1564){\makebox(0,0)[r]{\strut{}}}%
+      \put(6020,1868){\makebox(0,0)[r]{\strut{}}}%
+      \put(6020,2172){\makebox(0,0)[r]{\strut{}}}%
+      \put(6020,2476){\makebox(0,0)[r]{\strut{}}}%
+      \put(9010,1412){\makebox(0,0)[l]{\strut{}-10}}%
+      \put(9010,1678){\makebox(0,0)[l]{\strut{}-5}}%
+      \put(9010,1944){\makebox(0,0)[l]{\strut{}+0}}%
+      \put(9010,2210){\makebox(0,0)[l]{\strut{}+5}}%
+      \put(9010,2476){\makebox(0,0)[l]{\strut{}+10}}%
+      \put(9710,1944){\rotatebox{-270.00}{\makebox(0,0){\strut{}$Log(\frac{R_{Taf}}{R_{Hey}})$}}}%
+      \colorrgb{1.00,1.00,1.00}%%
+      \put(7948,1944){\rotatebox{-65.53}{\makebox(0,0){\strut{}0V vs RHE}}}%
+      \colorrgb{1.00,1.00,1.00}%%
+      \put(6518,2257){\makebox(0,0){\strut{}Pd}}%
+    }%
+    \gplgaddtomacro\gplbacktext{%
+    }%
+    \gplgaddtomacro\gplfronttext{%
+      \csname LTb\endcsname%%
+      \put(1605,1445){\makebox(0,0){\strut{}}}%
+      \put(2201,1445){\makebox(0,0){\strut{}}}%
+      \put(2797,1445){\makebox(0,0){\strut{}}}%
+      \put(846,369){\makebox(0,0)[r]{\strut{} 8}}%
+      \put(846,673){\makebox(0,0)[r]{\strut{}10}}%
+      \put(846,977){\makebox(0,0)[r]{\strut{}12}}%
+      \put(846,1281){\makebox(0,0)[r]{\strut{}14}}%
+      \put(397,749){\rotatebox{-270.00}{\makebox(0,0){\strut{}pH}}}%
+      \colorrgb{1.00,1.00,1.00}%%
+      \put(2774,749){\rotatebox{-65.53}{\makebox(0,0){\strut{}0V vs RHE}}}%
+      \colorrgb{1.00,1.00,1.00}%%
+      \put(1344,1062){\makebox(0,0){\strut{}Pt}}%
+    }%
+    \gplgaddtomacro\gplbacktext{%
+    }%
+    \gplgaddtomacro\gplfronttext{%
+      \csname LTb\endcsname%%
+      \put(4192,1445){\makebox(0,0){\strut{}}}%
+      \put(4788,1445){\makebox(0,0){\strut{}}}%
+      \put(5384,1445){\makebox(0,0){\strut{}}}%
+      \put(3433,369){\makebox(0,0)[r]{\strut{}}}%
+      \put(3433,673){\makebox(0,0)[r]{\strut{}}}%
+      \put(3433,977){\makebox(0,0)[r]{\strut{}}}%
+      \put(3433,1281){\makebox(0,0)[r]{\strut{}}}%
+      \put(6423,217){\makebox(0,0)[l]{\strut{}-10}}%
+      \put(6423,483){\makebox(0,0)[l]{\strut{}-5}}%
+      \put(6423,749){\makebox(0,0)[l]{\strut{}+0}}%
+      \put(6423,1015){\makebox(0,0)[l]{\strut{}+5}}%
+      \put(6423,1281){\makebox(0,0)[l]{\strut{}+10}}%
+      \put(7123,749){\rotatebox{-270.00}{\makebox(0,0){\strut{}$Log(\frac{R_{Taf}}{R_{Hey}})$}}}%
+      \colorrgb{1.00,1.00,1.00}%%
+      \put(5361,749){\rotatebox{-65.53}{\makebox(0,0){\strut{}0V vs RHE}}}%
+      \colorrgb{1.00,1.00,1.00}%%
+      \put(3931,1062){\makebox(0,0){\strut{}Rh}}%
+    }%
+    \gplbacktext
+    \put(0,0){\includegraphics[width={504.00bp},height={216.00bp}]{Figure_Selectivity-inc}}%
+    \gplfronttext
+  \end{picture}%
+\endgroup
+\end{document}
