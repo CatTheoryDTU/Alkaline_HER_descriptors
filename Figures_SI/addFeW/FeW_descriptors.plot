@@ -44,8 +44,8 @@ set ytics format "%1.1f"
 set xtics format "%1.1f"
 set xlabel '$\Delta G^{top}_{H}$ (eV)'
 set ylabel 'Activation Free Energy $\Delta G^\ddag$ (eV)'
-set label 1 sprintf('\tiny{Volmer, $R^2$ = %1.2f}',htopvol_correlation**2) at 0.18,0.68 rotate by atan(2*htopvol_slope/1.3)/pi*180.0-5 font subtitlefont textcolor 'black' front
-set label 3 sprintf('\tiny{Tafel, $R^2$ = %1.2f}',htoptaf_correlation**2) at 0.25,0.86 rotate by atan(2*htoptaf_slope/1.3)/pi*180.0 font subtitlefont textcolor lt 6 front
+set label 1 sprintf('\scriptsize{Volmer, $R^2$ = %1.2f}',htopvol_correlation**2) at 0.18,0.68 rotate by atan(2*htopvol_slope/1.3)/pi*180.0-5 font subtitlefont textcolor 'black' front
+set label 3 sprintf('\scriptsize{Tafel, $R^2$ = %1.2f}',htoptaf_correlation**2) at 0.25,0.86 rotate by atan(2*htoptaf_slope/1.3)/pi*180.0 font subtitlefont textcolor lt 6 front
 set label 4 at graph -0.1,1.1 'a)' front
 plot \
 	'<paste vac_Htops.txt volmers.txt numbers.txt' u 1:2:3 with points lc 'black' pointtype variable ps 2 notitle, \
@@ -60,8 +60,8 @@ set xtics 1,2,7
 set ytics format ""
 set ylabel ""
 set xlabel '$|V|^2$'
-set label 1 sprintf('\tiny{Volmer, $R^2$ = %1.2f}',coupvol_correlation**2) at 0.18,0.68 rotate by atan(2*coupvol_slope/1.3)/pi*180.0-5 font subtitlefont textcolor 'black' front
-set label 3 sprintf('\tiny{Tafel, $R^2$ = %1.2f}',couptaf_correlation**2) at 0.25,0.86 rotate by atan(2*couptaf_slope/1.3)/pi*180.0 font subtitlefont textcolor lt 6 front
+set label 1 sprintf('\scriptsize{Volmer, $R^2$ = %1.2f}',coupvol_correlation**2) at 0.18,0.68 rotate by atan(2*coupvol_slope/1.3)/pi*180.0-5 font subtitlefont textcolor 'black' front
+set label 3 sprintf('\scriptsize{Tafel, $R^2$ = %1.2f}',couptaf_correlation**2) at 0.25,0.86 rotate by atan(2*couptaf_slope/1.3)/pi*180.0 font subtitlefont textcolor lt 6 front
 set label 4 at graph -0.1,1.1 'b)' front
 unset key
 plot \
@@ -77,8 +77,8 @@ set ylabel 'Activation Free Energy $\Delta G^\ddag$ (eV)'
 set xtics -0.5,0.5,1.0
 set xlabel '$\Delta G^{fcc}_{H}$ -0.52$(U_{PZC})$'
 set style textbox 1 transparent fc rgb 0xffff00 border lc "black" lw 5
-set label 1 sprintf('\tiny{Volmer, $R^2$ = %1.2f}',VOLM_correlation**2) at -0.5,0.26 rotate by atan(3.6*f22/1.3)/pi*180+8 font subtitlefont textcolor 'black' front
-set label 3 sprintf('\tiny{Tafel, $R^2$ = %1.2f}',TAF_correlation**2) at 0.4,0.93 rotate by atan(3.6*h22/1.3)/pi*180-2 font subtitlefont textcolor lt 6 front
+set label 1 sprintf('\scriptsize{Volmer, $R^2$ = %1.2f}',VOLM_correlation**2) at -0.5,0.26 rotate by atan(3.6*f22/1.3)/pi*180+8 font subtitlefont textcolor 'black' front
+set label 3 sprintf('\scriptsize{Tafel, $R^2$ = %1.2f}',TAF_correlation**2) at 0.4,0.93 rotate by atan(3.6*h22/1.3)/pi*180-2 font subtitlefont textcolor lt 6 front
 set label 4 at graph -0.15,1.1 'c)' front
 plot \
 	"<paste PZCs.txt vac_HBEs.txt volmers.txt numbers.txt" using (-0.52*($1-4.44)+$2):3:4 w points lc 'black' ps 2 pt variable notitle, \
@@ -88,11 +88,11 @@ plot \
 # Hdiff
 set ytics format ""
 set ylabel ""
-set xrange[-0.7:0.7]
-set xtics -0.5,0.5,1.0
+set xrange[-0.3:0.9]
+set xtics -0.4,0.4,0.8
 set xlabel '$\Delta G^{top}_{H} - \Delta G^{fcc}_{H}$'
-set label 1 sprintf('\tiny{Volmer, $R^2$ = %1.2f}',hdiffvol_correlation**2) at 0.18,0.98 rotate by 28.9 font subtitlefont textcolor 'black' front
-set label 3 sprintf('\tiny{Tafel, $R^2$ = %1.2f}',hdifftaf_correlation**2) at 0.25,0.92 rotate by 5.3 font subtitlefont textcolor lt 6 front
+set label 1 sprintf('\scriptsize{Volmer, $R^2$ = %1.2f}',hdiffvol_correlation**2) at 0.18,0.98 rotate by 28.9 font subtitlefont textcolor 'black' front
+set label 3 sprintf('\scriptsize{Tafel, $R^2$ = %1.2f}',hdifftaf_correlation**2) at 0.25,0.92 rotate by 5.3 font subtitlefont textcolor lt 6 front
 set label 4 at graph -0.15,1.1 'd)' front
 plot \
 	'<paste Hdiff.txt volmers.txt numbers.txt' u 1:2:3 with points lc 'black' pointtype variable ps 2 notitle, \
