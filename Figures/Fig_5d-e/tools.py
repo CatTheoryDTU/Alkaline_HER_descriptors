@@ -7,7 +7,7 @@ transform = {'htop': '$\Delta G^{\mathrm{top}}_\mathrm{H}$',
                  'hfcc': '$\Delta G^{\mathrm{fcc}}_\mathrm{H}$',
                  'htop-hfcc': '$\Delta G^{\mathrm{top}}_\mathrm{H} - \Delta G^{\mathrm{fcc}}_\mathrm{H}$',
                  'vsquaredREL': '$V^2_{rel}$',
-                 'hfcc-pzc': '$\Delta G^{\mathrm{fcc}}_\mathrm{H} - PZC$'}
+                 'hfcc-pzc': '$\Delta G^{\mathrm{fcc}}_\mathrm{H} - 0.58eU_{\mathrm{PZC}}$'}
 
 def collect_data(metal_order=['Ni', 'Pd', 'Ir', 'Rh', 'Pt', 'Cu', 'Ag', 'Au']):
     """
@@ -136,8 +136,8 @@ def plot_volcano(data, rxns_long=['Volmer','Heyrovsky','Tafel','Activity'],
 
     # Making a large heatplot only containing the activity
     fig,ax=plt.subplots(1, 1, figsize=(8, 8))
-    ax.set_ylabel(f'{transform[descriptors[1]]} / eV')
-    ax.set_xlabel(f'{transform[descriptors[0]]} / eV')
+    ax.set_ylabel(f'{transform[descriptors[1]]} (eV)')
+    ax.set_xlabel(f'{transform[descriptors[0]]} (eV)')
 #    ax.set_title(f'Activity')
 
     im=ax.imshow(dats[3],
@@ -154,7 +154,7 @@ def plot_volcano(data, rxns_long=['Volmer','Heyrovsky','Tafel','Activity'],
     ax.plot(x,y, 'ko', markeredgecolor='k', markersize=30, markerfacecolor='none')
     ax.set_xlim(min(ranges[0]), max(ranges[0]))
     ax.set_ylim(min(ranges[1]), max(ranges[1]))
-    fig.colorbar(im,label=r'$\Delta$G$^\ddagger$ / eV', orientation='vertical')
+    fig.colorbar(im,label=r'$\Delta$G$^\ddagger$  (eV)', orientation='vertical')
     plt.tight_layout()
     plt.savefig(f'Figure_5e_{descriptors[1]}_v_{descriptors[0]}.pdf')
     plt.show()
@@ -171,7 +171,7 @@ def plot_r2_with_varying_descriptors_in_2D(
     to be varied.
     """
     all_r2s = []
-    colors= ['k', 'g', 'b']
+    colors= ['k', 'r', 'b']
     for ibar, bar in enumerate(rxns_long):
         r2s=[]
         # Perform linear regression for more sophisticated descriptors
