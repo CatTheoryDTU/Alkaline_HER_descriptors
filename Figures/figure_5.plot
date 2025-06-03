@@ -42,7 +42,7 @@ plot \
 	"<paste fig5x.txt fig5b.txt" u 1:4 w l lc 'blue' lw 3.0 notitle, \
 	"<paste fig5x.txt fig5b.txt" u 1:6 w l lc 'purple' lw 3.0 notitle, \
 	"<paste fig5x.txt fig5b.txt" u 1:7 w l lc 'blue' lw 3.0 dashtype '.' notitle
-set label 1 '$|V|^2$' at -1, 0.88 textcolor 'purple' front
+set label 1 '$|V_{ad}|^2$' at -1, 0.88 textcolor 'purple' front
 set label 2 '$\Delta G^{fcc}_H-\Delta G^{top}_H$' at -1.5,0.75 textcolor 'blue' front
 set label 3 at graph -0.15,1.05 'c)' front
 plot \
