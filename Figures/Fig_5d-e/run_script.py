@@ -12,7 +12,7 @@ from tools import (
 rcParams = {
         'font.family': 'serif',
         'font.serif': ['Times New Roman'],
-        'font.size': 16,
+        'font.size': 26,
         }
 plt.rcParams.update(rcParams)
 
@@ -66,7 +66,8 @@ if 0:
 if 1:
     plot_r2_with_varying_descriptors_in_2D(data,
                                                     rxns_long,
-                                                    descriptors=['htop','hfcc'])
+                                                    descriptors=['htop','hfcc'],
+                                                    cs=np.linspace(-1.3,1.3,500))
 
 #   plot_r2_with_varying_descriptors_in_2D(data,
 #                                                    rxns_long,

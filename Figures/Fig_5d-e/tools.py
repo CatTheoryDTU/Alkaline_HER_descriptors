@@ -3,6 +3,11 @@ import matplotlib.pyplot as plt
 from scipy.stats import linregress
 import json
 
+transform = {'htop': '$\Delta G^{\mathrm{top}}_\mathrm{H}$',
+                 'hfcc': '$\Delta G^{\mathrm{fcc}}_\mathrm{H}$',
+                 'htop-hfcc': '$\Delta G^{\mathrm{top}}_\mathrm{H} - \Delta G^{\mathrm{fcc}}_\mathrm{H}$',
+                 'vsquaredREL': '$V^2_{rel}$',
+                 'hfcc-pzc': '$\Delta G^{\mathrm{fcc}}_\mathrm{H} - PZC$'}
 
 def collect_data(metal_order=['Ni', 'Pd', 'Ir', 'Rh', 'Pt', 'Cu', 'Ag', 'Au']):
     """
@@ -65,11 +70,6 @@ def plot_volcano(data, rxns_long=['Volmer','Heyrovsky','Tafel','Activity'],
     """
 
     # Make a heatplot showing the barrier heights
-    transform = {'htop': '$\Delta G^{top}_\mathrm{H}$',
-                 'hfcc': '$\Delta G^{fcc}_\mathrm{H}$',
-                 'htop-hfcc': '$\Delta G^{top}_\mathrm{H} - \Delta G^{fcc}_\mathrm{H}$',
-                 'vsquaredREL': '$V^2_{rel}$',
-                 'hfcc-pzc': '$\Delta G^{fcc}_\mathrm{H} - PZC$'}
 
     ranges= (np.linspace(min(data[descriptors[0]])-extend_axes[0],max(data[descriptors[0]]+extend_axes[1]),50),
              np.linspace(min(data[descriptors[1]])-extend_axes[2],max(data[descriptors[1]]+extend_axes[3]),50))
@@ -131,14 +131,14 @@ def plot_volcano(data, rxns_long=['Volmer','Heyrovsky','Tafel','Activity'],
             thisax.plot(x,y, 'ko', markeredgecolor='k', markersize=20, markerfacecolor='none')
         thisax.set_xlim(min(ranges[0]), max(ranges[0]))
         thisax.set_ylim(min(ranges[1]), max(ranges[1]))
-        fig.colorbar(im,label=r'Effective barrier', orientation='vertical')
+        fig.colorbar(im,label=r'Effective barrier / eV', orientation='vertical')
         plt.show()
 
     # Making a large heatplot only containing the activity
-    fig,ax=plt.subplots(1, 1, figsize=(6, 6), dpi=80)
-    ax.set_ylabel(f'{transform[descriptors[1]]}')
-    ax.set_xlabel(f'{transform[descriptors[0]]}')
-    ax.set_title(f'Activity')
+    fig,ax=plt.subplots(1, 1, figsize=(8, 8))
+    ax.set_ylabel(f'{transform[descriptors[1]]} / eV')
+    ax.set_xlabel(f'{transform[descriptors[0]]} / eV')
+#    ax.set_title(f'Activity')
 
     im=ax.imshow(dats[3],
                              extent=(min(ranges[0]), max(ranges[0]),
@@ -149,27 +149,29 @@ def plot_volcano(data, rxns_long=['Volmer','Heyrovsky','Tafel','Activity'],
     for i in range(len(data[descriptors[0]])):
         ax.annotate(metal_order[i],
                     xy=(x[i],y[i]),
-                    fontsize=15,ha='center', va='center')
+                    fontsize=20,ha='center', va='center')
 
-    ax.plot(x,y, 'ko', markeredgecolor='k', markersize=20, markerfacecolor='none')
+    ax.plot(x,y, 'ko', markeredgecolor='k', markersize=30, markerfacecolor='none')
     ax.set_xlim(min(ranges[0]), max(ranges[0]))
     ax.set_ylim(min(ranges[1]), max(ranges[1]))
-    fig.colorbar(im,label=r'Effective barrier', orientation='vertical')
+    fig.colorbar(im,label=r'$\Delta$G$^\ddagger$ / eV', orientation='vertical')
     plt.tight_layout()
+    plt.savefig(f'Figure_5e_{descriptors[1]}_v_{descriptors[0]}.pdf')
     plt.show()
     return
 
 def plot_r2_with_varying_descriptors_in_2D(
         data, rxns_long=['Volmer','Heyrovsky','Tafel'],
         descriptors=['htop', 'hfcc'],
-        cs=np.linspace(-2, 2, 500)):
+        cs=np.linspace(-2, 2, 500),
+        figsize=(8, 8)):
     """
     Plot the R^2 value of the linear regression of the sum of two descriptors
     with the varying coefficient c. c is the ratio of coefficients
     to be varied.
     """
     all_r2s = []
-    colors= ['r', 'g', 'b']
+    colors= ['k', 'g', 'b']
     for ibar, bar in enumerate(rxns_long):
         r2s=[]
         # Perform linear regression for more sophisticated descriptors
@@ -179,12 +181,13 @@ def plot_r2_with_varying_descriptors_in_2D(
         for c in cs:
             hdiff_k, hdiff_d, hdiff_r, p_value, std_err = linregress(
                     vec[0]+c*vec[1], data[bar])
-            r2s.append([c,hdiff_r**2])
+            r2s.append([c,hdiff_r**2, hdiff_k, hdiff_d])
 
         r2s = np.array(r2s)
         all_r2s.append(r2s)
-    fig,ax=plt.subplots(1, 1, figsize=(10, 6), dpi=80, sharey=True)
-
+    fig,ax=plt.subplots(1, 1, figsize=figsize, sharey=True)
+    dg,dag=r'$\Delta$G',r'$^\ddagger$'
+    bar_labels = [dg+r'$_{\mathrm{V}}^\ddagger$', dg+r'$_{\mathrm{Hey}}^\ddagger$', dg+r'$_{\mathrm{T}}^\ddagger$']
     for ibar, bar in enumerate([2,3,4]):
         r2 = all_r2s[ibar]
         bestfit=r2[np.argmax(r2[:, 1])]
@@ -192,18 +195,33 @@ def plot_r2_with_varying_descriptors_in_2D(
         ax.plot(r2[:, 0], r2[:, 1], color=colors[ibar], label=f'{rxns_long[ibar]}: R$^2_{{best}}$={bestfit[1]:.2f}')
 #        ax.plot(bestfit[0], bestfit[1], 'o', color='k', markersize=10,)
         ax.plot([bestfit[0],bestfit[0]], [0,bestfit[1]], '--', color=colors[ibar], markersize=10,)
+        sign = '+' if bestfit[0] >= 0 else ''
+        y = transform[descriptors[1]] if descriptors[1] != 'htop-hfcc' else 'htop-hfcc'
+        ax.annotate(
+                #f'{bar_labels[ibar]}'
+                #f': \nR$^2_{{best}}$={bestfit[1]:.2f}'
+                #f'{rxns_long[ibar]}: R$^2_{{best}}$={bestfit[1]:.2f}\n '
+                    #Version where the fitting functions are shown explicitly
+                    f'{bar_labels[ibar]}=\n{bestfit[2]:1.2f}D'
+                    f'+{bestfit[3]:1.2f}eV'
+                    , xy=(bestfit[0], bestfit[1]+0.01), ha='center', va='bottom', fontsize=24, color=colors[ibar],
+                    bbox=dict(facecolor='white', alpha=0.8, edgecolor='none', pad=0.5)
+                    ).draggable(),
 #        im = ax[ibar].imshow(r2[:, 2].reshape(len(c1s), len(c2s)),
 #                             extent=(min(c1s), max(c1s), min(c2s),
 #                             max(c2s)), aspect='auto', origin='lower',
 #                   vmin=0.5, vmax=1.0,cmap='RdYlGn', interpolation='bicubic')
 #        ax.plot([min(c2s),max(c2s)],[min(c2s),max(c2s)], 'k--')
         ax.set_xlim(min(cs), max(cs))
-        ax.set_xlabel(f'b/a in {descriptors[0]} + b/a * {descriptors[1]}')
+        #ax.set_xlabel(f'a in k({transform[descriptors[0]]} + a$\cdot${transform[descriptors[1]]}) + d')
+        ax.set_xlabel(f'a in D={transform[descriptors[0]]}+a$\cdot${transform[descriptors[1]]}')
 
     ax.set_ylabel(r'$R^2$')
-    ax.set_ylim([0,1])
+    ax.set_ylim([0.6,1.0])
+    ax.set_yticks(np.arange(0.6, 1.01, 0.1))
     plt.tight_layout()
-    plt.legend()
+#    plt.legend()
+    plt.savefig('Figure_5d.pdf')
     plt.show()
 
 
