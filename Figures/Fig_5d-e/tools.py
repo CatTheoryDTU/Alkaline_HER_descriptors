@@ -54,6 +54,7 @@ def plot_volcano(data, rxns_long=['Volmer','Heyrovsky','Tafel','Activity'],
                 descriptors=['htop', 'hfcc'],
                  metal_order=['Ni', 'Pd', 'Ir', 'Rh', 'Pt', 'Cu', 'Ag', 'Au'],
                  extend_axes=(0.2, 0.2, 0.2, 0.2),
+                 only_activity=False
                  ):
     """
     Plot the volcano plot for the different reactions.
@@ -104,31 +105,34 @@ def plot_volcano(data, rxns_long=['Volmer','Heyrovsky','Tafel','Activity'],
     dats.append(diffs)
 
     # Plotting the heatmaps
-    fig,ax=plt.subplots(1, len(dats), figsize=(20, 6), dpi=80, sharey=True,sharex=True)
-    for idat,dat in enumerate(dats):
-        thisax = ax[idat]
-        if not idat:
-            thisax.set_ylabel(f'{transform[descriptors[1]]}')
-        thisax.set_xlabel(f'{transform[descriptors[0]]}')
-        thisax.set_title(f'{rxns_long_changed[idat]}')
-        x=data[descriptors[0]]
-        y=data[descriptors[1]]
-        #print(min(ranges[0]), max(ranges[0]), min(ranges[1]),max(ranges[1]))
-        im=thisax.imshow(dats[idat],
-                             extent=(min(ranges[0]), max(ranges[0]),
-                                     min(ranges[1]),max(ranges[1])),
-                         aspect='auto', origin='lower',
-                   vmin=0.4, vmax=1.3,cmap='RdYlGn_r', interpolation='nearest')
+    x=data[descriptors[0]]
+    y=data[descriptors[1]]
+    if not only_activity:
+        fig,ax=plt.subplots(1, len(dats), figsize=(20, 6), dpi=80, sharey=True,sharex=True)
+        for idat,dat in enumerate(dats):
+            thisax = ax[idat]
+            if not idat:
+                thisax.set_ylabel(f'{transform[descriptors[1]]}')
+            thisax.set_xlabel(f'{transform[descriptors[0]]}')
+            thisax.set_title(f'{rxns_long_changed[idat]}')
+    #        x=data[descriptors[0]]
+    #        y=data[descriptors[1]]
+            #print(min(ranges[0]), max(ranges[0]), min(ranges[1]),max(ranges[1]))
+            im=thisax.imshow(dats[idat],
+                                 extent=(min(ranges[0]), max(ranges[0]),
+                                         min(ranges[1]),max(ranges[1])),
+                             aspect='auto', origin='lower',
+                       vmin=0.4, vmax=1.3,cmap='RdYlGn_r', interpolation='nearest')
 
-        for i in range(len(x)):
-            thisax.annotate(metal_order[i],
-                            xy=(x[i],y[i]),
-                            fontsize=15,ha='center', va='center')
-        thisax.plot(x,y, 'ko', markeredgecolor='k', markersize=20, markerfacecolor='none')
-    thisax.set_xlim(min(ranges[0]), max(ranges[0]))
-    thisax.set_ylim(min(ranges[1]), max(ranges[1]))
-    fig.colorbar(im,label=r'Effective barrier', orientation='vertical')
-    plt.show()
+            for i in range(len(x)):
+                thisax.annotate(metal_order[i],
+                                xy=(x[i],y[i]),
+                                fontsize=15,ha='center', va='center')
+            thisax.plot(x,y, 'ko', markeredgecolor='k', markersize=20, markerfacecolor='none')
+        thisax.set_xlim(min(ranges[0]), max(ranges[0]))
+        thisax.set_ylim(min(ranges[1]), max(ranges[1]))
+        fig.colorbar(im,label=r'Effective barrier', orientation='vertical')
+        plt.show()
 
     # Making a large heatplot only containing the activity
     fig,ax=plt.subplots(1, 1, figsize=(6, 6), dpi=80)

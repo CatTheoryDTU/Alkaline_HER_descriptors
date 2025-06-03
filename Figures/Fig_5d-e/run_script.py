@@ -35,12 +35,14 @@ dict_keys: Binding energies: 'hfcc', 'htop',
            Hybrid descriptors: 'hfcc-pzc' (is actually hfcc-0.58PZC), 'htop-hfcc'])
 """
 
+# Plot correlations between descriptors
 if 0:
     correlate_descriptors(data, descriptors=['htop-hfcc','vsquaredREL'])
     correlate_descriptors(data, descriptors=['htop','hfcc-pzc'])
 
-#Plot 1-dimensional correlations
-#plot_1_to_1_correlations(data, descriptors=['hfcc', 'htop', 'hfcc-pzc','htop-hfcc','vsquaredREL'])
+# Plot 1-dimensional correlations
+if 0:
+ plot_1_to_1_correlations(data, descriptors=['hfcc', 'htop', 'hfcc-pzc','htop-hfcc','vsquaredREL'])
 
 if 0:
     c1s=np.linspace(0.01,1.,100)
@@ -60,18 +62,22 @@ if 0:
                                                      descriptors=['htop-hfcc','vsquaredREL'],
                                                      c1s=c1s,
                                                      c2s=c2s)
-plot_r2_with_varying_descriptors_in_2D(data,
+# Plot 2-dimensional mixed descriptor quality (possibly fig 5d)
+if 1:
+    plot_r2_with_varying_descriptors_in_2D(data,
                                                     rxns_long,
                                                     descriptors=['htop','hfcc'])
 
-#plot_r2_with_varying_descriptors_in_2D(data,
+#   plot_r2_with_varying_descriptors_in_2D(data,
 #                                                    rxns_long,
 #                                                    descriptors=['hfcc-pzc','htop'],
 #                                                    cs=np.linspace(-20,20,100))
+
+# Plot volcano plots (possibly fig 5e)
 if 1:
 #    plot_volcano(data,descriptors=['hfcc-pzc','vsquaredREL'])
 #    plot_volcano(data,descriptors=['htop','vsquaredREL'])
-    plot_volcano(data,descriptors=['hfcc-pzc','htop-hfcc'])
-    plot_volcano(data,descriptors=['htop','htop-hfcc'])
+    plot_volcano(data,descriptors=['hfcc-pzc','htop-hfcc'],only_activity=True)
+    plot_volcano(data,descriptors=['htop','htop-hfcc'],only_activity=True)
 
 
