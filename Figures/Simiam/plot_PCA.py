@@ -1,7 +1,7 @@
 
 """
 
-Y correlate with descriptors X
+Y correlate with multiple descriptors X in PCA
 
 handle missing data!
 
@@ -79,8 +79,8 @@ def parse_results():
     return df
 
 
-def plot_scatter(xvals, yvals,metals,terminations, xlabel, ylabel,xkey,ykey) :
-#def plot_scatter(xvals, yvals,metals, xlabel, ylabel,xkey,ykey, x2vals,x2label,x3vals,x3label) 
+#def plot_scatter(xvals, yvals,metals, xlabel, ylabel,xkey,ykey) :
+def plot_scatter(xvals, yvals,metals, xlabel, ylabel,xkey,ykey, x2vals,x2label,x3vals,x3label): 
 
     print(' ')
     #print('{} {} {} {} {} {} {} {}'.format( spin,mtag,dindex,site,zval,xkey,ykey,adsorbate))
@@ -124,8 +124,8 @@ def plot_scatter(xvals, yvals,metals,terminations, xlabel, ylabel,xkey,ykey) :
         dx,dy=(0.0,0.1)
         
         for i in range(xvals.shape[0]):
-            ax.annotate('{}{}'.format(metals[i],terminations[i]), xy=(xvals[i]+dx,yvals[i]+dy),
-            #ax.annotate('{}'.format(metals[i]), xy=(xvals[i]+dx,yvals[i]+dy),
+            #ax.annotate('{}{}'.format(metals[i],terminations[i]), xy=(xvals[i]+dx,yvals[i]+dy),
+            ax.annotate('{}'.format(metals[i]), xy=(xvals[i]+dx,yvals[i]+dy),
                         fontsize=arsize,ha='center',textcoords='data',
                         color="k",annotation_clip=False)                      
         
@@ -196,7 +196,7 @@ def plot_scatter(xvals, yvals,metals,terminations, xlabel, ylabel,xkey,ykey) :
         ax.set_ylabel(ylabel,fontsize=fs) 
     
    
-    figname='{}_vs_{}_reg{}'.format(ykey,xkey,SKregression)
+    figname='PCA_test_{}_vs_{}_reg{}'.format(ykey,xkey,SKregression)
 
     #if xkey == 'wdos':
     #    figname+='_{}pm_dindex{}{}'.format(zval,dindex,mtag) 
@@ -224,6 +224,7 @@ if __name__ == "__main__":
     TM = pd.read_csv('CSV/TM_parameters.csv')
     
     metals = df['metal'].tolist()
+    
     terminations = []
     for metal in metals:
         if metal in ['Fe','W']: 
@@ -235,84 +236,96 @@ if __name__ == "__main__":
         terminations.append(termination)
 
 
-    for ykey in ['i0','PZC']: 
-        for xkey in ['vsquaredREL','WF']:  
-        #,'dbandcenter','dbandupperedge','vsquaredREL']: 
-        
-            if ykey == 'i0':
-                yvals= np.array(  [df.loc[ df['metal'] == metal, ykey]  for metal in metals ] )
-                ylabel=r'log($|j_0|$/(mA cm$^{-2}$))'#   i0s [TOF]d-band upper edge (maj.spin.) [eV]'
-            elif ykey == 'PZC':
-                yvals= np.array(  [df.loc[ df['metal'] == metal, ykey]  for metal in metals ] )
-                ylabel=r'PZC [V]'#   i0s [TOF]d-band upper edge (maj.spin.) [eV]'
-            elif ykey == 'WF':   
-                ylabel=r'WF $\phi_{Exp.}$ [eV]'
-                WF = []
-                for i in range(len(metals)):
-                    WF.append(  float(TM.loc[ TM['metal'] == metals[i], 'WF{}'.format(terminations[i] ) ])  )
-                WF = np.array(WF)
-                yvals=WF
             
-            elif ykey == 'dbandcenter': 
-                yvals  = np.array(  [TM.loc[ TM['metal'] == metal, ykey]  for metal in metals ] )
-                ylabel=r'd-band center $\epsilon_d$ [eV]'
-        
-            elif ykey == 'dbandupperedge':   
-                yvals= np.array(  [TM.loc[ TM['metal'] == metal, ykey]  for metal in metals ] )
-                ylabel=r'd-band upper edge (maj.spin.) [eV]'
-            
-            elif ykey == 'vsquaredREL':
-                yvals  = np.array(  [TM.loc[ TM['metal'] == metal, ykey]  for metal in metals ] )
-                ylabel=r'V$_{ad}^2$ [Rel. Cu]' #eV$^2$]'
+    WFs = []
+    for i in range(len(metals)):
+        WFs.append(  TM.loc[ TM['metal'] == metals[i], 'WF{}'.format(terminations[i] ) ]  )
+
+    rlist = [
+             {'metal':metals},
+             {'i0': [df.loc[ df['metal'] == metal, 'i0']  for metal in metals ] },
+             {'PZC': [df.loc[ df['metal'] == metal, 'PZC']  for metal in metals ] },
+             {'dbandcenter': [TM.loc[ TM['metal'] == metal, 'dbandcenter']  for metal in metals ] },
+             {'vsquaredREL': [TM.loc[ TM['metal'] == metal, 'vsquaredREL']  for metal in metals ] },
+             {'WF': WFs}
+             ]
              
 
 
-
-            if xkey == 'WF':   
-                xlabel=r'WF $\phi_{Exp.}$ [eV]'
-                #NEW WAY
-                WF = []
-                for i in range(len(metals)):
-                    WF.append(  float(TM.loc[ TM['metal'] == metals[i], 'WF{}'.format(terminations[i] ) ])  )
-         
-                WF = np.array(WF)
-                xvals=WF
-            
-            elif xkey == 'dbandcenter': 
-                xvals  = np.array(  [TM.loc[ TM['metal'] == metal, xkey]  for metal in metals ] )
-                xlabel=r'd-band center $\epsilon_d$ [eV]'
-        
-            elif xkey == 'dbandupperedge':   
-                xvals= np.array(  [TM.loc[ TM['metal'] == metal, xkey]  for metal in metals ] )
-                xlabel=r'd-band upper edge (maj.spin) [eV]'
-            
-            elif xkey == 'vsquaredREL':
-                xvals  = np.array(  [TM.loc[ TM['metal'] == metal, xkey]  for metal in metals ] )
-                xlabel=r'V$_{ad}^2$ [Rel. Cu]' #eV$^2$]'
-            
-                
-          #  #what is PCA using 2-dimensions??
-          #  #optional second dimension:
-          #  x2vals  = np.array(  [TM.loc[ TM['metal'] == metal, 'dbandcenter']  for metal in metals ] )
-          #  x2label=r'd-band center $\epsilon_d$ [eV]'
-          #      
-          #  #third dimension:
-          #  x3vals= np.array(  [df.loc[ df['PZC'] == metal, ykey]  for metal in metals ] )
-          #  x3label='PZC [V]'
+    df_pca = pd.DataFrame(rlist)
 
 
+    #Build PCA model. 
 
-
-
-
-            # arrays contain None. Is that a problem?
-            print('metals are {}'.format(metals))
-            #print('terminations are {}'.format(terminations))
-            print('xvals are {} {}'.format(xkey, xvals))
-            print('yvals are {} {}'.format(ykey, yvals))
-            plot_scatter(xvals, yvals,metals,terminations, xlabel, ylabel,xkey,ykey) 
-            #plot_scatter(xvals, yvals,metals, xlabel, ylabel,xkey,ykey, x2vals,x2label,x3vals,x3label) 
+    # arrays contain None. Is that a problem?
+#    print('metals are {}'.format(metals))
+    #print('terminations are {}'.format(terminations))
+#    print('xvals are {} {}'.format(xkey, xvals))
+#    print('yvals are {} {}'.format(ykey, yvals))
+    #plot_scatter(xvals, yvals,metals, xlabel, ylabel,xkey,ykey) 
+#    plot_scatter(xvals, yvals,metals, xlabel, ylabel,xkey,ykey, x2vals,x2label,x3vals,x3label) 
 
 
     
+#    ykey ='i0'  #the quantity of interest: the observable
+#        
+#    if ykey == 'i0':
+#        yvals= np.array(  [df.loc[ df['metal'] == metal, ykey]  for metal in metals ] )
+#        ylabel=r'log($|j_0|$/(mA cm$^{-2}$))'#   i0s [TOF]d-band upper edge (maj.spin.) [eV]'
+#        elif ykey == 'WF':   
+#            ylabel=r'WF $\phi_{Exp.}$ [eV]'
+#            WF = []
+#            for i in range(len(metals)):
+#                WF.append(  float(TM.loc[ TM['metal'] == metals[i], 'WF{}'.format(terminations[i] ) ])  )
+#            WF = np.array(WF)
+#            yvals=WF
+#        
+#        elif ykey == 'dbandcenter': 
+#            yvals  = np.array(  [TM.loc[ TM['metal'] == metal, ykey]  for metal in metals ] )
+#            ylabel=r'd-band center $\epsilon_d$ [eV]'
+#    
+#        elif ykey == 'dbandupperedge':   
+#            yvals= np.array(  [TM.loc[ TM['metal'] == metal, ykey]  for metal in metals ] )
+#            ylabel=r'd-band upper edge (maj.spin.) [eV]'
+#        
+#        elif ykey == 'vsquaredREL':
+#            yvals  = np.array(  [TM.loc[ TM['metal'] == metal, ykey]  for metal in metals ] )
+#            ylabel=r'V$_{ad}^2$ [Rel. Cu]' #eV$^2$]'
+#         
+#            
+#
+#        
+#        xkeys = ['vsquaredREL','dbandcenter','dbandupperedge','PZC','WF']: 
+#
+#        if xkey == 'WF':   
+#            xlabel=r'WF $\phi_{Exp.}$ [eV]'
+#            #NEW WAY
+#            WFs = []
+#            for i in range(len(metals)):
+#                WFs.append(  float(TM.loc[ TM['metal'] == metals[i], 'WF{}'.format(terminations[i] ) ])  )
+#     
+#            WF = np.array(WF)
+#            xvals=WF
+#        
+#        elif xkey == 'dbandcenter': 
+#            xvals  = np.array(  [TM.loc[ TM['metal'] == metal, xkey]  for metal in metals ] )
+#            xlabel=r'd-band center $\epsilon_d$ [eV]'
+#    
+#        elif xkey == 'dbandupperedge':   
+#            xvals= np.array(  [TM.loc[ TM['metal'] == metal, xkey]  for metal in metals ] )
+#            xlabel=r'd-band upper edge (maj.spin) [eV]'
+#        
+#        elif xkey == 'vsquaredREL':
+#            xvals  = np.array(  [TM.loc[ TM['metal'] == metal, xkey]  for metal in metals ] )
+#            xlabel=r'V$_{ad}^2$ [Rel. Cu]' #eV$^2$]'
+#        
+#            
+#        #what is PCA using 2-dimensions??
+#        #optional second dimension:
+#        x2vals  = np.array(  [TM.loc[ TM['metal'] == metal, 'dbandcenter']  for metal in metals ] )
+#        x2label=r'd-band center $\epsilon_d$ [eV]'
+#            
+#        #third dimension:
+#        x3vals= np.array(  [df.loc[ df['PZC'] == metal, ykey]  for metal in metals ] )
+#        x3label='PZC [V]'
 
