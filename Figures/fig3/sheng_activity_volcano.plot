@@ -2,7 +2,7 @@ set encoding utf8
 set xtics nomirror #offset 0,graph 0.025 nomirror
 set ytics nomirror
 set ylabel 'log($|j_0|$/(mA cm$^{-2}$))'
-set terminal epslatex color colortext size 6in,4in "cmss" standalone
+set terminal epslatex color colortext size 6in,4in "ptm,10" standalone
 set output "Sheng_Activity_volcano.tex"
 f(x,y)=b*(x-4.44)+a*y+c
 piecef(x)= x<=-d ? g*(x+d)+h : -g*(x+d)+h
@@ -26,6 +26,7 @@ stats "<paste ../vac_HBEs.txt ../i0s.txt" using (piecefhfcc($1)):(1*($2-amps)) p
 stats "<paste ../PZCs.txt ../i0s.txt" using ($1-4.44):(1*($2-amps)) prefix "PZC"
 #stats "<paste ../vac_Htops.txt ../i0s.txt" using 1:(1*($2-amps)) prefix "H"
 stats "<paste ../PZCs.txt ../vac_Htops.txt" using 1:2 prefix "HPZC"
+
 #### Experimental fits
 #hfcc
 exp_piecefhfcc(x)= x<=-expq ? expr*(x+expq)+expn : -expr*(x+expq)+expn
@@ -43,68 +44,83 @@ exp_piecef(x)= x<=-expd ? expg*(x+expd)+exph : -expg*(x+expd)+exph
 fit exp_piecef(x) "../sheng_i0s.txt" using 3:(1*($5-amps)) via expd,expg,exph
 stats "../sheng_i0s.txt" using (exp_piecef($3)):(1*($5-amps)) prefix "exp_HTOP"
 
-
-
+set style line 1 lc 'black' pt 7 #Theory points
+set style line 2 lc 'black' dt 2 lw 5 #Theory line
+set style line 3 pt 7 lc 'blue' #Experiment points
+set style line 4 lc 'blue' dt 3 lw 1 #Experiment line
+set key noautotitle
 
 set xrange [-0.3:0.7]
 set yrange [-10:2]
 set xtics -0.25,.25,0.5
 #set format x '\text{%0.2f}'
 set multiplot layout 2,2 margins 0.15, 0.95, 0.15, 0.94 spacing 0.05,0.15 # title "Activation Energies at -1 V vs SHE" font titlefont
+
 #vac_HBEs
-set xlabel '$\Delta G^{fcc}_H$ (eV)'# offset 0,screen 0.05
+set xlabel '$\Delta G^{\mathrm{fcc}}_\mathrm{H}$ (eV)'# offset 0,screen 0.05
 #set title "Thermodynamic" #offset 0,graph -0.05
-set label 1 at  -0.2, -8 sprintf('\small \shortstack[l]{{$R^2$=%1.2f} \\ {y=±%1.2f(x+%1.2f)$%1.2f$}}',HMIN_correlation**2,r,q,n) front
-set label 3 at  0.1, -0 sprintf('\small \shortstack[l]{{$R^2$=%1.2f} \\ {y=±%1.2f(x+%1.2f)$%1.2f$}}',exp_HMIN_correlation**2,expr,expq,expn) textcolor 'blue' front
+set label 1 at  -0.28, -8 sprintf('\small \shortstack[l]{Theory: {$R^2$=%1.2f} \\ {\tiny y=±%1.2f(x+%1.2f)$%1.2f$}}',HMIN_correlation**2,r,q,n) front
+set label 3 at  0.33, -0 sprintf('\small \shortstack[r]{Exp: {$R^2$=%1.2f} \\ {\tiny y=±%1.2f(x+%1.2f)$%1.2f$}}',exp_HMIN_correlation**2,expr,expq,expn) textcolor 'blue' front
 set label 2 at graph -0.15,1.1 'a)' front
+
 plot \
-	'<paste ../vac_HBEs.txt ../i0s.txt ../metals.txt' u 1:(1*($2-amps)):(sprintf("%s",stringcolumn(3))) w labels point pt 7 offset char 0.5,0.5 notitle, \
-	'../sheng_i0s.txt' u 1:(1*($5-amps)):6 w errorbars pt 7 lc 'blue' notitle, \
-	piecefhfcc(x) lc 'black' dt 2 lw 5 notitle, \
-	exp_piecefhfcc(x) lc 'blue' dt 2 lw 5 notitle# sprintf("R^2 = %1.2f",HTOP_correlation**2)
+	'<paste ../vac_HBEs.txt ../i0s.txt ../metals.txt' u 1:(1*($2-amps)):(sprintf("%s",stringcolumn(3))) \
+        w labels point ls 1 offset char 0.5,0.5, \
+	'../sheng_i0s.txt' u 1:(1*($5-amps)):6 w errorbars ls 3, \
+	piecefhfcc(x) ls 2, \
+	exp_piecefhfcc(x) ls 4
 unset ylabel
 set format y ''
+
 # PZC
 #set title "Electrostatic" #offset 0,graph -0.05
-set xlabel '$U_{PZC}$ vs SHE (V)'
+set xlabel '$U_{\mathrm{PZC}}$ vs SHE (V)'
 set xrange [-1.0:1.0]
 set xtics -1,0.5,1
-set label 1 at  0.25, -6 sprintf('\small \shortstack[l]{{$R^2$=%1.2f} \\ {y=%1.2fx%1.2f}}',PZC_correlation**2,PZC_slope,PZC_intercept) front
-set label 3 at  -0.9, -0.1 sprintf('\small \shortstack[l]{{$R^2$=%1.2f} \\ {y=%1.2fx%1.2f}}',exp_PZC_correlation**2,exp_PZC_slope,exp_PZC_intercept) textcolor 'blue' front
+set label 1 at  0.18, -9 sprintf('\small \shortstack[r]{{Theory: $R^2$=%1.2f} \\ {\tiny y=%1.2fx%1.2f}}',PZC_correlation**2,PZC_slope,PZC_intercept) front
+set label 3 at  -0.92, 0 \
+    sprintf('\small \shortstack[l]{{Exp: $R^2$=%1.2f} \\ {\tiny y=%1.2fx%1.2f}}',exp_PZC_correlation**2,exp_PZC_slope,exp_PZC_intercept) \
+    textcolor 'blue' front
 set label 2 at graph -0.1,1.1 'b)' front
 plot \
-	'<paste ../PZCs.txt ../i0s.txt ../metals.txt' u ($1-4.44):(1*($2-amps)):(sprintf("%s",stringcolumn(3))) w labels point pt 7 offset char -1,0.5 notitle, \
-	'../sheng_i0s.txt' u ($2-4.44):(1*($5-amps)):6 w errorbars pt 7 lc 'blue' notitle, \
-	PZC_slope * x + PZC_intercept lc 'black' dt 2 lw 5 notitle, \
-	exp_PZC_slope * x + exp_PZC_intercept lc 'blue' dt 2 lw 5 notitle# sprintf("R^2 = %1.2f",PZC_correlation**2)
+	'<paste ../PZCs.txt ../i0s.txt ../metals.txt' u ($1-4.44):(1*($2-amps)):(sprintf("%s",stringcolumn(3))) \
+        w labels point ls 1 offset char -1,0.5, \
+	'../sheng_i0s.txt' u ($2-4.44):(1*($5-amps)):6 w errorbars ls 3, \
+	PZC_slope * x + PZC_intercept ls 2, \
+	exp_PZC_slope * x + exp_PZC_intercept ls 4
+
 #Combined
 set ylabel 'log($|j_0|$/(mA cm$^{-2}$))'
 unset format y
 set xrange [-10:2]
 set xtics -10,2,2
 #set title "Combined" #offset 0,graph -0.05
-set xlabel '$a\Delta G^{fcc}_H+b(U_{PZC})+c$'
-set label 1 at  -2, -6 sprintf('\small \shortstack[l]{{$R^2$=%1.2f} \\ {a=%1.2f} \\ {b=%1.2f} \\ {c=%1.2f}}',DESC_correlation**2,a,b,c) front
-set label 3 at  -9, -1 sprintf('\small $R^2$=%1.2f ',exp_DESC_correlation**2,expa,expb,expc) textcolor 'blue' front
+set xlabel '$a\Delta G^{\mathrm{fcc}}_\mathrm{H}+b(U_{\mathrm{PZC}})+c$'
+set label 1 at  -2.8, -8.3 sprintf('\small \shortstack[r]{{Theory: $R^2$=%1.2f} \\ {\tiny a=%1.2f, b=%1.2f, c=%1.2f}}',DESC_correlation**2,a,b,c) front
+set label 3 at  -9.6, 0 \
+    sprintf('\small \shortstack[l]{{Exp: $R^2$=%1.2f } \\ {\tiny a=%1.2f, b=%1.2f, c=%1.2f}}',exp_DESC_correlation**2,expa,expb,expc)  textcolor 'blue' front
 set label 2 at graph -0.15,1.1 'c)' front
 plot \
-	"<paste ../PZCs.txt ../vac_HBEs.txt ../i0s.txt ../metals.txt" using (f($1,$2)):(1*($3-amps)):(sprintf("%s",stringcolumn(4))) w  labels point pt 7 offset char 1,0.5 notitle, \
-	'../sheng_i0s.txt' u (f($2,$1)):(1*($5-amps)):6 w errorbars pt 7 lc 'blue' notitle, \
-	DESC_slope * x + DESC_intercept lc 'black' dt 2 lw 5 notitle, \
-	exp_DESC_slope * x + exp_DESC_intercept lc 'blue' dt 2 lw 5 notitle
+	"<paste ../PZCs.txt ../vac_HBEs.txt ../i0s.txt ../metals.txt" using (f($1,$2)):(1*($3-amps)):(sprintf("%s",stringcolumn(4))) \
+        w  labels point ls 1 offset char 1,0.5, \
+	'../sheng_i0s.txt' u (f($2,$1)):(1*($5-amps)):6 w errorbars ls 3, \
+	DESC_slope * x + DESC_intercept ls 2, \
+	exp_DESC_slope * x + exp_DESC_intercept ls 4
+
 #vac_Htop
 unset ylabel
 set format y ''
 set xrange [-0.3:1.2]
 set xtics 0,.25,1.0
-set xlabel '$\Delta G^{top}_H$ (eV)'# offset 0,screen 0.05
+set xlabel '$\Delta G^{\mathrm{top}}_\mathrm{H}$ (eV)'# offset 0,screen 0.05
 #set title "Thermodynamic" #offset 0,graph -0.05
-set label 1 at  -.2, -8 sprintf('\small \shortstack[l]{{$R^2$=%1.2f} \\ {y=±%1.2f(x+%1.2f)$%1.2f$}}',HTOP_correlation**2,g,d,h) front
-set label 3 at  .2, -0 sprintf('\small \shortstack[l]{{$R^2$=%1.2f} \\ {y=±%1.2f(x+%1.2f)$%1.2f$}}',exp_HTOP_correlation**2,expg,expd,exph) textcolor 'blue' front
+set label 1 at  -.25, -8 sprintf('\small \shortstack[l]{{Theory: $R^2$=%1.2f} \\ {\tiny y=±%1.2f(x+%1.2f)$%1.2f$}}',HTOP_correlation**2,g,d,h) front
+set label 3 at  .65, -0 sprintf('\small \shortstack[r]{{Exp: $R^2$=%1.2f} \\ {\tiny y=±%1.2f(x+%1.2f)$%1.2f$}}',exp_HTOP_correlation**2,expg,expd,exph) textcolor 'blue' front
 set label 2 at graph -0.1,1.1 'd)' front
 plot \
-	'<paste ../vac_Htops.txt ../i0s.txt ../metals.txt' u 1:(1*($2-amps)):(sprintf("%s",stringcolumn(3))) w labels point pt 7 offset char 0.5,0.5 notitle, \
-	'../sheng_i0s.txt' u 3:(1*($5-amps)):6 w errorbars pt 7 lc 'blue' notitle, \
-	piecef(x) lc 'black' dt 2 lw 5 notitle, \
-	exp_piecef(x) lc 'blue' dt 2 lw 5 notitle
+	'<paste ../vac_Htops.txt ../i0s.txt ../metals.txt' u 1:(1*($2-amps)):(sprintf("%s",stringcolumn(3))) \
+        w labels point ls 1 offset char 0.5,0.5, \
+	'../sheng_i0s.txt' u 3:(1*($5-amps)):6 w errorbars ls 3, \
+	piecef(x) ls 2, \
+	exp_piecef(x) ls 4
 unset multiplot
