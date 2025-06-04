@@ -17,7 +17,7 @@ set fit logfile '/dev/null'
 elements="Ag Au Cu Ir Ni Pd Pt Rh"
 FILE = "numbers.txt"
 array numbers[8]
-stats FILE u (numbers[int($0+1)] = $1) 
+stats FILE u (numbers[int($0+1)] = $1)
 array elements = ["Ag","Au","Cu","Ir","Ni","Pd","Pt","Rh"]
 set multiplot layout 2,2 margins 0.15, 0.95, 0.15, 0.95 spacing 0.05,0.10 # title "Activation Energies at -1 V vs SHE" font titlefont
 set key at screen 0.8,screen 0.05 maxrows 2
@@ -58,7 +58,7 @@ unset xrange
 set xlabel "U vs SHE (V)" #offset 0,screen 0.075
 set ylabel 'Free Energy $\Delta G$ (eV)'
 set title "Tafel"
-set ytics format '%1.1f' 
+set ytics format '%1.1f'
 array coeffs_a[8]
 array coeffs_b[8]
 do for [i=1:8]{
