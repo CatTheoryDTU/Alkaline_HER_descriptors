@@ -182,12 +182,6 @@ def plot_scatter(xvals, yvals,metals, xlabel, ylabel,xkey,ykey, x2vals,x2label,x
         if PDregression:
             dummy=1
 
-        ##PCA analysis
-        #if True:
-        #    from sklearn.decomposition import PCA
-        #    pca = PCA(n_components=3)
-        #    pca.fit_transform(scaled_df)
-
 
 
         
@@ -239,21 +233,37 @@ if __name__ == "__main__":
             
     WFs = []
     for i in range(len(metals)):
-        WFs.append(  TM.loc[ TM['metal'] == metals[i], 'WF{}'.format(terminations[i] ) ]  )
+        WFs.append(  float(TM.loc[ TM['metal'] == metals[i], 'WF{}'.format(terminations[i] ) ].iloc[0])  )
 
-    rlist = [
-             {'metal':metals},
-             {'i0': [df.loc[ df['metal'] == metal, 'i0']  for metal in metals ] },
-             {'PZC': [df.loc[ df['metal'] == metal, 'PZC']  for metal in metals ] },
-             {'dbandcenter': [TM.loc[ TM['metal'] == metal, 'dbandcenter']  for metal in metals ] },
-             {'vsquaredREL': [TM.loc[ TM['metal'] == metal, 'vsquaredREL']  for metal in metals ] },
-             {'WF': WFs}
-             ]
-             
+    rdict = {
+             #'metal':metals,
+             'i0': [ float(df.loc[ df['metal'] == metal, 'i0'].iloc[0])  for metal in metals ] ,
+             'PZC': [ float(df.loc[ df['metal'] == metal, 'PZC'].iloc[0]) for metal in metals ] ,
+             'dbandcenter': [ float(TM.loc[ TM['metal'] == metal, 'dbandcenter'].iloc[0])  for metal in metals ] ,
+             'dbandupperedge': [ float(TM.loc[ TM['metal'] == metal, 'dbandupperedge'].iloc[0])  for metal in metals ] ,
+             'vsquaredREL': [ float(TM.loc[ TM['metal'] == metal, 'vsquaredREL'].iloc[0]) for metal in metals ] 
+             #'WF': WFs
+             }
+                 
+    
+    df_pca = pd.DataFrame(rdict)
+            
+        #PCA analysis
+        #if True:
+    from sklearn.decomposition import PCA
+    from sklearn.preprocessing import StandardScaler
+    std_scaler = StandardScaler()
+    scaled_df = std_scaler.fit_transform(df_pca)
+    
+    
+    pca = PCA(n_components=1)
+    pca.fit_transform(scaled_df)
 
+    df = pd.DataFrame(pca.components_, columns=list(df_pca.columns))
 
-    df_pca = pd.DataFrame(rlist)
+    print(pca.explained_variance_ratio_)
 
+    #WTF?
 
     #Build PCA model. 
 
