@@ -1,6 +1,6 @@
 set encoding utf8
 set xtics nomirror #offset 0,graph 0.025 nomirror
-set ytics nomirror
+set ytics (-9, -6, -3, 0) nomirror
 set ylabel 'log($|j_0|$/(mA cm$^{-2}$))'
 set terminal epslatex color colortext size 6in,4in "ptm,10" standalone
 set output "Sheng_Activity_volcano.tex"
