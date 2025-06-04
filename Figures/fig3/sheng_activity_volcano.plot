@@ -117,7 +117,7 @@ unset format y
 set xrange [-10:2]
 set xtics -10,2,2
 #set title "Combined" #offset 0,graph -0.05
-set xlabel '$a\Delta G^{\mathrm{fcc}}_\mathrm{H}+b(U_{\mathrm{PZC}})+c$'
+set xlabel '$a\Delta G^{\mathrm{fcc}}_\mathrm{H}+b(\mathrm{e}U_{\mathrm{PZC}})+c$  (eV)'
 set label 1 at  -2.8, -8.3 sprintf('\small \shortstack[r]{{Theory: $R^2$=%1.2f} \\ {\tiny a=%1.2f, b=%1.2f, c=%1.2f}}',DESC_correlation**2,a,b,c) front
 set label 3 at  -9.6, 0 \
     sprintf('\small \shortstack[l]{{Exp: $R^2$=%1.2f } \\ {\tiny a=%1.2f, b=%1.2f, c=%1.2f}}',exp_DESC_correlation**2,expa,expb,expc)  textcolor 'blue' front
@@ -152,7 +152,7 @@ set label 3 at  .65, -0 sprintf('\small \shortstack[r]{{Exp: $R^2$=%1.2f} \\ {\t
 set label 4 at -0.1,0.8 'Pt' center front
 set label 5 at -0.1,-2.4 'Ir' center front
 set label 6 at 0.15,-4.1 'Rh' center front
-set label 7 at 0.45,-3.4 'Ni' center front
+set label 7 at 0.37,-5.1 'Ni' center front
 set label 8 at 0.33,-2.8 'Pd' center front
 set label 9 at 0.92,-6.5 'Cu' center front
 set label 10 at 0.78,-8.4 'Au' center front
