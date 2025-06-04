@@ -6,7 +6,6 @@ Y correlate with descriptors X
 handle missing data!
 
 
-
 """
 
 
@@ -21,8 +20,66 @@ from sklearn.linear_model import LinearRegression
 
 
 
+
+
+def parse_results():
+"""
+parse .txt files to dataframe
+"""
+    filenames=[
+        'metals.txt',
+        'PZCs.txt', 
+        'vac_Htops.txt',
+        'vac_HBEs.txt',
+        'i0s.txt'
+             ]
+    
+    path='../'
+    
+    data = []
+    for i in range(len(filenames)):
+        vals=[]
+        with open(path+filenames[i],'r') as f:
+            for line in f:
+                cols = line.split()
+                if i !=0:
+                    value = float(cols[0])
+                else: 
+                    value = str(cols[0])
+                vals.append(value)
+        data.append(vals)
+    
+    metals = data[0]
+    PZCs = data[1]
+    vac_Htops = data[2]
+    vac_HBEs = data[3]
+    i0s = data[4]
+    
+    print('len metals {}'.format(len(metals)))
+    #print('len HBEs {}'.format(len(HBEs)))
+    #print('len tafel_barriers {}'.format(len(tafel_barriers)))
+    
+    
+    rlist = [] 
+    for j in range(len(metals)):
+        attributes = {
+                "metal" : metals[j],
+                "PZC" : PZCs[j],
+                "vac_Htop" : vac_Htops[j],
+                "vac_HBE" : vac_HBEs[j],
+                "i0" : i0s[j]
+                  }
+        
+        rlist.append(attributes)
+    
+    df = pd.DataFrame(rlist)
+    
+    df.to_csv('CSV/results_dipam.csv',index=False)
+
+    return df
+
+
 def plot_scatter(xvals, yvals,metals, xlabel, ylabel,xkey,ykey) :
-#def plot_scatter(xvals, yvals,metals, xlabel, ylabel,spin,mtag,dindex,site,zval,xkey,ykey,adsorbate): 
     print(' ')
     #print('{} {} {} {} {} {} {} {}'.format( spin,mtag,dindex,site,zval,xkey,ykey,adsorbate))
     print('plotting y {} vs x{} '.format( ykey,xkey))
@@ -151,58 +208,18 @@ if __name__ == "__main__":
     
     pd.options.display.max_rows = 4000
     pd.set_option('display.max_colwidth', None)
-    
-    
+
+
     #LOAD DATA 
+    df = parse_results()
+    
     TM = pd.read_csv('CSV/TM_parameters.csv')
-
-    #df_raw = pd.read_csv('../analysis_tafel/CSV/DFT_tafel_Dipam.csv')
-   
-    """
-    #CONFIRM: wdos of H at 2A (4A) top reference geometry correlates well 
-    #with some properties: WF and volmer, heyrovsky barriers (less so with Tafel).
-    """
-    #Simiam FHI-aims calculations at 2,4A.
-    #df_wdos = pd.read_csv('../../scripts_packgl/bd_utils/runscripts/STM/reference_wdos/CSV/df_bd_HM111_REF.csv') 
-    #dfHBE = pd.read_csv('../../scripts_packgl/bd_utils/runscripts/STM/reference_wdos/CSV/df_HBE_HM111_REF.csv') 
-
-    #I want to see HBE, d-band center, edge, and WF correlated.
-    #also with barriers.
-    #does HBEtop for example correlate with its own hybridization? 
-    #(finding correlation is one thing...deriving a model is something else) 
-
-
-    #adsorbate='H'      
-    #site='top'
-    #spin='up';
-    #mtag='_m2'
-    #zvals = [200,400]  #we do tests at different elevations, [pm].
-
-
-    #consider all entries in the dictionary.
+    
     metals = TM['metal'].tolist()
-            
-    terminations = []
-    for metal in metals:
-        if metal in ['Fe','W']: 
-            termination = '110'
-        elif metal in [ 'Os','Ru','Re','Zn','Co' ]:
-            termination = '0001'
-        else: 
-            termination='111'
-        terminations.append(termination)
 
-
-
-    #for ykey in ['WF','dbandcenter','dbandupperedge','vsquaredREL']: 
-    for ykey in ['WF']: #,'dbandcenter','dbandupperedge','vsquaredREL']: 
-        #, i''HBEdipam','HBEtop_ref_exact','HBEtop_ref_monolayer' ]:    
-        #HBEdipam from df_raw (Dipam hollow HBEs which are potential-averaged???) 
-        #Simiam DFT  HBEtop at 2A, 4A. 
-
-        #for xkey in ['wdos', 'WF', 'dbandcenter','dbandupperedge','vsquaredREL']:  #VsquaredREL
-        for xkey in ['WF','dbandcenter','dbandupperedge','vsquaredREL']:  
-        #for xkey in ['dbandupperedge']: #,'vsquaredREL']:  
+    for ykey in ['i0']: 
+        for xkey in ['vsquaredREL']:  
+        #,'dbandcenter','dbandupperedge','vsquaredREL']: 
         
             if ykey == 'WF':   
                 ylabel=r'WF $\phi_{Exp.}$ [eV]'
@@ -255,112 +272,6 @@ if __name__ == "__main__":
             print('yvals are {} {}'.format(ykey, yvals))
             plot_scatter(xvals, yvals,metals, xlabel, ylabel,xkey,ykey) 
 
-            
 
-            #VsquaredREL
-            #all from TM.
-            #if xkey=='wdos':
-            #    dindices = [0] #,1,2,3,4]
-            #else:
-            #    dindices = [0]
-            #for dindex in dindices:
-            #    for zval in zvals:
-                    
+    
 
-           #assemble xvals and yvals.
-
-          #  if ykey == 'HBEdipam':
-          #      #Dipams HBE hollow. POTENTIAL AVERAGED?
-          #      #yvals = np.array(  [df_raw.loc[ df_raw['metal'] == metal, 'HBE']  for metal in metals ] )
-          #      
-        
-          #      
-          #      yvals = np.array( df_raw['HBE'] )
-          #      metals = df_raw['metal'] # == metal, 'HBE']  for metal in metals ] )
-          #      ylabel=r'HBE$_{\text{hollow,Dipam}}$ [eV]'
-        
-          #      terminations = []
-          #      for i in range(metals.shape[0]):
-          #          if metals[i] in ['Fe','W']:
-          #              terminations.append('110')
-          #          else:
-          #              terminations.append('111')
-        
-        
-        
-          #  elif ykey == 'HBEtop_ref_exact' or ykey == 'HBEtop_ref_monolayer' :
-          #      #SIMIAM's DFT calculations.
-          #      ######NEW WAY:
-          #      criteria=(dfHBE['site'] == site)    &\
-          #               (dfHBE['zval'] == zval ) &\
-          #               (dfHBE[ykey].notnull())       #removes NaN rows.
-          #      
-          #      yvals = np.array(   dfHBE.loc[ criteria,  ykey] )  #contains NaN 
-          #      
-          #      #NaNs have been removed.
-          #      
-          #      metals = np.array(   dfHBE.loc[ criteria,  'metal'] )
-          #      terminations = np.array(  dfHBE.loc[ criteria,  'termination'] )
-          #      
-          #      if ykey == 'HBEtop_ref_exact': 
-          #          ylabel=r'HBE$_{\text{top ref exact}}$ [eV]'+' {}A'.format(int(zval/100))
-          #      if ykey == 'HBEtop_ref_monolayer': 
-          #          ylabel=r'HBE$_{\text{top ref ML}}$ [eV]'+' {}A'.format(int(zval/100))
-          #      
-          #  print('yvals {}, metals {}'.format(yvals, metals))
-        
-          #  
-          #  if xkey == 'wdos':
-          #      #dindex=0;
-          #      
-          #      #We look up values of wdos for the metals above, but again check for NaN:
-          #      #this is a risky label: perception risk
-          #      orbital = np.array(df_wdos.loc[ (df_wdos['dindex'] == dindex) , 'orbital'])[0]
-          #      
-          #      wdos = []
-          #      for i in range(metals.shape[0]):
-          #          print('metal {}'.format(metals[i]))
-          #          criteria=(df_wdos['dindex'] == dindex) &\
-          #                   (df_wdos['site'] == site)    &\
-          #                   (df_wdos['metal'] == metals[i])    &\
-          #                   (df_wdos['mtag'] == mtag)    &\
-          #                   (df_wdos['spin'] == spin ) &\
-          #                   (df_wdos['zval'] == zval ) #&\
-          #                  # (df_wdos[xkey].notnull())       
-          #                  #removes NaN rows.  
-          #                  #If you remove NaN here, you compromise the dimension.
-          #          res=float(df_wdos.loc[ criteria, xkey  ] )
-          #          print('result is {}'.format(res))
-          #          wdos.append(res   )
-          #      
-          #      print('BEFORE NaN filtering:')
-          #      print('yvals {}'.format(yvals))
-          #      print('wdos {}'.format(wdos))
-          #       
-          #      #CONTAINS NANs
-          #      #If we remove NaNs, we have to update yvals. 
-          #      #CURATE A SUBSET.
-          #      subset  =[]
-          #      for i in range(len(wdos)):
-          #          #if wdos[i]=='nan':
-          #          if math.isnan(wdos[i]): ##=='nan':
-          #              print('dropping NaN at index {} which is metal {}'.format(i,metals[i]))
-          #              continue
-          #          else:
-          #              subset.append(i)
-          #      print('subset of good values is {}'.format(subset))
-          #      
-          #      yvals = np.array([yvals[i] for i in subset])
-          #      wdos = np.array([wdos[i] for i in subset])
-          #      metals = [metals[i] for i in subset]
-          #      terminations = [terminations[i] for i in subset]
-        
-          #      print('AFTER NaN filtering:')
-          #      print('yvals {}'.format(yvals))
-          #      print('wdos {}'.format(wdos))
-        
-          #      print('wdos is {}'.format(wdos))
-          #      wdos = np.array(wdos)
-          #      xvals=wdos
-        
-          #      xlabel=r'$\Delta_{\text{H}}(\epsilon_{F})$ [eV] '
