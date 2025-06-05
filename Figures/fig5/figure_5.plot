@@ -7,7 +7,7 @@ set terminal epslatex color colortext size 6in,3in "ptm,10" standalone
 set output "Figure_5.tex"
 set xtics nomirror
 set ytics nomirror
-set ytics 0,0.25,0.75
+set ytics (0,0.25,0.5,0.75,1)
 set xtics -2,1,0
 set offset 1,1
 #set yrange [0:1.2]
