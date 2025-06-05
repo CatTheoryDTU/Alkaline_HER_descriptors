@@ -3,3 +3,7 @@ __pycache__
 fit.log
 data.pkl
 *.attempt
+*aux
+*log
+*eps
+*pdf

@@ -12,7 +12,7 @@ from tools import (
 rcParams = {
         'font.family': 'serif',
         'font.serif': ['Times New Roman'],
-        'font.size': 26,
+        'font.size': 33,
         }
 plt.rcParams.update(rcParams)
 

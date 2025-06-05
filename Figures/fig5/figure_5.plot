@@ -20,8 +20,8 @@ set yrange[-0.05:1.05]
 set ytics format "%1.2f"
 set xlabel 'U vs SHE (V)'
 set label 1 '$U_{\mathrm{PZC}}$' at -1.5, 0.75 textcolor 'dark-green' front
-set label 2 '$\Delta G^{\mathrm{fcc}}_\mathrm{H}$' at -1,0.62 textcolor 'black' front
-set label 4 'a) Volmer' at -2,-0. textcolor 'black' front
+set label 2 '$\Delta G^{\mathrm{top}}_\mathrm{H}$' at -2,0.99 textcolor 'blue' front
+set label 4 '\large a) Volmer' at -2,-0. textcolor 'black' front
 #set label 3 at graph -0.15,1.05 'a)' front
 #'$|V|^2$','$\Delta G^{fcc}_H-\Delta G^{top}_H$'
 plot \
@@ -33,9 +33,9 @@ plot \
 	"<paste fig5x.txt fig5a.txt" u 1:7 w l lc 'dark-goldenrod' lw 3.0 notitle
 set ylabel ""
 set ytics format ""
-set label 4 'b) Heyrovsky' at 0,-0. textcolor 'black' front right
+set label 4 '\large b) Heyrovsky' at 0,-0. textcolor 'black' front right
 set label 1 '$\Delta G^{\mathrm{fcc}}_\mathrm{H}-0.52\mathrm{e}U_{\mathrm{PZC}}$' at -1.9, 1.0 textcolor 'dark-red' front
-set label 2 '$\Delta G^{\mathrm{top}}_\mathrm{H}$' at -1,0.83 textcolor 'blue' front
+set label 2 '$\Delta G^{\mathrm{fcc}}_\mathrm{H}$' at -0.4,0.82 textcolor 'black' front
 #set label 3 at graph -0.15,1.05 'b)' front
 plot \
 	"<paste fig5x.txt fig5b.txt" u 1:3 w l lc 'black' lw 3.0 notitle, \
@@ -46,7 +46,7 @@ plot \
 	"<paste fig5x.txt fig5b.txt" u 1:7 w l lc 'dark-goldenrod' lw 3.0 notitle
 set label 1 '$|V_{ad}|^2$' at -1, 0.88 textcolor 'purple' front
 set label 2 '$\Delta G^{\mathrm{fcc}}_\mathrm{H}-\Delta G^{\mathrm{top}}_\mathrm{H}$' at -1.5,0.75 textcolor 'dark-goldenrod' front
-set label 4 'c) Tafel' at -2,1. textcolor 'black' front left
+set label 4 '\large c) Tafel' at -2,1. textcolor 'black' front left
 #set label 3 at graph -0.15,1.05 'c)' front
 plot \
 	"<paste fig5x.txt fig5c.txt" u 1:3 w l lc 'black' lw 3.0 notitle, \

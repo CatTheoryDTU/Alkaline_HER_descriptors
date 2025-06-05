@@ -214,7 +214,7 @@ def plot_r2_with_varying_descriptors_in_2D(
 #        ax.plot([min(c2s),max(c2s)],[min(c2s),max(c2s)], 'k--')
         ax.set_xlim(min(cs), max(cs))
         #ax.set_xlabel(f'a in k({transform[descriptors[0]]} + a$\cdot${transform[descriptors[1]]}) + d')
-        ax.set_xlabel(f'a in D={transform[descriptors[0]]}+a$\cdot${transform[descriptors[1]]}')
+        ax.set_xlabel(f'a in D={transform[descriptors[0]]}+a{transform[descriptors[1]]}')
 
     ax.set_ylabel(r'$R^2$')
     ax.set_ylim([0.6,1.0])
