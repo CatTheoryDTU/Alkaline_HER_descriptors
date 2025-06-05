@@ -68,103 +68,135 @@ def plot_volcano(data, rxns_long=['Volmer','Heyrovsky','Tafel','Activity'],
     for the reaction to occur. The descriptor values are the
     values of the descriptors for each metal.
     """
+    #Allow multiple descriptors to be passed in
+    if not isinstance(descriptors[0], list):
+        descriptors = [descriptors]
 
     # Make a heatplot showing the barrier heights
 
-    ranges= (np.linspace(min(data[descriptors[0]])-extend_axes[0],max(data[descriptors[0]]+extend_axes[1]),50),
-             np.linspace(min(data[descriptors[1]])-extend_axes[2],max(data[descriptors[1]]+extend_axes[3]),50))
-    dats=[]
-    rxns_long_changed = ['Volmer', 'Heyrovsky', 'Tafel', 'Activity']
-    for ibar, bar in enumerate(rxns_long[:-1]):
-        if rxns_long[ibar]!='Tafel':
-            index=0
-#            descriptor = data[descriptors[0]]     #data['htop']
-#            d_range=ranges[0]
-        else:
-            index=1
-        descriptor = data[descriptors[index]]
-        d_range=ranges[index]
-        k, d, r, p_value, std_err = linregress(descriptor, data[bar])
-        print(f'{rxns_long[ibar]}, {descriptor[0]}: k={k:.2f}, d={d:.2f}, R^2={r**2:.2f}')
-        dat = k*d_range + d
-        dat = dat*np.ones((len(ranges[1-index]), len(ranges[1-index])))
-        if rxns_long[ibar]=='Tafel':
-            dat= dat.T
-        rxns_long_changed[ibar] = f'{rxns_long[ibar]}:\n k={k:.2f}, d={d:.2f}, R$^2$={r**2:.2f}'
-        dats.append(dat)
 
-    # Compare the magnitude in all three dat matrices: Take the lower one between
-    # Tafel and Heyrovsky and compare it to the Volmer and take the higher one.
-    diffs = np.zeros((len(ranges[0]), len(ranges[1])))
-    print(dats[0].shape)
-    for i in range(dats[0].shape[0]):
-     for j in range(dats[0].shape[1]):
-#        for j in range(len(dats[1])):
-            diffs[i][j] = min(dats[1][i][j],dats[2][i][j])
-            diffs[i][j] = max(dats[0][i][j],diffs[i][j])
-    dats.append(diffs)
 
+    all_dats=[]
+    all_ranges=[]
+    for idesc, desc in enumerate(descriptors):
+        ranges= (np.linspace(min(data[desc[0]])-extend_axes[0],max(data[desc[0]]+extend_axes[1]),50),
+                np.linspace(min(data[desc[1]])-extend_axes[2],max(data[desc[1]]+extend_axes[3]),50))
+        all_ranges.append(ranges)
+        dats=[]
+        rxns_long_changed = ['Volmer', 'Heyrovsky', 'Tafel', 'Activity']
+        for ibar, bar in enumerate(rxns_long[:-1]):
+            if rxns_long[ibar]!='Tafel':
+                index=0
+    #            descriptor = data[descriptors[0]]     #data['htop']
+    #            d_range=ranges[0]
+            else:
+                index=1
+            descriptor = data[desc[index]]
+            d_range=ranges[index]
+            k, d, r, p_value, std_err = linregress(descriptor, data[bar])
+            print(f'{rxns_long[ibar]}, {descriptor[0]}: k={k:.2f}, d={d:.2f}, R^2={r**2:.2f}')
+            dat = k*d_range + d
+            dat = dat*np.ones((len(ranges[1-index]), len(ranges[1-index])))
+            if rxns_long[ibar]=='Tafel':
+                dat= dat.T
+            rxns_long_changed[ibar] = f'{rxns_long[ibar]}:\n k={k:.2f}, d={d:.2f}, R$^2$={r**2:.2f}'
+            dats.append(dat)
+
+        # Compare the magnitude in all three dat matrices: Take the lower one between
+        # Tafel and Heyrovsky and compare it to the Volmer and take the higher one.
+        diffs = np.zeros((len(ranges[0]), len(ranges[1])))
+        print(dats[0].shape)
+        for i in range(dats[0].shape[0]):
+         for j in range(dats[0].shape[1]):
+    #        for j in range(len(dats[1])):
+                diffs[i][j] = min(dats[1][i][j],dats[2][i][j])
+                diffs[i][j] = max(dats[0][i][j],diffs[i][j])
+        dats.append(diffs)
+        all_dats.append(dats)
+
+    xs,ys=[],[]
     # Plotting the heatmaps
-    x=data[descriptors[0]]
-    y=data[descriptors[1]]
-    if not only_activity:
-        fig,ax=plt.subplots(1, len(dats), figsize=(20, 6), dpi=80, sharey=True,sharex=True)
-        for idat,dat in enumerate(dats):
-            thisax = ax[idat]
-            if not idat:
-                thisax.set_ylabel(f'{transform[descriptors[1]]}')
-            thisax.set_xlabel(f'{transform[descriptors[0]]}')
-            thisax.set_title(f'{rxns_long_changed[idat]}')
-    #        x=data[descriptors[0]]
-    #        y=data[descriptors[1]]
-            #print(min(ranges[0]), max(ranges[0]), min(ranges[1]),max(ranges[1]))
-            im=thisax.imshow(dats[idat],
+    for idesc, desc in enumerate(descriptors):
+        x=data[desc[0]]
+        xs.append(x)
+        y=data[desc[1]]
+        ys.append(y)
+        if not only_activity:
+            for iadat, adat in enumerate(all_dats):
+             fig,ax=plt.subplots(1, len(adat), figsize=(20, 6), sharey=True,sharex=True)
+             for idat,dat in enumerate(adat):
+                thisax = ax[idat]
+                if not idat:
+                    thisax.set_ylabel(f'{transform[desc[1]]}')
+                thisax.set_xlabel(f'{transform[desc[0]]}')
+                thisax.set_title(f'{rxns_long_changed[idat]}')
+        #        x=data[descriptors[0]]
+        #        y=data[descriptors[1]]
+                #print(min(ranges[0]), max(ranges[0]), min(ranges[1]),max(ranges[1]))
+                im=thisax.imshow(dat,
+                                     extent=(min(ranges[0]), max(ranges[0]),
+                                             min(ranges[1]),max(ranges[1])),
+                                 aspect='auto', origin='lower',
+                           vmin=0.4, vmax=1.3,cmap='RdYlGn_r', interpolation='nearest')
+
+                for i in range(len(x)):
+                    thisax.annotate(metal_order[i],
+                                    xy=(x[i],y[i]),
+                                    fontsize=15,ha='center', va='center')
+                thisax.plot(x,y, 'ko', markeredgecolor='k', markersize=20, markerfacecolor='none')
+             thisax.set_xlim(min(ranges[0]), max(ranges[0]))
+             thisax.set_ylim(min(ranges[1]), max(ranges[1]))
+             fig.colorbar(im,label=r'Effective barrier / eV', orientation='vertical')
+             plt.show()
+
+    # Making a large heatplot only containing the activity
+    fig,axs=plt.subplots(1, len(descriptors), figsize=(20,10), sharey=True)
+    print(type(axs))
+    if not isinstance(axs, np.ndarray):
+        axs = [axs]
+
+    for iax,ax in enumerate(axs):
+        if not iax:
+            ax.set_ylabel(f'{transform[descriptors[iax][1]]} (eV)')
+        ax.set_xlabel(f'{transform[descriptors[iax][0]]} (eV)')
+    #    ax.set_title(f'Activity')
+        ranges= all_ranges[iax]
+
+        im=ax.imshow(all_dats[iax][3],
                                  extent=(min(ranges[0]), max(ranges[0]),
                                          min(ranges[1]),max(ranges[1])),
                              aspect='auto', origin='lower',
                        vmin=0.4, vmax=1.3,cmap='RdYlGn_r', interpolation='nearest')
 
-            for i in range(len(x)):
-                thisax.annotate(metal_order[i],
-                                xy=(x[i],y[i]),
-                                fontsize=15,ha='center', va='center')
-            thisax.plot(x,y, 'ko', markeredgecolor='k', markersize=20, markerfacecolor='none')
-        thisax.set_xlim(min(ranges[0]), max(ranges[0]))
-        thisax.set_ylim(min(ranges[1]), max(ranges[1]))
-        fig.colorbar(im,label=r'Effective barrier / eV', orientation='vertical')
-        plt.show()
+        for i in range(len(data[descriptors[iax][0]])):
+            ax.annotate(metal_order[i],
+                        xy=(xs[iax][i],ys[iax][i]),
+                        fontsize=20,ha='center', va='center')
 
-    # Making a large heatplot only containing the activity
-    fig,ax=plt.subplots(1, 1, figsize=(9, 8))
-    ax.set_ylabel(f'{transform[descriptors[1]]} (eV)')
-    ax.set_xlabel(f'{transform[descriptors[0]]} (eV)')
-#    ax.set_title(f'Activity')
+        ax.plot(xs[iax],ys[iax], 'ko', markeredgecolor='k', markersize=30, markerfacecolor='none')
+        ax.set_xlim(min(ranges[0]), max(ranges[0]))
+        ax.set_ylim(min(ranges[1]), max(ranges[1]))
 
-    im=ax.imshow(dats[3],
-                             extent=(min(ranges[0]), max(ranges[0]),
-                                     min(ranges[1]),max(ranges[1])),
-                         aspect='auto', origin='lower',
-                   vmin=0.4, vmax=1.3,cmap='RdYlGn_r', interpolation='nearest')
-
-    for i in range(len(data[descriptors[0]])):
-        ax.annotate(metal_order[i],
-                    xy=(x[i],y[i]),
-                    fontsize=20,ha='center', va='center')
-
-    ax.plot(x,y, 'ko', markeredgecolor='k', markersize=30, markerfacecolor='none')
-    ax.set_xlim(min(ranges[0]), max(ranges[0]))
-    ax.set_ylim(min(ranges[1]), max(ranges[1]))
-    fig.colorbar(im,label=r'$\Delta$G$^\ddagger$  (eV)', orientation='vertical')
+    for iax,ax in enumerate(axs):
+        pos = ax.get_position()
+        ax.set_position([pos.x0+0.06*iax, pos.y0, pos.width * 1.12, pos.height])
+    cbar_ax = fig.add_axes([0.88, 0.17, 0.03, 0.78])  # [left, bottom, width, height]
+    cbar = plt.colorbar(im, cax=cbar_ax, orientation='vertical', label=r'$\Delta$G$^\ddagger$  (eV)')
+    #fig.colorbar(im,label=r'$\Delta$G$^\ddagger$  (eV)', orientation='vertical')
     plt.tight_layout()
-    plt.savefig(f'Figure_5e_{descriptors[1]}_v_{descriptors[0]}.pdf')
+    if len(axs) > 1:
+        plt.savefig(f'Figure_5e_multipanel.pdf')
+    else:
+        plt.savefig(f'Figure_5e_{descriptors[0][1]}_v_{descriptors[0][0]}.pdf')
     plt.show()
     return
 
 def plot_r2_with_varying_descriptors_in_2D(
         data, rxns_long=['Volmer','Heyrovsky','Tafel'],
+        figax=None,
         descriptors=['htop', 'hfcc'],
         cs=np.linspace(-2, 2, 500),
-        figsize=(8, 8)):
+        figsize=(8, 8), return_plt=False):
     """
     Plot the R^2 value of the linear regression of the sum of two descriptors
     with the varying coefficient c. c is the ratio of coefficients
@@ -185,7 +217,10 @@ def plot_r2_with_varying_descriptors_in_2D(
 
         r2s = np.array(r2s)
         all_r2s.append(r2s)
-    fig,ax=plt.subplots(1, 1, figsize=figsize, sharey=True)
+    if figax is None:
+        fig,ax=plt.subplots(1, 1, figsize=figsize, sharey=True)
+    else:
+        fig,ax=figax
     dg,dag=r'$\Delta$G',r'$^\ddagger$'
     bar_labels = [dg+r'$_{\mathrm{V}}^\ddagger$', dg+r'$_{\mathrm{Hey}}^\ddagger$', dg+r'$_{\mathrm{T}}^\ddagger$']
     for ibar, bar in enumerate([2,3,4]):
@@ -219,10 +254,13 @@ def plot_r2_with_varying_descriptors_in_2D(
     ax.set_ylabel(r'$R^2$')
     ax.set_ylim([0.7,1.0])
     ax.set_yticks(np.arange(0.7, 1.01, 0.1))
-    plt.tight_layout()
+    if return_plt:
+        return plt
+    else:
+        plt.tight_layout()
 #    plt.legend()
-    plt.savefig('Figure_5d.pdf')
-    plt.show()
+        plt.savefig('Figure_5d.pdf')
+        plt.show()
 
 
 

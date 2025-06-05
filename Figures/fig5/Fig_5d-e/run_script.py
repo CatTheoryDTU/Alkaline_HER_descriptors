@@ -63,11 +63,13 @@ if 0:
                                                      c1s=c1s,
                                                      c2s=c2s)
 # Plot 2-dimensional mixed descriptor quality (possibly fig 5d)
-if 1:
+if 0:
     plot_r2_with_varying_descriptors_in_2D(data,
                                                     rxns_long,
                                                     descriptors=['htop','hfcc'],
-                                                    cs=np.linspace(-1.3,1.3,500))
+                                                    cs=np.linspace(-1.3,1.3,500),
+                                           )
+
 
 #   plot_r2_with_varying_descriptors_in_2D(data,
 #                                                    rxns_long,
@@ -78,7 +80,8 @@ if 1:
 if 1:
 #    plot_volcano(data,descriptors=['hfcc-pzc','vsquaredREL'])
 #    plot_volcano(data,descriptors=['htop','vsquaredREL'])
-    plot_volcano(data,descriptors=['hfcc-pzc','htop-hfcc'],only_activity=True)
-    plot_volcano(data,descriptors=['htop','htop-hfcc'],only_activity=True)
+#    plot_volcano(data,descriptors=['hfcc-pzc','htop-hfcc'])
+#    plot_volcano(data,descriptors=['htop','htop-hfcc'],only_activity=True)
+    plot_volcano(data,descriptors=[['htop','htop-hfcc'],['hfcc-pzc','htop-hfcc']],only_activity=True)
 
 
