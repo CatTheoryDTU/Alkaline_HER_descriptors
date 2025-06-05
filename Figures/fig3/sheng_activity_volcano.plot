@@ -147,7 +147,7 @@ set xtics 0,.25,1.0
 set xlabel '$\Delta G^{\mathrm{top}}_\mathrm{H}$ (eV)'# offset 0,screen 0.05
 #set title "Thermodynamic" #offset 0,graph -0.05
 set label 1 at  -.25, -8 sprintf('\small \shortstack[l]{{Theory: $R^2$=%1.2f} \\ {\tiny y=±%1.2f(x+%1.2f)$%1.2f$}}',HTOP_correlation**2,g,d,h) front
-set label 3 at  .65, -0 sprintf('\small \shortstack[r]{{Exp: $R^2$=%1.2f} \\ {\tiny y=±%1.2f(x+%1.2f)$%1.2f$}}',exp_HTOP_correlation**2,expg,expd,exph) textcolor 'blue' front
+set label 3 at  .65, -0 sprintf('\small \shortstack[r]{{Exp: $R^2$=%1.2f} \\ {\tiny y=±%1.2f(x+%1.2f)$+%1.2f$}}',exp_HTOP_correlation**2,expg,expd,exph) textcolor 'blue' front
 
 set label 4 at -0.1,0.8 'Pt' center front
 set label 5 at -0.1,-2.4 'Ir' center front
