@@ -16,5 +16,5 @@ pH=13*-0.059
 set key textcolor variable
 set label 2 at screen 0.05,0.95 '\huge{b)}' front
 plot "< paste ../pt_coverages.txt  ../activation_forward.txt" using ($1-pH):3 axis x1y1 w l lw 3.0 lc 'black' title "Volmer" at end, \
-     "< paste ../pt_coverages.txt ../activation_forward.txt" using ($1-pH):4 axis x1y1 w l lw 3.0 lc 6 title "Tafel" at end \
+     "< paste ../pt_coverages.txt ../activation_forward.txt" using ($1-pH):4 axis x1y1 w l lw 3.0 lc 6 title "Tafel" at end, \
      "../pt_coverages.txt" using ($1-pH):2 axis x1y2 w l dt 3 lc 'black' lw 3.0 notitle

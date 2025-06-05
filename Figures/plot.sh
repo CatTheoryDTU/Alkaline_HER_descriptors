@@ -7,13 +7,18 @@
 #awk '{print $2-$1+4.0144772408+0.097}' vacuum_energies.txt > vac_HBEs.txt
 #awk '{print $3-$1+4.0144772408+0.097+0.105}' vacuum_energies.txt > vac_Htops.txt
 # 3c and 3b are actually for figure 2, not updating
-for plotfile in figure_potential_activation_energies figure_coverage_periodic_table figure_catmap_activationenergies figure_log_current square_true_activity_volcano 2x2_volcano figure_3c figure_3b
-do 
-	gnuplot $plotfile\.plot
-	outfile=`grep "^set output" $plotfile.plot | awk -F '\"' '{print $2}'`
-	incfile=`echo $outfile | awk -F '.' '{print $1}'`
-	epstopdf $incfile\-inc.eps
-	pdflatex $outfile > /dev/null
+for dir in fig*
+do
+	cd $dir
+	for plotfile in *plot
+	do 
+		gnuplot $plotfile
+		outfile=`grep "^set output" $plotfile | awk -F '\"' '{print $2}'`
+		incfile=`echo $outfile | awk -F '.' '{print $1}'`
+		epstopdf $incfile\-inc.eps
+		pdflatex $outfile > /dev/null
+	done
+	cd ../
 done
-python r2_with_tafel.py
-python georg.plot.py
+#python r2_with_tafel.py
+#python georg.plot.py
