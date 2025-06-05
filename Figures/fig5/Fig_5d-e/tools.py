@@ -7,7 +7,7 @@ transform = {'htop': '$\Delta G^{\mathrm{top}}_\mathrm{H}$',
                  'hfcc': '$\Delta G^{\mathrm{fcc}}_\mathrm{H}$',
                  'htop-hfcc': '$\Delta G^{\mathrm{top}}_\mathrm{H} - \Delta G^{\mathrm{fcc}}_\mathrm{H}$',
                  'vsquaredREL': '$V^2_{rel}$',
-                 'hfcc-pzc': '$\Delta G^{\mathrm{fcc}}_\mathrm{H} - 0.58eU_{\mathrm{PZC}}$'}
+                 'hfcc-pzc': '$\Delta G^{\mathrm{fcc}}_\mathrm{H} - 0.52eU_{\mathrm{PZC}}$'}
 
 def collect_data(metal_order=['Ni', 'Pd', 'Ir', 'Rh', 'Pt', 'Cu', 'Ag', 'Au']):
     """
@@ -47,7 +47,7 @@ def collect_data(metal_order=['Ni', 'Pd', 'Ir', 'Rh', 'Pt', 'Cu', 'Ag', 'Au']):
     dat_dict['PZC'] = np.array([
         5.02015, 4.81861, 5.12015, 4.57793, 5.45706,
         4.29556, 3.95333, 4.69770])
-    dat_dict['hfcc-pzc'] = dat_dict['hfcc'] - 0.58*dat_dict['PZC']
+    dat_dict['hfcc-pzc'] = dat_dict['hfcc'] - 0.52*dat_dict['PZC']
     dat_dict['htop-hfcc'] = dat_dict['htop'] - dat_dict['hfcc']
 
 
@@ -135,7 +135,7 @@ def plot_volcano(data, rxns_long=['Volmer','Heyrovsky','Tafel','Activity'],
         plt.show()
 
     # Making a large heatplot only containing the activity
-    fig,ax=plt.subplots(1, 1, figsize=(8, 8))
+    fig,ax=plt.subplots(1, 1, figsize=(9, 8))
     ax.set_ylabel(f'{transform[descriptors[1]]} (eV)')
     ax.set_xlabel(f'{transform[descriptors[0]]} (eV)')
 #    ax.set_title(f'Activity')
@@ -205,7 +205,7 @@ def plot_r2_with_varying_descriptors_in_2D(
                     f'{bar_labels[ibar]}=\n{bestfit[2]:1.2f}D'
                     f'+{bestfit[3]:1.2f}eV'
                     , xy=(bestfit[0], bestfit[1]+0.01), ha='center', va='bottom', fontsize=24, color=colors[ibar],
-                    bbox=dict(facecolor='white', alpha=0.8, edgecolor='none', pad=0.5)
+                    #bbox=dict(facecolor='white', alpha=0.8, edgecolor='none', pad=0.5)
                     ).draggable(),
 #        im = ax[ibar].imshow(r2[:, 2].reshape(len(c1s), len(c2s)),
 #                             extent=(min(c1s), max(c1s), min(c2s),
@@ -217,8 +217,8 @@ def plot_r2_with_varying_descriptors_in_2D(
         ax.set_xlabel(f'a in D={transform[descriptors[0]]}+a{transform[descriptors[1]]}')
 
     ax.set_ylabel(r'$R^2$')
-    ax.set_ylim([0.6,1.0])
-    ax.set_yticks(np.arange(0.6, 1.01, 0.1))
+    ax.set_ylim([0.7,1.0])
+    ax.set_yticks(np.arange(0.7, 1.01, 0.1))
     plt.tight_layout()
 #    plt.legend()
     plt.savefig('Figure_5d.pdf')
