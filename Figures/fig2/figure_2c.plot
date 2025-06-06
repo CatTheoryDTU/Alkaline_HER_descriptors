@@ -2,7 +2,7 @@ set encoding utf8
 set fit quiet
 set fit logfile '/dev/null'
 set print '/dev/null'
-set terminal epslatex color colortext size 2in,5in font "cmss,10" standalone
+set terminal epslatex color colortext size 2.5in,5in font "cmss,10" standalone
 set output "Figure_2C.tex"
 set xlabel "U vs RHE (V)" offset 0,screen 0 #font labelfont
 set ylabel "-j (mA/cm$^2$)" offset graph 0.02,0#font labelfont
@@ -42,14 +42,14 @@ s2 = 5
 deg(x) = x/pi*180.0
 r(x) = deg(atan(s1*s2*x))
 set label 9 at screen 0.05,0.95 '\huge{c)}' front
-set label 1 sprintf('\small Ag %3.0f mV/dec',1000/Ag_slope) at -0.60,10**(-0.45+(-0.60)*Ag_slope+Ag_intercept) rotate by r(Ag_slope)-18 center textcolor lt 1
-set label 2 sprintf('\small Au %3.0f mV/dec',1000/Au_slope) at -0.45,10**(0.65+(-0.45)*Au_slope+Au_intercept) rotate by r(Au_slope)-15 center textcolor lt 2
-set label 3 sprintf('\small Cu %3.0f mV/dec',1000/Cu_slope) at -0.65,10**(-0.50+(-0.65)*Cu_slope+Cu_intercept) rotate by r(Cu_slope)-18 center textcolor lt 3
-set label 4 sprintf('\small Ir %3.0f mV/dec',1000/Ir_slope) at -0.65,10**(0.50+(-0.65)*Ir_slope+Ir_intercept) rotate by r(Ir_slope)-18 center textcolor lt 4
-set label 5 sprintf('\small Ni %3.0f mV/dec',1000/Ni_slope) at -0.55,10**(0.4+(-0.55)*Ni_slope+Ni_intercept) rotate by r(Ni_slope)-12. center textcolor lt 5
-set label 6 sprintf('\small Pd %3.0f mV/dec',1000/Pd_slope) at -0.70,10**(-0.70+(-0.70)*Pd_slope+Pd_intercept) rotate by r(Pd_slope)-13 center textcolor lt 6
-set label 7 sprintf('\small Pt %3.0f mV/dec',1000/Pt_slope) at -0.65,10**(0.45+(-0.65)*Pt_slope+Pt_intercept) rotate by r(Pt_slope)-15 center textcolor lt 7
-set label 8 sprintf('\small Rh %3.0f mV/dec',1000/Rh_slope) at -0.55,10**(0.60+(-0.55)*Rh_slope+Rh_intercept) rotate by r(Rh_slope)-15 center textcolor lt 8
+set label 1 sprintf('\small Ag %3.0f mV/dec',1000/Ag_slope) at -0.60,10**(-0.55+(-0.60)*Ag_slope+Ag_intercept) rotate by r(Ag_slope)-10 center textcolor lt 1
+set label 2 sprintf('\small Au %3.0f mV/dec',1000/Au_slope) at -0.45,10**(0.50+(-0.45)*Au_slope+Au_intercept) rotate by r(Au_slope)-6 center textcolor lt 2
+set label 3 sprintf('\small Cu %3.0f mV/dec',1000/Cu_slope) at -0.65,10**(-0.60+(-0.65)*Cu_slope+Cu_intercept) rotate by r(Cu_slope)-10 center textcolor lt 3
+set label 4 sprintf('\small Ir %3.0f mV/dec',1000/Ir_slope) at -0.65,10**(0.40+(-0.65)*Ir_slope+Ir_intercept) rotate by r(Ir_slope)-8 center textcolor lt 4
+set label 5 sprintf('\small Ni %3.0f mV/dec',1000/Ni_slope) at -0.55,10**(0.3+(-0.55)*Ni_slope+Ni_intercept) rotate by r(Ni_slope)-2. center textcolor lt 5
+set label 6 sprintf('\small Pd %3.0f mV/dec',1000/Pd_slope) at -0.70,10**(-0.80+(-0.70)*Pd_slope+Pd_intercept) rotate by r(Pd_slope)-8 center textcolor lt 6
+set label 7 sprintf('\small Pt %3.0f mV/dec',1000/Pt_slope) at -0.65,10**(0.40+(-0.65)*Pt_slope+Pt_intercept) rotate by r(Pt_slope)-8 center textcolor lt 7
+set label 8 sprintf('\small Rh %3.0f mV/dec',1000/Rh_slope) at -0.55,10**(0.50+(-0.55)*Rh_slope+Rh_intercept) rotate by r(Rh_slope)-8 center textcolor lt 8
 plot "<awk '$2==13.0' ../../results/Ag/current.dat" using ($1-pH):(a*(-1.0*$3)) w l lw 2.0 notitle, \
 	"<awk '$2==13.0' ../../results/Au/current.dat" using ($1-pH):(a*(-1.0*$3)) w l lw 2.0 notitle, \
 	"<awk '$2==13.0' ../../results/Cu/current.dat" using ($1-pH):(a*(-1.0*$3)) w l lw 2.0 notitle, \
