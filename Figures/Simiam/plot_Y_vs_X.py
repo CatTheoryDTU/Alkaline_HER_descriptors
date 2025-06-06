@@ -191,7 +191,7 @@ def plot_scatter(xvals, yvals,metals,terminations, xlabel, ylabel,xkey,ykey) :
 
 
         
-        fs=6
+        fs=9
         ax.set_xlabel(xlabel,fontsize=fs) 
         ax.set_ylabel(ylabel,fontsize=fs) 
     
@@ -235,8 +235,8 @@ if __name__ == "__main__":
         terminations.append(termination)
 
 
-    for ykey in ['i0','PZC']: 
-        for xkey in ['vsquaredREL','WF']:  
+    for ykey in ['i0','PZC','vac_Htop','vac_HBE','WF']: 
+        for xkey in ['vac_HBE','PZC','vsquaredREL','WF', 'dbandcenter','dbandupperedge']:  
         #,'dbandcenter','dbandupperedge','vsquaredREL']: 
         
             if ykey == 'i0':
@@ -245,6 +245,13 @@ if __name__ == "__main__":
             elif ykey == 'PZC':
                 yvals= np.array(  [df.loc[ df['metal'] == metal, ykey]  for metal in metals ] )
                 ylabel=r'PZC [V]'#   i0s [TOF]d-band upper edge (maj.spin.) [eV]'
+            elif ykey == 'vac_Htop':
+                yvals= np.array(  [df.loc[ df['metal'] == metal, ykey]  for metal in metals ] )
+                ylabel=r'vac Htop [eV]'#   i0s [TOF]d-band upper edge (maj.spin.) [eV]'
+            elif ykey == 'vac_HBE':
+                yvals= np.array(  [df.loc[ df['metal'] == metal, ykey]  for metal in metals ] )
+                ylabel=r'vac HBE [eV]'#   i0s [TOF]d-band upper edge (maj.spin.) [eV]'
+            
             elif ykey == 'WF':   
                 ylabel=r'WF $\phi_{Exp.}$ [eV]'
                 WF = []
@@ -277,6 +284,9 @@ if __name__ == "__main__":
          
                 WF = np.array(WF)
                 xvals=WF
+            elif xkey == 'vac_HBE':
+                xvals= np.array(  [df.loc[ df['metal'] == metal, xkey]  for metal in metals ] )
+                xlabel=r'vac HBE [eV]'#   i0s [TOF]d-band upper edge (maj.spin.) [eV]'
             
             elif xkey == 'dbandcenter': 
                 xvals  = np.array(  [TM.loc[ TM['metal'] == metal, xkey]  for metal in metals ] )
@@ -289,6 +299,9 @@ if __name__ == "__main__":
             elif xkey == 'vsquaredREL':
                 xvals  = np.array(  [TM.loc[ TM['metal'] == metal, xkey]  for metal in metals ] )
                 xlabel=r'V$_{ad}^2$ [Rel. Cu]' #eV$^2$]'
+            elif xkey == 'PZC':
+                xvals= np.array(  [df.loc[ df['metal'] == metal, xkey]  for metal in metals ] )
+                xlabel=r'PZC [V]'#   i0s [TOF]d-band upper edge (maj.spin.) [eV]'
             
                 
           #  #what is PCA using 2-dimensions??
