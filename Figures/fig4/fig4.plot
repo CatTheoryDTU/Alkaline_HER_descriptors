@@ -3,10 +3,8 @@ ticsfont = "cmss,12"
 titlefont = "cmss,22"
 subtitlefont = "cmss,8"
 set xlabel '$\Delta G^{fcc}_{H}$ (eV)'
-set ylabel 'Activation Free Energy $\Delta G^\ddag$ (eV)'
-#set terminal svg enhanced size 1000,500
-#set output "NewVolcano.svg"
-#set terminal svg enhanced font titlefont size 1500,500
+#set ylabel 'Activation Free Energy $\Delta G^\ddag$ (eV)'
+set ylabel '$\Delta G^\ddag$ (eV)'
 set terminal epslatex color colortext size 6in,6in standalone font 'cmss' #header '\newcommand{\hl}[1]{\setlength{\fboxsep}{0.75pt}\colorbox{white}{#1}}'
 set output "2x2_NewVolcano.tex"
 
@@ -77,7 +75,8 @@ plot \
 #### HBE+PZC
 set xrange[-0.8:1.3]
 set ytics format "%1.1f"
-set ylabel 'Activation Free Energy $\Delta G^\ddag$ (eV)'
+#set ylabel 'Activation Free Energy $\Delta G^\ddag$ (eV)'
+set ylabel '$\Delta G^\ddag$ (eV)'
 set xtics -0.5,0.5,1.0
 set xlabel '$\Delta G^{fcc}_{H} -\frac{b}{a}(eU_{PZC})$ (eV)'
 set style textbox 1 transparent fc rgb 0xffff00 border lc "black" lw 5

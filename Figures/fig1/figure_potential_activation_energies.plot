@@ -24,7 +24,7 @@ do for [i=1:8]{
 	coeffs_a[i]=a
 	coeffs_b[i]=b
 }
-set ylabel 'Free Energy $\Delta G$ (eV)'
+set ylabel '$\Delta G^\ddag$ (eV)'
 set xrange [-2.5:0.5]
 set ytics format '%1.1f'
 plot for [i=1:8] "../../data/volmer/".elements[i]."/free_energy.txt" u ($1-0):2 ps 2 pointtype numbers[i] title elements[i], \
@@ -65,7 +65,7 @@ do for [i=1:8]{
 	coeffs_b[i]=b
 }
 set xrange [-2.5:0.5]
-set ylabel 'Free Energy $\Delta G$ (eV)' offset char 1,0
+set ylabel '$\Delta G_H$ (eV)' offset char 1,0
 set xlabel "U vs SHE (V)" #offset 0,screen 0.075
 plot for [i=1:8] "../../data/hydrogen/".elements[i]."_diff.txt" u ($1-4.4):($2-free_energy_corrections[i]) ps 2 pointtype numbers[i] title elements[i], \
      for [i=1:8] coeffs_a[i]*x+coeffs_b[i] lc i lw 2 dt 2 notitle

@@ -15,7 +15,7 @@ set cbtics out nomirror
 set cbtics format "%1.1f" #font ticsfont
 set cblabel '$\Delta G^\ddagger$ (eV)' #offset graph 0,0.25
 #
-set xlabel '$\Delta G^{fcc}_H$ (eV)'# offset 0,screen 0.05
+set xlabel '$\Delta G^{top}_H$ (eV)'# offset 0,screen 0.05
 set ylabel '$\Delta G^{top}_H-\Delta G^{fcc}_H$ (eV)'
 set xrange [-0.28:1.3]
 set yrange [-0.3:0.85]
