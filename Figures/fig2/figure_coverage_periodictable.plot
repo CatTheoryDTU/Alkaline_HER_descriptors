@@ -1,17 +1,9 @@
 set encoding utf8
-#tics#font = "Helvetica,10"
-#title#font = "Helvetica,14"
-#surfaces= "Au Cu"
-#do for [metal in surfaces] {print metal}
-#set terminal png enhanced #font titlefont size 1000,1000
-#set output "Coverage.png"
-#set palette defined ( 1e-9 "blue", 0.1 "red" )
 #set terminal epslatex color colortext size 5in,3.0in "cmss" standalone font "Times new Roman, 30"
-set terminal epslatex color colortext size 5in,3.0in font "ptm, 10" standalone
+set terminal epslatex color colortext size 5in,3.0in font "cmss, 10" standalone
 set output "Figure_Coverage_PeriodicTable.tex"
 
 set multiplot layout 3,3 columnsfirst margins 0.10, 0.85, 0.15, 0.95 spacing 0.02, 0.03
-# title "Coverage" #font "Helvetica,16"
 load '../turbo.pal'
 #
 CBHeight = 0.05
@@ -63,7 +55,7 @@ set cbtics  1e-2,1e1,1e0 offset screen 0,0.12
 unset colorbox
 set format y "%2.0f"
 set ytics 8,2,14 offset graph 0.05,0
-set title 'Rh' offset -6.6,-2.0 textcolor 'black' left
+set title 'Rh' offset -6.6,-2.5 textcolor 'black' left
 set arrow 1 from -0.413,7 to -0.826,14 nohead lc 'white' lw 5 dt 2 front
 set format x '';
 #set label 1 '0V vs RHE'  at -0.5195,10.5 font ",5" textcolor 'white' rotate by atan(3.5*1.75*-0.59)/pi*180+3 center front #font ticsfont
@@ -73,7 +65,7 @@ splot "../../results/Rh/coverage.dat" using 1:2:3 with pm3d notitle
 unset colorbox
 unset xlabel
 set ylabel "pH"
-set title 'Ir' offset -6.6,-2.0 textcolor 'white' left
+set title 'Ir' offset -6.6,-2.5 textcolor 'white' left
 set arrow 1 from -0.413,7 to -0.826,14 nohead lc 'white' lw 5 front
 unset colorbox
 set format x "%1.1f"
@@ -86,16 +78,16 @@ unset ylabel
 unset xlabel
 set format y '';
 set format x '';
-set title 'Ni' offset -6.6,-2.0 textcolor 'white' left
+set title 'Ni' offset -6.6,-2.5 textcolor 'white' left
 set arrow 1 from -0.413,7 to -0.826,14 nohead lc 'white' lw 5 front
 splot "../../results/Ni/coverage.dat" using 1:2:3 with pm3d notitle
 #Pd
-set title 'Pd' offset -6.6,-2.0 textcolor 'white' left
+set title 'Pd' offset -6.6,-2.5 textcolor 'white' left
 splot "../../results/Pd/coverage.dat" using 1:2:3 with pm3d notitle
 #Pt
 set format x "%1.1f"
 set xlabel "U vs SHE (V)"
-set title 'Pt' offset -6.6,-2.0 textcolor 'white' left
+set title 'Pt' offset -6.6,-2.5 textcolor 'white' left
 splot "../../results/Pt/coverage.dat" using 1:2:3 with pm3d notitle
 #
 set cbrange [1e-10:1e-4]
@@ -105,18 +97,18 @@ unset xlabel
 set format x ''
 set arrow 1 from -0.413,7 to -0.826,14 nohead lc 'black' lw 5 dt 2 front
 set label 1 '\small{0V vs RHE}'  at -0.5195,10.5 textcolor 'black' rotate by atan(3.5*1.75*-0.42)/pi*180+3 center front #font ticsfont
-set title 'Ag' offset -6.6,-2.0 textcolor 'black' left
+set title 'Ag' offset -6.6,-2.5 textcolor 'black' left
 splot "../../results/Ag/coverage.dat" using 1:2:3 with pm3d notitle
 unset label 1
 #Au
-set title 'Au' offset -6.6,-2.0 textcolor 'black' left
+set title 'Au' offset -6.6,-2.5 textcolor 'black' left
 set arrow 1 from -0.413,7 to -0.826,14 nohead lc 'black' lw 5 front
 splot "../../results/Au/coverage.dat" using 1:2:3 with pm3d notitle
 #Cu
 set xlabel "U vs SHE (V)"
 set xtics -1.5,0.5,-0.5
 set format x "%1.1f"
-set title 'Cu' offset -6.6,-2.0 textcolor 'black' left
+set title 'Cu' offset -6.6,-2.5 textcolor 'black' left
 set arrow 1 from -0.413,7 to -0.826,14 nohead lc 'black' lw 5 front
 set colorbox front user origin 0.87,0.15 size 0.02,0.80
 set cbtics  1e-8,1e2,1e-4 offset screen -0.01,0 nomirror out

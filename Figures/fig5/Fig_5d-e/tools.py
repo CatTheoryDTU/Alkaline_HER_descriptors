@@ -7,7 +7,7 @@ transform = {'htop': '$\Delta G^{\mathrm{top}}_\mathrm{H}$',
                  'hfcc': '$\Delta G^{\mathrm{fcc}}_\mathrm{H}$',
                  'htop-hfcc': '$\Delta G^{\mathrm{top}}_\mathrm{H} - \Delta G^{\mathrm{fcc}}_\mathrm{H}$',
                  'vsquaredREL': '$V^2_{rel}$',
-                 'hfcc-pzc': '$\Delta G^{\mathrm{fcc}}_\mathrm{H} - 0.52eU_{\mathrm{PZC}}$'}
+                 'hfcc-pzc': '$\Delta G^{\mathrm{fcc}}_\mathrm{H} - 0.91eU_{\mathrm{PZC}}$'}
 
 def collect_data(metal_order=['Ni', 'Pd', 'Ir', 'Rh', 'Pt', 'Cu', 'Ag', 'Au']):
     """
@@ -46,8 +46,8 @@ def collect_data(metal_order=['Ni', 'Pd', 'Ir', 'Rh', 'Pt', 'Cu', 'Ag', 'Au']):
 
     dat_dict['PZC'] = np.array([
         5.02015, 4.81861, 5.12015, 4.57793, 5.45706,
-        4.29556, 3.95333, 4.69770])
-    dat_dict['hfcc-pzc'] = dat_dict['hfcc'] - 0.52*dat_dict['PZC']
+        4.29556, 3.95333, 4.69770])-4.44
+    dat_dict['hfcc-pzc'] = dat_dict['hfcc'] - 0.91*dat_dict['PZC']
     dat_dict['htop-hfcc'] = dat_dict['htop'] - dat_dict['hfcc']
 
 
@@ -168,10 +168,22 @@ def plot_volcano(data, rxns_long=['Volmer','Heyrovsky','Tafel','Activity'],
                              aspect='auto', origin='lower',
                        vmin=0.4, vmax=1.3,cmap='RdYlGn_r', interpolation='nearest')
 
+        extent=[min(ranges[0]), max(ranges[0]),min(ranges[1]),max(ranges[1])]
+        #f=open(f'heat_{iax}.txt','w')
+        #for i,row in enumerate(all_dats[iax][3]):
+        #    f.write("\n")
+        #    yval=extent[2]+i*(extent[3]-extent[2])/(row.size-1)
+        #    for j,cval in enumerate(row):
+        #        xval=extent[0]+j*(extent[1]-extent[0])/(row.size-1)
+        #        f.write(f'{xval:1.5f} {yval:1.5f} {cval:1.5f}\n')
+        #f.close()
+        #f=open(f'points_{iax}.txt','w')
         for i in range(len(data[descriptors[iax][0]])):
             ax.annotate(metal_order[i],
                         xy=(xs[iax][i],ys[iax][i]),
                         fontsize=20,ha='center', va='center')
+        #    f.write(f'{xs[iax][i]:1.5f} {ys[iax][i]:1.5f} {metal_order[i]}\n')
+        #f.close()
 
         ax.plot(xs[iax],ys[iax], 'ko', markeredgecolor='k', markersize=30, markerfacecolor='none')
         ax.set_xlim(min(ranges[0]), max(ranges[0]))

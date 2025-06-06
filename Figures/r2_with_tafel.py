@@ -64,7 +64,7 @@ slopes_hdiff_heyrovsky=[]
 xpzc=PZCs-4.4
 xhbe=HBEs
 xhtop=Htops
-combined_hbepzc=xhbe-0.52*xpzc
+combined_hbepzc=xhbe-0.91*xpzc
 xcoup=couplings
 xhdiff=HBEs-Htops
 
@@ -166,4 +166,4 @@ for label, ax in zip(labels,axs):
         fontsize='medium', va='bottom', fontfamily='serif')
     ax.set_xticks([-2,-1,0])
 #fig.show()
-fig.savefig('R2_with_potential.pdf',bbox_inches="tight")
+#fig.savefig('R2_with_potential.pdf',bbox_inches="tight")

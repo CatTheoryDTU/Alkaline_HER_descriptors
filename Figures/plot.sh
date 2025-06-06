@@ -16,7 +16,7 @@ do
 		outfile=`grep "^set output" $plotfile | awk -F '\"' '{print $2}'`
 		incfile=`echo $outfile | awk -F '.' '{print $1}'`
 		epstopdf $incfile\-inc.eps
-		pdflatex $outfile > /dev/null
+		pdflatex -interaction=nonstopmode $outfile > /dev/null
 	done
 	cd ../
 done

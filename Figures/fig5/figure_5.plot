@@ -3,7 +3,7 @@
 #
 set encoding utf8
 set ylabel 'Descriptor Strength, $R^2$ '
-set terminal epslatex color colortext size 6in,3in "ptm,10" standalone
+set terminal epslatex color colortext size 6in,3in "cmss,10" standalone
 set output "Figure_5.tex"
 set xtics nomirror
 set ytics nomirror
@@ -34,8 +34,8 @@ plot \
 set ylabel ""
 set ytics format ""
 set label 4 '\large b) Heyrovsky' at 0,-0. textcolor 'black' front right
-set label 1 '$\Delta G^{\mathrm{fcc}}_\mathrm{H}-0.52\mathrm{e}U_{\mathrm{PZC}}$' at -1.9, 1.0 textcolor 'dark-red' front
-set label 2 '$\Delta G^{\mathrm{fcc}}_\mathrm{H}$' at -0.4,0.82 textcolor 'black' front
+set label 1 '$\Delta G^{\mathrm{fcc}}_\mathrm{H}-0.91eU_{\mathrm{PZC}}$' at -1.9, 0.98 textcolor 'dark-red' front
+set label 2 '$\Delta G^{\mathrm{fcc}}_\mathrm{H}$' at -0.5,0.825 textcolor 'black' front
 #set label 3 at graph -0.15,1.05 'b)' front
 plot \
 	"<paste fig5x.txt fig5b.txt" u 1:3 w l lc 'black' lw 3.0 notitle, \
