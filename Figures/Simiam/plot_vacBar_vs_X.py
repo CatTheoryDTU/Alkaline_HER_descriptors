@@ -1,6 +1,6 @@
 """
 
-Tafel barriers vac. vs. aqueous trajectories
+Tafel barriers in vacuum vs. descriptors
 
 """
 
@@ -207,9 +207,6 @@ def plot_scatter(xvals, yvals,metals, xlabel, ylabel,xkey,ykey) :
 
 
 
-
-
-        
         fs=6
         ax.set_xlabel(xlabel,fontsize=fs) 
         ax.set_ylabel(ylabel,fontsize=fs) 
@@ -217,9 +214,6 @@ def plot_scatter(xvals, yvals,metals, xlabel, ylabel,xkey,ykey) :
    
     figname='{}_vs_{}_reg{}'.format(ykey,xkey,SKregression)
 
-    #if xkey == 'wdos':
-    #    figname+='_{}pm_dindex{}{}'.format(zval,dindex,mtag) 
-    
 
     print('plotting {}'.format(figname))
     plt.savefig('output/'+figname+'.png',dpi=300)
@@ -242,8 +236,6 @@ if __name__ == "__main__":
     df = parse_results()
     
     #load vacuum barriers.
-    #pot='4.40'
-    #filename='CSV/parsed_barriers_vac_aqu_pot{}.csv'.format(pot)
     filename='CSV/parsed_vacuum_tafel_barriers.csv'
     dfB = pd.read_csv(filename)
 
@@ -256,7 +248,8 @@ if __name__ == "__main__":
     
     xvals = HBEtops - HBEfccs
     xkey = 'HBEtop-HBEfcc'
-    xlabel='HBEtop - HBEfcc [eV]' #$\Delta E^{\ddagger}$ [eV] (vac.traj)' #+ ' {}V'.format(pot)
+    xlabel='HBEtop - HBEfcc [eV]' 
+    
     yvals = vac_barriers
     ykey = 'vacBar'
     ylabel=r'$\Delta E^{\ddagger}$ [eV] (vac.traj)' #+ ' {}V'.format(pot)
