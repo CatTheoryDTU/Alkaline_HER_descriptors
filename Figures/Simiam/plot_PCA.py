@@ -111,7 +111,7 @@ if __name__ == "__main__":
     rdict = {
              'PZC': [ float(df.loc[ df['metal'] == metal, 'PZC'].iloc[0]) for metal in metals ] ,
              'vac_Htop': [ float(df.loc[ df['metal'] == metal, 'vac_Htop'].iloc[0]) for metal in metals ] ,
-             'vac_HBE': [ float(df.loc[ df['metal'] == metal, 'vac_HBE'].iloc[0]) for metal in metals ] 
+             'vac_HBE': [ float(df.loc[ df['metal'] == metal, 'vac_HBE'].iloc[0]) for metal in metals ] ,
              'dbandcenter': [ float(TM.loc[ TM['metal'] == metal, 'dbandcenter'].iloc[0])  for metal in metals ] ,
              'dbandupperedge': [ float(TM.loc[ TM['metal'] == metal, 'dbandupperedge'].iloc[0])  for metal in metals ] ,
              'vsquaredREL': [ float(TM.loc[ TM['metal'] == metal, 'vsquaredREL'].iloc[0]) for metal in metals ],
