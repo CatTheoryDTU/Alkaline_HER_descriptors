@@ -18,10 +18,14 @@ stats "<paste couplings.txt tafels.txt" u 1:2 prefix "couptaf"
 stats "<paste dbandcenters.txt volmers.txt" u 1:2 prefix "dbandvol"
 stats "<paste dbandcenters.txt heyrovskys.txt" u 1:2 prefix "dbandhey"
 stats "<paste dbandcenters.txt tafels.txt" u 1:2 prefix "dbandtaf"
+stats "<paste Hdiff.txt volmers.txt" u 1:2 prefix "hdiffvol"
+stats "<paste Hdiff.txt heyrovskys.txt" u 1:2 prefix "hdiffhey"
+stats "<paste Hdiff.txt tafels.txt" u 1:2 prefix "hdifftaf"
 set yrange [0.2:1.5]
-set multiplot layout 1,2 margins 0.15, 0.95, 0.25, 0.85 # title "Activation Energies at -1 V vs SHE" font titlefont
+set multiplot layout 1,3 margins 0.15, 0.95, 0.25, 0.85 # title "Activation Energies at -1 V vs SHE" font titlefont
 set title 
 set xrange[-4.5:-1.0]
+set xtics -4.,1,-1
 set xlabel '$\epsilon_d$'
 FILE = "numbers.txt"
 array numbers[8]
@@ -42,6 +46,7 @@ plot \
 unset key
 set xrange[0.5:4.5]
 set xlabel "$|V_{ad}|^2$"
+set xtics 1,1,4
 set ylabel ""
 set ytics format ""
 set label 1 sprintf('\tiny{Volmer, $R^2 = %1.2f$}',coupvol_correlation**2) at 1.0,0.7 rotate by 0 textcolor 'black' front
@@ -54,4 +59,17 @@ plot \
 	coupvol_slope * x + coupvol_intercept w l lw 7.5 lc 'black' dt 2 notitle, \
 	couphey_slope * x + couphey_intercept w l lw 7.5 lc 7 dt 2 notitle, \
 	couptaf_slope * x + couptaf_intercept w l lw 7.5 lc 6 dt 2 notitle
+set xrange[-0.3:0.9]
+set xtics -0.4,0.4,0.8
+set xlabel '$\Delta G^{top}_{H} - \Delta G^{fcc}_{H}$'
+set label 1 sprintf('\tiny{Volmer, $R^2 = %1.2f$}',hdiffvol_correlation**2) at -.2,0.45 rotate by 0 textcolor 'black' front
+set label 2 sprintf('\tiny{Heyrovsky, $R^2 = %1.2f$}',hdiffhey_correlation**2) at -.2,0.35 rotate by 0 textcolor lt 7 front
+set label 3 sprintf('\tiny{Tafel, $R^2 = %1.2f$}',hdifftaf_correlation**2) at -.2,0.25 rotate by 0 textcolor lt 6 front
+plot \
+	'<paste Hdiff.txt volmers.txt numbers.txt' u 1:2:3 with points lc 'black' pointtype variable ps 2 notitle, \
+	'<paste Hdiff.txt heyrovskys.txt numbers.txt' u 1:2:3 w points ps 2 pt variable lc 7 notitle, \
+	'<paste Hdiff.txt tafels.txt numbers.txt' u 1:2:3 w points ps 2 pt variable lc 6 notitle, \
+	hdiffvol_slope * x + hdiffvol_intercept w l lw 7.5 lc 'black' dt 2 notitle, \
+	hdiffhey_slope * x + hdiffhey_intercept w l lw 7.5 lc 7 dt 2 notitle, \
+	hdifftaf_slope * x + hdifftaf_intercept w l lw 7.5 lc 6 dt 2 notitle
 unset multiplot
