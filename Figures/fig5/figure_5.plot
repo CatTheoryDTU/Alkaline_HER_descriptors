@@ -45,7 +45,7 @@ plot \
 	"<paste fig5x.txt fig5b.txt" u 1:6 w l lc 'purple' lw 3.0 notitle, \
 	"<paste fig5x.txt fig5b.txt" u 1:7 w l lc 'dark-goldenrod' lw 3.0 notitle
 set label 1 '$|V_{ad}|^2$' at -1, 0.88 textcolor 'purple' front
-set label 2 '$\Delta G^{\mathrm{fcc}}_\mathrm{H}-\Delta G^{\mathrm{top}}_\mathrm{H}$' at -1.5,0.75 textcolor 'dark-goldenrod' front
+set label 2 '$\Delta G^{\mathrm{top}}_\mathrm{H}-\Delta G^{\mathrm{fcc}}_\mathrm{H}$' at -1.5,0.75 textcolor 'dark-goldenrod' front
 set label 4 '\large c) Tafel' at -2,1. textcolor 'black' front left
 #set label 3 at graph -0.15,1.05 'c)' front
 plot \

@@ -16,7 +16,8 @@ rcParams = {
         }
 plt.rcParams.update(rcParams)
 
-metal_order = ['Ni', 'Pd', 'Ir', 'Rh', 'Pt', 'Cu', 'Ag', 'Au']
+#metal_order = ['Ni', 'Pd', 'Ir', 'Rh', 'Pt', 'Cu', 'Ag', 'Au']
+metal_order = ['Ag', 'Au', 'Cu', 'Ir', 'Ni', 'Pd', 'Pt', 'Rh']
 rxns_long= ['Volmer','Heyrovsky','Tafel']
 colors = ['r', 'g', 'b']
 
