@@ -255,8 +255,8 @@ if __name__ == "__main__":
     
     
     for ykey in ['vacuum_barrier']:
-        #for xkey in [ 'HBEtop-HBEfcc',  'vsquaredREL']:
-        for xkey in [ 'vsquaredREL']:
+        for xkey in [ 'HBEtop-HBEfcc',  'vsquaredREL']:
+        #for xkey in [ 'vsquaredREL']:
 
             if ykey == 'vacuum_barrier':
                 #load vacuum barriers.
@@ -275,31 +275,24 @@ if __name__ == "__main__":
             
             elif xkey == 'HBEtop-HBEfcc':
                 #only few metals available.
-                #metals = df['metal'].tolist()   
-                #HBEfccs = np.array( [ float(df.loc[ df['metal'] == metal, 'vac_HBE'].iloc[0])  for metal in metals ] )
-                #HBEtops = np.array( [ float(df.loc[ df['metal'] == metal, 'vac_Htop'].iloc[0])  for metal in metals ] )
-                  
 
                 #look up results. return np.nan if not found.
                 HBEfccs = []
                 HBEtops = []
-              #  for metal in metals:
-              #      if df.loc[ df['metal'] == metal, 'vac_HBE'] not None:
-              #          HBEfccs.append( df.loc[ df['metal'] == metal, 'vac_HBE'] )
-              #      else
-              #          HBEfccs.append( np.nan)
-              #      
-              #      if df.loc[ df['metal'] == metal, 'vac_Htop'] not None:
-              #          HBEtops.append( df.loc[ df['metal'] == metal, 'vac_Htop'] )
-              #      else
-              #          HBEtops.append( np.nan)
+                for metal in metals:
+                    if df.loc[ df['metal'] == metal, 'vac_HBE'].any(): 
+                        HBEfccs.append( df.loc[ df['metal'] == metal, 'vac_HBE'].iloc[0] )
+                    else:
+                        HBEfccs.append( np.nan)
+                    
+                    if df.loc[ df['metal'] == metal, 'vac_Htop'].any():
+                        HBEtops.append( df.loc[ df['metal'] == metal, 'vac_Htop'].iloc[0] )
+                    else:
+                        HBEtops.append( np.nan)
                         
-                HBEfccs =  [ df.loc[ df['metal'] == metal, 'vac_HBE']  for metal in metals ] 
-                #print(HBEfccs)
-                HBEtops =  [ df.loc[ df['metal'] == metal, 'vac_Htop']  for metal in metals ] 
-
                
-
+                HBEfccs = np.array(HBEfccs)
+                HBEtops = np.array(HBEtops)
 
                 xvals = HBEtops - HBEfccs
                 xkey = 'HBEtop-HBEfcc'
