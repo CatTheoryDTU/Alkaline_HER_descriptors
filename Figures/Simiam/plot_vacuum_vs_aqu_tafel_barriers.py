@@ -217,8 +217,8 @@ if __name__ == "__main__":
 
         yvals = df_aqu['aquBarrier'].to_numpy()
         xvals = df_vac['vacBarrier'].to_numpy()
-        xkey = 'vac'
-        ykey = 'aqu_pot{}'.format(pot)
+        xkey = 'vacuum_barrier'
+        ykey = 'aqu_barrier_pot{}'.format(pot)
             
         ylabel=r'$\Delta E^{\ddagger}$ [eV] (aqu.traj)' + ' {}V'.format(pot)
         xlabel=r'$\Delta E^{\ddagger}$ [eV] (vac.traj)' 

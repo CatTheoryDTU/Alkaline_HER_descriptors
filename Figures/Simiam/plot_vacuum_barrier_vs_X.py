@@ -259,7 +259,7 @@ if __name__ == "__main__":
     xlabel='HBEtop - HBEfcc [eV]' 
     
     yvals = vac_barriers
-    ykey = 'vacBar'
+    ykey = 'vacuum_barrier'
     ylabel=r'$\Delta E^{\ddagger}$ [eV] (vac.traj)' #+ ' {}V'.format(pot)
     plot_scatter(xvals, yvals,metals, xlabel, ylabel,xkey,ykey) 
 
