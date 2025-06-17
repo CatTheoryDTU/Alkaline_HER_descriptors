@@ -1,6 +1,6 @@
 """
 
-Tafel barriers vac. vs. aqueous trajectories
+Tafel barriers in vacuum vs. descriptors
 
 """
 
@@ -22,9 +22,63 @@ from ase.io import read,write
 
 
 
+def parse_results():
+    """
+    parse .txt files to dataframe
+    """
+    filenames=[
+        'metals.txt',
+        'PZCs.txt', 
+        'vac_Htops.txt',
+        'vac_HBEs.txt',
+        'i0s.txt'
+             ]
+    
+    path='../'
+    #laptop
+    #path='/Users/sangh/software/Alkaline_HER_Descriptors/Figures/' 
+    data = []
+    for i in range(len(filenames)):
+        vals=[]
+        with open(path+filenames[i],'r') as f:
+            for line in f:
+                cols = line.split()
+                if i !=0:
+                    value = float(cols[0])
+                else: 
+                    value = str(cols[0])
+                vals.append(value)
+        data.append(vals)
+    
+    metals = data[0]
+    PZCs = data[1]
+    vac_Htops = data[2]
+    vac_HBEs = data[3]
+    i0s = data[4]
+    
+    print('len metals {}'.format(len(metals)))
+    rlist = [] 
+    for j in range(len(metals)):
+        attributes = {
+                "metal" : metals[j],
+                "PZC" : PZCs[j],
+                "vac_Htop" : vac_Htops[j],
+                "vac_HBE" : vac_HBEs[j],
+                "i0" : i0s[j]
+                  }
+        
+        rlist.append(attributes)
+    
+    df = pd.DataFrame(rlist)
+    
+    df.to_csv('CSV/results_dipam.csv',index=False)
+
+    return df
+
 
 def plot_scatter(xvals, yvals,metals, xlabel, ylabel,xkey,ykey) :
     print(' ')
+    #print('{} {} {} {} {} {} {} {}'.format( spin,mtag,dindex,site,zval,xkey,ykey,adsorbate))
     print('plotting y {} vs x{} '.format( ykey,xkey))
 
     lrbt=[0.3,0.95,0.2,0.95]
@@ -83,12 +137,12 @@ def plot_scatter(xvals, yvals,metals, xlabel, ylabel,xkey,ykey) :
         #ax.scatter(xvals, yvals,s=5, color='black')
         ax.scatter(xvals[subset],yvals[subset],s=5, color='black')
         
-        arsize=4
+        arsize=6
         #dx,dy=(0.1,0.01)
         dx,dy=(0.0,0.01)
         
         for i in subset: #range(xvals.shape[0]):
-            ax.annotate('{}{}'.format(metals[i],terminations[i]), xy=(xvals[i]+dx,yvals[i]+dy),
+            ax.annotate('{}'.format(metals[i]), xy=(xvals[i]+dx,yvals[i]+dy),
                         fontsize=arsize,ha='center',textcoords='data',
                         color="k",annotation_clip=False)                      
         
@@ -144,12 +198,13 @@ def plot_scatter(xvals, yvals,metals, xlabel, ylabel,xkey,ykey) :
             if False:
                 ax.annotate('R2 Excludes: {}'.format(excluded_from_regression), xy=capcoord,ha='center', fontsize=arsize,
                                 xycoords = ('axes fraction'), textcoords=('axes fraction') ,color="k",annotation_clip=False)                      
-            elif True: #if False:
+            elif False: #if False:
                 ax.annotate('Not found: {}'.format(excluded_from_regression), xy=capcoord,ha='center', fontsize=arsize,
                                 xycoords = ('axes fraction'), textcoords=('axes fraction') ,color="k",annotation_clip=False)                      
         
         if PDregression:
             dummy=1
+
 
 
         fs=6
@@ -159,9 +214,6 @@ def plot_scatter(xvals, yvals,metals, xlabel, ylabel,xkey,ykey) :
    
     figname='{}_vs_{}_reg{}'.format(ykey,xkey,SKregression)
 
-    #if xkey == 'wdos':
-    #    figname+='_{}pm_dindex{}{}'.format(zval,dindex,mtag) 
-    
 
     print('plotting {}'.format(figname))
     plt.savefig('output/'+figname+'.png',dpi=300)
@@ -178,144 +230,38 @@ if __name__ == "__main__":
     
     pd.options.display.max_rows = 4000
     pd.set_option('display.max_colwidth', None)
-
-    #LOAD INPUTS
-    TM = pd.read_csv('CSV/TM_parameters.csv')
-                
-    #adsorbate='H'      
-    metals_all=['Ag','Al','Au','Cu','Fe','Co','Ni','Ir','Os','Pd','Pt','Re','Rh','Ru','W','Zn']
     
+
+    #LOAD DATA, Dipam's HBEtop:
+    df = parse_results()
     
-    terminations = []
-    for metal in metals_all:
-        if metal in ['Fe','W']:
-            terminations.append('bcc') #'110')
-        elif metal in ['Co','Ru','Re','Os','Zn']:
-            terminations.append('0001')
-        else:
-            terminations.append('111')
+    print('Dipams results in dataframe:')
+    print('{}'.format(df))
 
-    #There are different datasets of barriers, containing also different subsets of metals_all.
-    
-    #bflags = ['aqutraj','vactraj','Hammer'] 
-    reaction='tafel'
-    
-    pots = [str('{0:.2f}'.format(pot)   ) for pot in np.arange(2.10,4.50, 0.05)]
+    #load vacuum barriers.
+    filename='CSV/parsed_vacuum_tafel_barriers.csv'
+    dfB = pd.read_csv(filename)
+    print('Vacuum barriers, parsed by Simiam, in dataframe:')
+    print('{}'.format(dfB))
 
 
-    """
-    search for all vacuum or aqueous tafel trajectories and get barrier. 
-    """
 
-
-    metals = metals_all
-
-    #pots = ['3.40']
-
-    if True: #parsing trajectories.
-
-        for pot in pots:
-            aqu_barriers=[]
-            vac_barriers=[]
-            count=0
-            for i in range(len(metals)):  #always parse the full metal list. Deal with missing data later. 
-                metal = metals[i]
-                termination = terminations[i]
-               
-                
-                print('****************')
-                print('METAL {} '.format(metal))
-               
-                #Niflheim:
-                #trunk='/home/cat/dmapa/gpaw/alkalinebarriers/{}/{}/{}/pot_{}/'.format(reaction,metal,termination, pot)
-                #Laptop
-                trunk='../alkalinebarriers/{}/{}/{}/pot_{}/'.format(reaction,metal,termination, pot)
-                
-                trajfile = 'final_path.traj'
-                fname = trunk+trajfile
-                if os.path.isfile(fname):
-                    print('FOUND traj {} {}'.format(metal,fname))
-                    traj = ase.io.read(fname+'@:')
-                    energies = np.array([image.get_potential_energy() for image in traj])  #array won't store in df!!!
-                    aqu_barrier= max(energies) - energies[0]
-                    count+=1
-                else:
-                    print('combined system traj not found {}'.format(fname))
-                    print('skipping')  #This avoids NaNs.
-                    aqu_barrier = np.nan
-                    #continue
-                aqu_barriers.append(aqu_barrier) 
-                
-                #Niflheim:
-                #trunk='/home/cat/dmapa/gpaw/dissads/tree/endstates/BEEF-{}/H2/doNEB/'.format(metal)
-                #laptop:
-                trunk='../dissads/tree/endstates/BEEF-{}/H2/doNEB/'.format(metal)
-                
-                trajfile = 'final_path.traj'
-                fname = trunk+trajfile
-                if os.path.isfile(fname):
-                    print('FOUND traj {} {}'.format(metal,fname))
-                    traj = ase.io.read(fname+'@:')
-
-                    energies = np.array([image.get_potential_energy() for image in traj])  #array won't store in df!!!
-                    vac_barrier = max(energies) - energies[0]
-                else:
-                    print('combined system traj not found {}'.format(fname))
-                    print('skipping')  #This avoids NaNs.
-                    vac_barrier = np.nan 
-                    #continue
-                vac_barriers.append(vac_barrier) 
-                        
-
-            vac_barriers=np.array(vac_barriers)
-            aqu_barriers=np.array(aqu_barriers)
-            
-
-            df = pd.DataFrame([])
-            df_vac = pd.DataFrame([])
-            df['metal'] = metals_all
-            df['termination'] = terminations
-            df['aquBarrier'] = aqu_barriers
-
-            df_vac['metal'] = metals_all
-            df_vac['vacBarrier'] = vac_barriers
-            
-           
-            if count > 0 :
-                filename='CSV/parsed_aqueous_tafel_barriers_pot{}'.format(pot)
-                df.to_csv(filename+'.csv',index=False)
-            
-            filename='CSV/parsed_vacuum_tafel_barriers' #.format(pot)
-            df_vac.to_csv(filename+'.csv',index=False)
+    metals = df['metal'].tolist()   
+    HBEfccs = np.array( [ float(df.loc[ df['metal'] == metal, 'vac_HBE'].iloc[0])  for metal in metals ] )
+    HBEtops = np.array( [ float(df.loc[ df['metal'] == metal, 'vac_Htop'].iloc[0])  for metal in metals ] )
+    vac_barriers = np.array( [ float(dfB.loc[ dfB['metal'] == metal, 'vacBarrier'].iloc[0])  for metal in metals ] )
    
 
-    if True: #plotting
-        for pot in pots:
-            
-            fname='CSV/parsed_aqueous_tafel_barriers_pot{}.csv'.format(pot)
-            if os.path.isfile(fname):
-                df_aqu =  pd.read_csv(fname)
-            else:
-                print('file not found: {}'.format(fname))
-                continue
+    print('metals {}'.format(metals))
 
-            fname='CSV/parsed_vacuum_tafel_barriers.csv' 
-            if os.path.isfile(fname):
-                df_vac =  pd.read_csv(fname)
-            else:
-                print('file not found: {}'.format(fname))
-                continue
-            
-
-            yvals = df_aqu['aquBarrier'].to_numpy()
-            xvals = df_vac['vacBarrier'].to_numpy()
-            xkey = 'vac'
-            ykey = 'aqu_pot{}'.format(pot)
-                
-            ylabel=r'$\Delta E^{\ddagger}$ [eV] (aqu.traj)' + ' {}V'.format(pot)
-            xlabel=r'$\Delta E^{\ddagger}$ [eV] (vac.traj)' #+ ' {}V'.format(pot)
-            
-            plot_scatter(xvals, yvals,metals, xlabel, ylabel,xkey,ykey) 
+    xvals = HBEtops - HBEfccs
+    xkey = 'HBEtop-HBEfcc'
+    xlabel='HBEtop - HBEfcc [eV]' 
+    
+    yvals = vac_barriers
+    ykey = 'vacBar'
+    ylabel=r'$\Delta E^{\ddagger}$ [eV] (vac.traj)' #+ ' {}V'.format(pot)
+    plot_scatter(xvals, yvals,metals, xlabel, ylabel,xkey,ykey) 
 
 
 
