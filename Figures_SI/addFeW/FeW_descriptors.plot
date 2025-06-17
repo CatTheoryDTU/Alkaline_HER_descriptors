@@ -92,7 +92,7 @@ set xtics 1,2,7
 set ytics format "%1.1f"
 set xtics format "%1.1f"
 set ylabel 'Activation Free Energy $\Delta G^\ddag$ (eV)'
-set xlabel '$|V|^2$'
+set xlabel '$|V_{ad}|^2$'
 set label 1 sprintf('\small{Volmer, $R^2$=%1.2f}',coupvol_correlation**2) at 0.18,0.68 rotate by atan(2*coupvol_slope/1.3)/pi*180.0-5 font subtitlefont textcolor 'black' front
 set label 3 sprintf('\small{Tafel, $R^2$=%1.2f}',couptaf_correlation**2) at 0.25,0.86 rotate by atan(2*couptaf_slope/1.3)/pi*180.0 font subtitlefont textcolor lt 6 front
 set label 4 at graph -0.1,1.1 'd)' front
