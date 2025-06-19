@@ -78,7 +78,7 @@ set ytics format "%1.1f"
 #set ylabel 'Activation Free Energy $\Delta G^\ddag$ (eV)'
 set ylabel '$\Delta G^\ddag$ (eV)'
 set xtics -0.5,0.5,1.0
-set xlabel '$\Delta G^{fcc}_{H} -\frac{b}{a}(eU_{PZC})$ (eV)'
+set xlabel '$\Delta G^{fcc}_{H} -0.91(eU_{PZC})$ (eV)'
 set style textbox 1 transparent fc rgb 0xffff00 border lc "black" lw 5
 set label 1 sprintf('\small{Volmer $R^2=%1.2f$}',VOLM_correlation**2) at 0.35,1.05 rotate by atan(3.6*f22/1.3)/pi*180-15 font subtitlefont textcolor 'black' front
 set label 2 sprintf('\small{Heyrovsky $R^2=%1.2f$}',HEY_correlation**2) at 0.32,0.78 rotate by atan(3.6*g22/1.3)/pi*180+12 font subtitlefont textcolor lt 7 front
