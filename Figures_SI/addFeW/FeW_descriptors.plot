@@ -3,7 +3,7 @@ ticsfont = "cmss,12"
 titlefont = "cmss,22"
 subtitlefont = "cmss,8"
 set xlabel '$\Delta G^{fcc}_{H}$ (eV)'
-set ylabel 'Activation Free Energy $\Delta G^\ddag$ (eV)'
+set ylabel '$\Delta \Omega^\ddag$ (eV)'
 #set terminal svg enhanced size 1000,500
 #set output "NewVolcano.svg"
 #set terminal svg enhanced font titlefont size 1500,500
@@ -47,7 +47,7 @@ set xtics -0.5,0.5,1.0
 set ytics format "%1.1f"
 set xtics format "%1.1f"
 set xlabel '$\Delta G^{fcc}_{H}$ (eV)'
-set ylabel 'Activation Free Energy $\Delta G^\ddag$ (eV)'
+set ylabel '$\Delta \Omega^\ddag$ (eV)'
 set label 1 sprintf('\small{Volmer, $R^2$=%1.2f}',hfccvol_correlation**2) at 0.18,0.68 rotate by atan(2*hfccvol_slope/1.3)/pi*180.0-5 font subtitlefont textcolor 'black' front
 set label 3 sprintf('\small{Tafel, $R^2$=%1.2f}',hfcctaf_correlation**2) at 0.25,0.86 rotate by atan(2*hfcctaf_slope/1.3)/pi*180.0 font subtitlefont textcolor lt 6 front
 set label 4 at graph -0.1,1.1 'a)' front
@@ -91,7 +91,7 @@ set xrange [0.5:8]
 set xtics 1,2,7
 set ytics format "%1.1f"
 set xtics format "%1.1f"
-set ylabel 'Activation Free Energy $\Delta G^\ddag$ (eV)'
+set ylabel '$\Delta \Omega^\ddag$ (eV)'
 set xlabel '$|V_{ad}|^2$'
 set label 1 sprintf('\small{Volmer, $R^2$=%1.2f}',coupvol_correlation**2) at 0.18,0.68 rotate by atan(2*coupvol_slope/1.3)/pi*180.0-5 font subtitlefont textcolor 'black' front
 set label 3 sprintf('\small{Tafel, $R^2$=%1.2f}',couptaf_correlation**2) at 0.25,0.86 rotate by atan(2*couptaf_slope/1.3)/pi*180.0 font subtitlefont textcolor lt 6 front

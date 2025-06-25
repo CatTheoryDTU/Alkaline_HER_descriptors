@@ -9,7 +9,7 @@ f2(x,y)=f22*x+f21*y+f23
 g2(x,y)=g22*x+g21*y+g23
 h2(x,y)=h22*x+h21*y+h23
 #set arrow from first 5.5, graph 0 to first 5.5, graph 1 nohead
-set pm3d map interpolate 2,2 noborder
+set pm3d map interpolate 1,1 noborder
 #unset surface; 
 load '../../turbo.pal'
 set pm3d at b;
@@ -54,9 +54,9 @@ fit nh2(x,y) "data.new" u 2:($2-$1):5 via nh21,nh22,nh23
 set arrow 1 from -0.28,(-0.28*(nh22-nf22)+(nh23-nf23))/(nf21-nh21) to .57,(.57*(nh22-nf22)+(nh23-nf23))/(nf21-nh21) front nohead dt 2 lc 'black' #Volmer-Tafel
 set arrow 2 from 0.575,(0.575*(ng22-nf22)+(ng23-nf23))/(nf21-ng21) to 0.72,(0.72*(ng22-nf22)+(ng23-nf23))/(nf21-ng21) front nohead dt 2 lc 'black' #Volmer Heyrovsky
 set arrow 3 from 0.475,(0.475*(ng22-nh22)+(ng23-nh23))/(nh21-ng21) to .575,(.575*(ng22-nh22)+(ng23-nh23))/(nh21-ng21) front nohead dt 2 lc 'black' #Heyrovsky-Tafel
-set label 3 at graph 0.4,0.2 '\large{Volmer-Limited}' front
-set label 4 at graph 0.02,0.87 '\large{Tafel-Limited}' front
-set label 5 at graph 0.52,0.92 '\large{H}' front
+#set label 3 at graph 0.4,0.2 '\large{Volmer-Limited}' front
+#set label 4 at graph 0.02,0.87 '\large{Tafel-Limited}' front
+#set label 5 at graph 0.52,0.92 '\large{H}' front
 splot  \
 	"heat_0.txt" using 1:2:3 with pm3d notitle, \
 	"points_0.txt" using 1:2:(0.):(0.1) with circles linecolor 'black' notitle, \

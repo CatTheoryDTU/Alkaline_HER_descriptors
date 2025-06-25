@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2024.7.25)  31 MAY 2025 21:15
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2024.7.25)  25 JUN 2025 23:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -161,15 +161,131 @@ Package: fontenc 2017/04/05 v2.0i Standard LaTeX package
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.def
 File: t1enc.def 2017/04/05 v2.0i Standard LaTeX file
 LaTeX Font Info:    Redeclaring font encoding T1 on input line 48.
-)))
-(./FeW_Activation_Energies.aux)
+))
+(/home/cat/dmapa/texmf/tex/mathastext/mathastext.sty
+
+LaTeX Warning: You have requested release `2020/02/02' of LaTeX,
+               but only release `2017-04-15' is available.
+
+Package: mathastext 2024/10/26 v1.4e Use the text font in math mode (JFB)
+
+Package mathastext Info: Starting the math mode configuration.
+\mst@exists@muskip=\muskip10
+\mst@forall@muskip=\muskip11
+\mst@prime@muskip=\muskip12
+\mst@do@nonletters=\toks21
+\mst@undo@nonletters=\toks22
+\mst@do@easynonletters=\toks23
+\mst@undo@easynonletters=\toks24
+\symmtoperatorfont=\mathgroup4
+\symmtletterfont=\mathgroup5
+! Undefined control sequence.
+\mst@update@greeksh ...expandafter \in@ \expanded 
+                                                  {{\mst@greek@lsh .}}{it.,s...
+l.792 \mst@update@greeksh{\mst@ltsh}{\mst@opsh}
+                                               
+? q
+OK, entering \batchmode...
+! Undefined control sequence.
+\mst@update@greeksh ...expandafter \in@ \expanded 
+                                                  {{\mst@greek@ush .}}{it.,s...
+l.792 \mst@update@greeksh{\mst@ltsh}{\mst@opsh}
+                                               
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+(   mathastext:   ) ! and ?
+(   mathastext:   ) punctuation: , . : ; and \colon
+LaTeX Info: Redefining \relbar on input line 1197.
+LaTeX Info: Redefining \rightarrowfill on input line 1198.
+LaTeX Info: Redefining \leftarrowfill on input line 1201.
+(   mathastext:   ) + and =
+LaTeX Info: Redefining \Relbar on input line 1344.
+(   mathastext:   ) adding = ; and + to \nfss@catcodes
+(   mathastext:   ) parentheses ( ) [ ] and slash /
+(   mathastext:   ) alldelims: < > \backslash \setminus | \vert \mid \{ \}
+LaTeX Font Info:    Redeclaring math symbol \setminus on input line 1410.
+LaTeX Info: Redefining \models on input line 1429.
+(   mathastext:   ) \# \mathdollar \% \& 
+(   mathastext:   ) \imath and \jmath 
+! Undefined control sequence.
+\mst@update@greeksh ...expandafter \in@ \expanded 
+                                                  {{\mst@greek@lsh .}}{it.,s...
+l.2934 \ifmst@eulergreek
+                        
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+\mst@update@greeksh ...expandafter \in@ \expanded 
+                                                  {{\mst@greek@ush .}}{it.,s...
+l.2934 \ifmst@eulergreek
+                        
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+LaTeX Font Info:    Overwriting math alphabet `\Mathnormalbold' in version `nor
+mal'
+(Font)                  T1/cmss/bx/n --> T1/cmss/bx/n on input line 2934.
+LaTeX Font Info:    Overwriting math alphabet `\Mathnormalbold' in version `bol
+d'
+(Font)                  T1/cmss/bx/n --> T1/cmss/bx/n on input line 2934.
+LaTeX Font Info:    Overwriting symbol font `mtletterfont' in version `normal'
+(Font)                  T1/cmss/m/n --> T1/cmss/m/n on input line 2934.
+LaTeX Font Info:    Overwriting symbol font `mtletterfont' in version `bold'
+(Font)                  T1/cmss/m/n --> T1/cmss/bx/n on input line 2934.
+LaTeX Font Info:    Overwriting symbol font `mtoperatorfont' in version `normal
+'
+(Font)                  T1/cmss/m/n --> T1/cmss/m/n on input line 2934.
+LaTeX Font Info:    Overwriting symbol font `mtoperatorfont' in version `bold'
+(Font)                  T1/cmss/m/n --> T1/cmss/bx/n on input line 2934.
+LaTeX Font Info:    Overwriting math alphabet `\Mathbf' in version `normal'
+(Font)                  T1/cmss/bx/n --> T1/cmss/bx/n on input line 2934.
+LaTeX Font Info:    Overwriting math alphabet `\Mathbf' in version `bold'
+(Font)                  T1/cmss/bx/n --> T1/cmss/bx/n on input line 2934.
+LaTeX Font Info:    Overwriting math alphabet `\Mathit' in version `normal'
+(Font)                  T1/cmss/m/it --> T1/cmss/m/it on input line 2934.
+LaTeX Font Info:    Overwriting math alphabet `\Mathit' in version `bold'
+(Font)                  T1/cmss/m/it --> T1/cmss/bx/it on input line 2934.
+LaTeX Font Info:    Overwriting math alphabet `\Mathsf' in version `normal'
+(Font)                  T1/xcmss/m/n --> T1/xcmss/m/n on input line 2934.
+LaTeX Font Info:    Overwriting math alphabet `\Mathsf' in version `bold'
+(Font)                  T1/xcmss/m/n --> T1/xcmss/bx/n on input line 2934.
+LaTeX Font Info:    Overwriting math alphabet `\Mathtt' in version `normal'
+(Font)                  T1/cmtt/m/n --> T1/cmtt/m/n on input line 2934.
+LaTeX Font Info:    Overwriting math alphabet `\Mathtt' in version `bold'
+(Font)                  T1/cmtt/m/n --> T1/cmtt/bx/n on input line 2934.
+(   mathastext:   ) Latin letters in the `normal', resp. `bold',
+(   mathastext:   ) math versions are now set up to use the fonts
+(   mathastext:   ) T1/cmss/m/n, resp. T1/cmss/bx/n.
+(   mathastext:   ) Other characters (digits, ...) and \log-like names will be
+(   mathastext:   ) typeset with the n shape.
+(   mathastext:   ) \hbar
+(   mathastext:   ) minus either as endash, Unicode minus, emdash or hyphen
+(   mathastext:   ) \HUGE has been (re)-defined.
+(   mathastext:   ) mathastext has declared larger sizes for subscripts.
+(   mathastext:   ) To keep LaTeX defaults, use option `defaultmathsizes'.
+
+Package mathastext Info: Loading is complete.  You can now use \Mathastext to
+(mathastext)             modify the normal and bold math versions.  Use it
+(mathastext)             with optional argument or use \MTDeclareVersion to
+(mathastext)             declare additional math versions.
+)) (./FeW_Activation_Energies.aux)
 \openout1 = `FeW_Activation_Energies.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmssm/m/it on input line 62.
 LaTeX Font Info:    Try loading font information for OML+cmssm on input line 62
 .
-
-(/home/cat/dmapa/texmf/tex/sansmathfonts/omlcmssm.fd
+ (/home/cat/dmapa/texmf/tex/sansmathfonts/omlcmssm.fd
 File: omlcmssm.fd 2024/10/15
 )
 LaTeX Font Info:    ... okay on input line 62.
@@ -180,30 +296,26 @@ LaTeX Font Info:    ... okay on input line 62.
 LaTeX Font Info:    Checking defaults for OMS/cmsssy/m/n on input line 62.
 LaTeX Font Info:    Try loading font information for OMS+cmsssy on input line 6
 2.
-
-(/home/cat/dmapa/texmf/tex/sansmathfonts/omscmsssy.fd
+ (/home/cat/dmapa/texmf/tex/sansmathfonts/omscmsssy.fd
 File: omscmsssy.fd 2024/10/15
 )
 LaTeX Font Info:    ... okay on input line 62.
 LaTeX Font Info:    Checking defaults for OMX/cmssex/m/n on input line 62.
 LaTeX Font Info:    Try loading font information for OMX+cmssex on input line 6
 2.
-
-(/home/cat/dmapa/texmf/tex/sansmathfonts/omxcmssex.fd
+ (/home/cat/dmapa/texmf/tex/sansmathfonts/omxcmssex.fd
 File: omxcmssex.fd 2024/10/15
 )
 LaTeX Font Info:    ... okay on input line 62.
 LaTeX Font Info:    Checking defaults for U/xcmss/m/n on input line 62.
 LaTeX Font Info:    Try loading font information for U+xcmss on input line 62.
-
-(/home/cat/dmapa/texmf/tex/sansmathfonts/uxcmss.fd
+ (/home/cat/dmapa/texmf/tex/sansmathfonts/uxcmss.fd
 File: uxcmss.fd 2024/10/15
 )
 LaTeX Font Info:    ... okay on input line 62.
 LaTeX Font Info:    Try loading font information for T1+xcmss on input line 62.
 
-
-(/home/cat/dmapa/texmf/tex/sansmathfonts/t1xcmss.fd
+ (/home/cat/dmapa/texmf/tex/sansmathfonts/t1xcmss.fd
 File: t1xcmss.fd 2024/10/15
 )
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
@@ -213,13 +325,14 @@ File: t1xcmss.fd 2024/10/15
 \scratchbox=\box26
 \nofMPsegments=\count87
 \nofMParguments=\count88
-\everyMPshowfont=\toks21
+\everyMPshowfont=\toks25
 \MPscratchCnt=\count89
 \MPscratchDim=\dimen115
 \MPnumerator=\count90
 \makeMPintoPDFobject=\count91
-\everyMPtoPDFconversion=\toks22
-) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+\everyMPtoPDFconversion=\toks26
+)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
 
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/infwarerr.sty
@@ -312,8 +425,13 @@ File: ucsencs.def 2011/01/21 Fixes to fontencodings LGR, T3
 \gptboxtext=\box27
 LaTeX Font Info:    Try loading font information for OT1+cmsmf on input line 21
 9.
-(/home/cat/dmapa/texmf/tex/sansmathfonts/ot1cmsmf.fd
+ (/home/cat/dmapa/texmf/tex/sansmathfonts/ot1cmsmf.fd
 File: ot1cmsmf.fd 2024/10/15
+)
+LaTeX Font Info:    Try loading font information for T1+cmss on input line 219.
+
+ (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmss.fd
+File: t1cmss.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 <FeW_Activation_Energies-inc.pdf, id=1, pagebox=cropbox, 433.62pt x 289.08pt>
 File: FeW_Activation_Energies-inc.pdf Graphic file (type pdf)
@@ -325,20 +443,20 @@ e 220.
  [1{/usr/share/texlive/texmf-dist/fonts/map/pdftex/updmap/pdftex.map} <./FeW_Ac
 tivation_Energies-inc.pdf>] (./FeW_Activation_Energies.aux) ) 
 Here is how much of TeX's memory you used:
- 2618 strings out of 494917
- 41122 string characters out of 6180699
- 102106 words of memory out of 5000000
- 5874 multiletter control sequences out of 15000+600000
- 9313 words of font info for 31 fonts, out of 8000000 for 9000
+ 3540 strings out of 494917
+ 56070 string characters out of 6180699
+ 114865 words of memory out of 5000000
+ 6786 multiletter control sequences out of 15000+600000
+ 10866 words of font info for 33 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 41i,6n,34p,351b,237s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 41i,7n,34p,351b,241s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texliv
 e/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texlive/texmf
 -dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></home/cat/dmapa/texmf/fonts/ty
-pe1/sansmathfonts/cmssmi10.pfb></home/cat/dmapa/texmf/fonts/type1/sansmathfonts
-/cmsssy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/sfss10
-95.pfb>
-Output written on FeW_Activation_Energies.pdf (1 page, 46613 bytes).
+pe1/sansmathfonts/cmsssy10.pfb></home/cat/dmapa/texmf/fonts/type1/sansmathfonts
+/cmsssy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/sfss109
+5.pfb>
+Output written on FeW_Activation_Energies.pdf (1 page, 49042 bytes).
 PDF statistics:
  28 PDF objects out of 1000 (max. 8388607)
  19 compressed objects within 1 object stream
