@@ -124,7 +124,8 @@ def plot_scatter(xvals, yvals,metals,terminations, xlabel, ylabel,xkey,ykey) :
         dx,dy=(0.0,0.03)
         
         for i in range(xvals.shape[0]):
-            ax.annotate('{}{}'.format(metals[i],terminations[i]), xy=(xvals[i]+dx,yvals[i]+dy),
+            #ax.annotate('{}{}'.format(metals[i],terminations[i]), xy=(xvals[i]+dx,yvals[i]+dy),
+            ax.annotate('{}'.format(metals[i]), xy=(xvals[i]+dx,yvals[i]+dy),
             #ax.annotate('{}'.format(metals[i]), xy=(xvals[i]+dx,yvals[i]+dy),
                         fontsize=arsize,ha='center',textcoords='data',
                         color="k",annotation_clip=False)                      
@@ -178,7 +179,7 @@ def plot_scatter(xvals, yvals,metals,terminations, xlabel, ylabel,xkey,ykey) :
             ax.plot(sorted_xvals,y_pred,lw=1, linestyle='--',color='black',zorder=0 )
                     
             capcoord=(0.40,-0.4)
-            ax.annotate('R2 excludes: {}'.format(excluded_from_regression), xy=capcoord,ha='center', fontsize=arsize,
+            if False: ax.annotate('R2 excludes: {}'.format(excluded_from_regression), xy=capcoord,ha='center', fontsize=arsize,
                                 xycoords = ('axes fraction'), textcoords=('axes fraction') ,color="k",annotation_clip=False)                      
         
         if PDregression:
@@ -206,6 +207,7 @@ def plot_scatter(xvals, yvals,metals,terminations, xlabel, ylabel,xkey,ykey) :
 
     print(figname)
     plt.savefig('output/'+figname+'.png',dpi=300)
+    plt.savefig('output/'+figname+'.pdf',dpi=300)
 
     return None
 
@@ -249,16 +251,15 @@ if __name__ == "__main__":
                 ylabel=r'PZC [V]'
             elif ykey == 'vac_Htop':
                 yvals= np.array(  [df.loc[ df['metal'] == metal, ykey]  for metal in metals ] )
-                ylabel=r'$\Delta$E$_{\text{Htop}}$ (vac) [eV]'
+                ylabel=r'$\Delta$G$_{\text{H}}^{\text{top}}$ [eV]' #vac
             elif ykey == 'vac_HBE':
                 yvals= np.array(  [df.loc[ df['metal'] == metal, ykey]  for metal in metals ] )
-                ylabel=r'$\Delta$E$_{\text{Hfcc}}$ (vac) [eV]'
+                ylabel=r'$\Delta$G$_{\text{H}}^{\text{fcc}}$ [eV]' #vac
             elif ykey == 'Htop-Hfcc':
                 htops= np.array(  [df.loc[ df['metal'] == metal, 'vac_Htop']  for metal in metals ] )
                 hfccs= np.array(  [df.loc[ df['metal'] == metal, 'vac_HBE']  for metal in metals ] )
                 yvals = htops - hfccs
-                ylabel=r'$\Delta$E$_{\text{Htop}}$ - $\Delta$E$_{\text{Hfcc}}$ [eV]'
-            
+                ylabel=r'$\Delta$G$_{\text{H}}^{\text{top}}$-$\Delta$G$_{\text{H}}^{\text{fcc}}$ [eV]' #vac
             elif ykey == 'WF':   
                 ylabel=r'WF $\phi_{Exp.}$ [eV]'
                 WF = []
@@ -273,11 +274,14 @@ if __name__ == "__main__":
         
             elif ykey == 'dbandupperedge':   
                 yvals= np.array(  [TM.loc[ TM['metal'] == metal, ykey]  for metal in metals ] )
-                ylabel=r'$\epsilon_d$ upper edge(maj.spin)[eV]'
+                #ylabel=r'$\epsilon_d$ upper edge(maj.spin)[eV]'
+                ylabel=r'$\epsilon_d$ upper edge [eV]'
+                ylabel=r'd-band upper edge [eV]'
             
             elif ykey == 'vsquaredREL':
                 yvals  = np.array(  [TM.loc[ TM['metal'] == metal, ykey]  for metal in metals ] )
-                ylabel=r'V$_{ad}^2$ [Rel. Cu]' #eV$^2$]'
+                #ylabel=r'V$_{ad}^2$ [Rel. Cu]' #eV$^2$]'
+                ylabel=r'|V$_{ad}$|$^2$ [Rel. Cu]' 
              
 
 
@@ -293,15 +297,15 @@ if __name__ == "__main__":
                 xvals=WF
             elif xkey == 'vac_HBE':
                 xvals= np.array(  [df.loc[ df['metal'] == metal, xkey]  for metal in metals ] )
-                xlabel=r'$\Delta$E$_{\text{Hfcc}}$ (vac) [eV]'
+                xlabel=r'$\Delta$G$_{\text{H}}^{\text{fcc}}$ [eV]' #vac
             elif xkey == 'vac_Htop':
                 xvals= np.array(  [df.loc[ df['metal'] == metal, xkey]  for metal in metals ] )
-                xlabel=r'$\Delta$E$_{\text{Htop}}$ (vac) [eV]'
+                xlabel=r'$\Delta$G$_{\text{H}}^{\text{top}}$ [eV]' #vac
             elif xkey == 'Htop-Hfcc':
                 htops= np.array(  [df.loc[ df['metal'] == metal, 'vac_Htop']  for metal in metals ] )
                 hfccs= np.array(  [df.loc[ df['metal'] == metal, 'vac_HBE']  for metal in metals ] )
                 xvals = htops - hfccs
-                xlabel=r'$\Delta$E$_{\text{Htop}}$ - $\Delta$E$_{\text{Hfcc}}$ [eV]'
+                xlabel=r'$\Delta$G$_{\text{H}}^{\text{top}}$-$\Delta$G$_{\text{H}}^{\text{fcc}}$ [eV]' #vac
             
             elif xkey == 'dbandcenter': 
                 xvals  = np.array(  [TM.loc[ TM['metal'] == metal, xkey]  for metal in metals ] )
@@ -309,11 +313,13 @@ if __name__ == "__main__":
         
             elif xkey == 'dbandupperedge':   
                 xvals= np.array(  [TM.loc[ TM['metal'] == metal, xkey]  for metal in metals ] )
-                xlabel=r'$\epsilon_d$ upper edge(maj.spin)[eV]'
+                #xlabel=r'$\epsilon_d$ upper edge(maj.spin)[eV]'
+                #xlabel=r'$\epsilon_d$ upper edge [eV]'
+                xlabel=r'd-band upper edge [eV]'
             
             elif xkey == 'vsquaredREL':
                 xvals  = np.array(  [TM.loc[ TM['metal'] == metal, xkey]  for metal in metals ] )
-                xlabel=r'V$_{ad}^2$ [Rel. Cu]' 
+                xlabel=r'|V$_{ad}$|$^2$ [Rel. Cu]' 
             elif xkey == 'PZC':
                 xvals= np.array(  [df.loc[ df['metal'] == metal, xkey]  for metal in metals ] )
                 xlabel=r'PZC [V]'
