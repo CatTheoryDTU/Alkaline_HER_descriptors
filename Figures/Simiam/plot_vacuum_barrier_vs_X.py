@@ -262,7 +262,7 @@ if __name__ == "__main__":
                 #load vacuum barriers.
                 filename='CSV/parsed_vacuum_tafel_barriers.csv'
                 dfB = pd.read_csv(filename)
-                print('Vacuum barriers, parsed by Simiam, in dataframe:')
+                print('Vacuum barriers, parsed, in dataframe:')
                 print('{}'.format(dfB))
                 vac_barriers = np.array( [ float(dfB.loc[ dfB['metal'] == metal, 'vacBarrier'].iloc[0])  for metal in metals ] )
                 yvals = vac_barriers

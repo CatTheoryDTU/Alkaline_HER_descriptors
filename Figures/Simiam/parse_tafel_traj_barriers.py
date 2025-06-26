@@ -1,6 +1,6 @@
 """
 
-PARSING Tafel barriers from vaccuum vs. aqueous trajectories
+Parse Tafel barriers from vacuum vs. aqueous trajectories
 
 """
 
@@ -55,7 +55,7 @@ if __name__ == "__main__":
     """
 
 
-    cluster = 'Laptop_Simiam'
+    cluster = 'Laptop'
     #cluster = 'Niflheim'
 
     metals = metals_all
@@ -71,7 +71,7 @@ if __name__ == "__main__":
         
             if cluster=='Niflheim':
                 trunk='/home/cat/dmapa/gpaw/dissads/tree/endstates/BEEF-{}/H2/doNEB/'.format(metal)
-            elif cluster=='Laptop_Simiam':  #traj files are elsewhere.
+            elif cluster=='Laptop':  #traj files are elsewhere.
                 trunk='/Users/sangh/software/her-scripts/dissads/tree/endstates/BEEF-{}/H2/doNEB/'.format(metal)
             trajfile = 'final_path.traj'
             fname = trunk+trajfile
@@ -117,7 +117,7 @@ if __name__ == "__main__":
                
                 if cluster=='Niflheim':
                     trunk='/home/cat/dmapa/gpaw/alkalinebarriers/{}/{}/{}/pot_{}/'.format(reaction,metal,termination, pot)
-                elif cluster=='Laptop_Simiam': #traj files are elsewhere.
+                elif cluster=='Laptop': #traj files are elsewhere.
                     #trunk='../alkalinebarriers/{}/{}/{}/pot_{}/'.format(reaction,metal,termination, pot)
                     trunk='/Users/sangh/software/her-scripts/alkalinebarriers/{}/{}/{}/pot_{}/'.format(reaction,metal,termination, pot)
                 
