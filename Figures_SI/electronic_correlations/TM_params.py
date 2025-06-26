@@ -9,7 +9,7 @@ SOURCES
     by B.Hammer, J.K.Norskov, in ADVANCES IN CATALYSIS, VOLUME 45, Elsevier (2000) 
     DOI: https://doi.org/10.1016/S0360-0564(02)45013-4
    
-    d-band edges estimated visually (Simiam Ghan) from Materials Project bulk systems.
+    d-band edges estimated visually from Materials Project bulk systems (majority spin channel).
 
     Workfunctions are experimental, various sources. 
 
@@ -88,7 +88,7 @@ rlist = [
          { 
          "metal": "Ir",
          "Z":77,
-         "WF111": 5.7,          #online experiments.  
+         "WF111": 5.7,          
          "vsquaredREL" : 4.45, 
          "dbandcenter" : -2.11, 
          "dbandfilling" : 0.8,
@@ -155,12 +155,8 @@ df = pd.DataFrame(rlist)
 
 df.to_csv('CSV/TM_parameters.csv',index=False)
 
-#df.to_json('CSV/TM_parameters.json',index=False)
 
 sys.exit()
-
-#df = pd.read_json()
-#df = pd.read_csv()
 
 
 

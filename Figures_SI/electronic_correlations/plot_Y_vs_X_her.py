@@ -3,8 +3,6 @@
 
 Y correlate with descriptors X
 
-handle missing data!
-
 
 """
 
@@ -56,9 +54,6 @@ def parse_results():
     i0s = data[4]
     
     print('len metals {}'.format(len(metals)))
-    #print('len HBEs {}'.format(len(HBEs)))
-    #print('len tafel_barriers {}'.format(len(tafel_barriers)))
-    
     
     rlist = [] 
     for j in range(len(metals)):
@@ -80,10 +75,8 @@ def parse_results():
 
 
 def plot_scatter(xvals, yvals,metals,terminations, xlabel, ylabel,xkey,ykey) :
-#def plot_scatter(xvals, yvals,metals, xlabel, ylabel,xkey,ykey, x2vals,x2label,x3vals,x3label) 
 
     print(' ')
-    #print('{} {} {} {} {} {} {} {}'.format( spin,mtag,dindex,site,zval,xkey,ykey,adsorbate))
     print('plotting y {} vs x {} '.format( ykey,xkey))
 
     lrbt=[0.3,0.9,0.2,0.95]
@@ -103,19 +96,12 @@ def plot_scatter(xvals, yvals,metals,terminations, xlabel, ylabel,xkey,ykey) :
     plt.subplots_adjust(left=None, bottom=None, right=None, top=None, wspace=sp, hspace=sp)
 
 
-    #metal ordering careful!
-    #the yvals determine the available metals list.
-
-
-
     yvals= yvals.reshape((-1, 1))
     xvals = xvals.reshape((-1, 1))
     
     print('xvals shape {}'.format(xvals.shape))
     
     if True:
-
-        #NEW: plot df columns. do LR in pandas. Doesn't really work though? 
 
         ax.scatter(xvals, yvals,s=5, color='black')
         
@@ -126,21 +112,12 @@ def plot_scatter(xvals, yvals,metals,terminations, xlabel, ylabel,xkey,ykey) :
         for i in range(xvals.shape[0]):
             #ax.annotate('{}{}'.format(metals[i],terminations[i]), xy=(xvals[i]+dx,yvals[i]+dy),
             ax.annotate('{}'.format(metals[i]), xy=(xvals[i]+dx,yvals[i]+dy),
-            #ax.annotate('{}'.format(metals[i]), xy=(xvals[i]+dx,yvals[i]+dy),
                         fontsize=arsize,ha='center',textcoords='data',
                         color="k",annotation_clip=False)                      
         
         capcoord=(-0.2,-0.3)
-        #ax.annotate('a)', xy=capcoord,ha='center',
-        #                  xycoords = ('axes fraction'), 
-        #                  textcoords=('axes fraction'),
-        #                  color="k",annotation_clip=False) 
         
-        #exclude W:
-        #subset=range(len(metals))#-1)
-        #Check for NaN
-        #FILTER NANs
-        #CURATE A SUBSET.
+        #optional CURATE A SUBSET.
         subset  =[]
         excluded_from_regression=[]
         exclude = [] #['Al','Zn']
@@ -151,11 +128,10 @@ def plot_scatter(xvals, yvals,metals,terminations, xlabel, ylabel,xkey,ykey) :
                 continue
             else:
                 subset.append(i)
-        print('subset of good values is {}'.format(subset))
+        print('subset of values is {}'.format(subset))
         
 
         SKregression = True
-        PDregression = False
         if SKregression: 
             LR = LinearRegression().fit(xvals[subset],yvals[subset])
             r_sq = LR.score(xvals[subset],yvals[subset]) 
@@ -179,20 +155,12 @@ def plot_scatter(xvals, yvals,metals,terminations, xlabel, ylabel,xkey,ykey) :
             ax.plot(sorted_xvals,y_pred,lw=1, linestyle='--',color='black',zorder=0 )
                     
             capcoord=(0.40,-0.4)
-            if False: ax.annotate('R2 excludes: {}'.format(excluded_from_regression), xy=capcoord,ha='center', fontsize=arsize,
-                                xycoords = ('axes fraction'), textcoords=('axes fraction') ,color="k",annotation_clip=False)                      
+            if False: 
+                ax.annotate('R2 excludes: {}'.format(excluded_from_regression), 
+                             xy=capcoord,ha='center', fontsize=arsize,
+                             xycoords = ('axes fraction'), textcoords=('axes fraction'),
+                             color="k",annotation_clip=False)                      
         
-        if PDregression:
-            dummy=1
-
-        ##PCA analysis
-        #if True:
-        #    from sklearn.decomposition import PCA
-        #    pca = PCA(n_components=3)
-        #    pca.fit_transform(scaled_df)
-
-
-
         
         fs=9
         ax.set_xlabel(xlabel,fontsize=fs) 
@@ -200,10 +168,6 @@ def plot_scatter(xvals, yvals,metals,terminations, xlabel, ylabel,xkey,ykey) :
     
    
     figname='{}_vs_{}_reg{}'.format(ykey,xkey,SKregression)
-
-    #if xkey == 'wdos':
-    #    figname+='_{}pm_dindex{}{}'.format(zval,dindex,mtag) 
-    
 
     print(figname)
     plt.savefig('output/'+figname+'.png',dpi=300)
@@ -241,7 +205,6 @@ if __name__ == "__main__":
 
     for ykey in ['i0','PZC','vac_Htop','vac_HBE','WF','Htop-Hfcc']: 
         for xkey in ['Htop-Hfcc','vac_HBE','vac_Htop','PZC','vsquaredREL','WF', 'dbandcenter','dbandupperedge']:  
-        #,'dbandcenter','dbandupperedge','vsquaredREL']: 
         
             if ykey == 'i0':
                 yvals= np.array(  [df.loc[ df['metal'] == metal, ykey]  for metal in metals ] )
@@ -274,13 +237,11 @@ if __name__ == "__main__":
         
             elif ykey == 'dbandupperedge':   
                 yvals= np.array(  [TM.loc[ TM['metal'] == metal, ykey]  for metal in metals ] )
-                #ylabel=r'$\epsilon_d$ upper edge(maj.spin)[eV]'
                 ylabel=r'$\epsilon_d$ upper edge [eV]'
                 ylabel=r'd-band upper edge [eV]'
             
             elif ykey == 'vsquaredREL':
                 yvals  = np.array(  [TM.loc[ TM['metal'] == metal, ykey]  for metal in metals ] )
-                #ylabel=r'V$_{ad}^2$ [Rel. Cu]' #eV$^2$]'
                 ylabel=r'|V$_{ad}$|$^2$ [Rel. Cu]' 
              
 
@@ -288,7 +249,6 @@ if __name__ == "__main__":
 
             if xkey == 'WF':   
                 xlabel=r'WF $\phi_{Exp.}$ [eV]'
-                #NEW WAY
                 WF = []
                 for i in range(len(metals)):
                     WF.append(  float(TM.loc[ TM['metal'] == metals[i], 'WF{}'.format(terminations[i] ) ])  )
@@ -313,8 +273,6 @@ if __name__ == "__main__":
         
             elif xkey == 'dbandupperedge':   
                 xvals= np.array(  [TM.loc[ TM['metal'] == metal, xkey]  for metal in metals ] )
-                #xlabel=r'$\epsilon_d$ upper edge(maj.spin)[eV]'
-                #xlabel=r'$\epsilon_d$ upper edge [eV]'
                 xlabel=r'd-band upper edge [eV]'
             
             elif xkey == 'vsquaredREL':
@@ -325,27 +283,10 @@ if __name__ == "__main__":
                 xlabel=r'PZC [V]'
             
                 
-          #  #what is PCA using 2-dimensions??
-          #  #optional second dimension:
-          #  x2vals  = np.array(  [TM.loc[ TM['metal'] == metal, 'dbandcenter']  for metal in metals ] )
-          #  x2label=r'd-band center $\epsilon_d$ [eV]'
-          #      
-          #  #third dimension:
-          #  x3vals= np.array(  [df.loc[ df['PZC'] == metal, ykey]  for metal in metals ] )
-          #  x3label='PZC [V]'
-
-
-
-
-
-
-            # arrays contain None. Is that a problem?
             print('metals are {}'.format(metals))
-            #print('terminations are {}'.format(terminations))
             print('xvals are {} {}'.format(xkey, xvals))
             print('yvals are {} {}'.format(ykey, yvals))
             plot_scatter(xvals, yvals,metals,terminations, xlabel, ylabel,xkey,ykey) 
-            #plot_scatter(xvals, yvals,metals, xlabel, ylabel,xkey,ykey, x2vals,x2label,x3vals,x3label) 
 
 
     
