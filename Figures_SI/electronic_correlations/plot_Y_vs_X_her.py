@@ -105,7 +105,7 @@ def plot_scatter(xvals, yvals,metals,terminations, xlabel, ylabel,xkey,ykey) :
 
         ax.scatter(xvals, yvals,s=5, color='black')
         
-        arsize=6
+        arsize=7
         #dx,dy=(0.1,0.01)
         dx,dy=(0.0,0.03)
         
@@ -140,12 +140,24 @@ def plot_scatter(xvals, yvals,metals,terminations, xlabel, ylabel,xkey,ykey) :
             print('slope:', LR.coef_)
             stringlabel=r'R$^2$:'+' {}'.format(round(r_sq,2))
             #r2duplet=(0.85,0.9)
-            r2duplet=(0.5,1.01)
+            r2duplet=(0.85,1.05)
             fsize = 8 #arsize
             ax.annotate('{}'.format(stringlabel), xy=r2duplet,ha='center',
                             xycoords = ('axes fraction'), 
                             textcoords=('axes fraction'),
                             color="blue",fontsize=fsize,annotation_clip=False)     
+            show_equation=True 
+            if show_equation:
+                string2label='y={}x+{}'.format(round(LR.coef_[0][0],2), round(LR.intercept_[0],2))
+                r2duplet=(0.2,1.05)
+                ax.annotate('{}'.format(string2label), xy=r2duplet,ha='center',
+                                xycoords = ('axes fraction'),
+                                textcoords=('axes fraction'),
+                                color="blue",annotation_clip=False,
+                                fontsize=fsize)
+ 
+
+
             #plot the linear fit please:
             sorted_xvals = np.sort( np.array([xvals[i][0] for i in subset])).reshape(-1, 1)
             print('xvals {}'.format(xvals))
