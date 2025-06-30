@@ -29,7 +29,10 @@ def parse_results():
         'PZCs.txt', 
         'vac_Htops.txt',
         'vac_HBEs.txt',
-        'i0s.txt'
+        'i0s.txt',
+        'volmers.txt',
+        'tafels.txt',
+        'heyrovskys.txt'
              ]
     
     path='../'
@@ -52,6 +55,9 @@ def parse_results():
     vac_Htops = data[2]
     vac_HBEs = data[3]
     i0s = data[4]
+    volmers = data[5]
+    tafels = data[6]
+    heyrovskys = data[7]
     
     print('len metals {}'.format(len(metals)))
     
@@ -62,13 +68,17 @@ def parse_results():
                 "PZC" : PZCs[j],
                 "vac_Htop" : vac_Htops[j],
                 "vac_HBE" : vac_HBEs[j],
-                "i0" : i0s[j]
+                "i0" : i0s[j],
+                "volmer" : volmers[j],
+                "tafel" : tafels[j],
+                "heyrovsky" :heyrovskys[j]
                   }
         
         rlist.append(attributes)
-    
+        
     df = pd.DataFrame(rlist)
-    
+    print(df)
+
     df.to_csv('CSV/results.csv',index=False)
 
     return df
@@ -221,32 +231,43 @@ if __name__ == "__main__":
             termination='111'
         terminations.append(termination)
 
-    #for ykey in ['dbandcenterVoj','dbandupperedgeVoj','dbandwidthVoj','vsquaredRELVoj']:
-    #    for xkey in ['dbandcenter','dbandupperedge','vsquaredREL','vsquaredRELVoj']:
-
-    for ykey in ['i0','PZC','vac_Htop','vac_HBE','WF','Htop-Hfcc','dbandcenterVoj','dbandupperedgeVoj','dbandwidthVoj']: 
-        #for xkey in ['Htop-Hfcc','vac_HBE','vac_Htop','PZC','vsquaredREL','WF', 'dbandcenter','dbandupperedge']:  
+    for ykey in ['i0','heyrovsky','volmer','tafel','PZC','vac_Htop','vac_HBE','WF','Htop-Hfcc','dbandcenterVoj','dbandupperedgeVoj','dbandwidthVoj']: 
         for xkey in ['Htop-Hfcc','vac_HBE','vac_Htop','PZC','WF', 'dbandcenterVoj','dbandupperedgeVoj','dbandwidthVoj','vsquaredRELVoj']:
 
-            if ykey == 'i0':
-                yvals= np.array(  [df.loc[ df['metal'] == metal, ykey]  for metal in metals ] )
+            if ykey == 'volmer':
+                yvals= np.array(  [ float( df.loc[ df['metal'] == metal, ykey].iloc[0])  for metal in metals ] )
+                ylabel=r'$\Delta \Omega_{\text{Volmer}} ^{\ddagger}$ [eV] '
+            
+            elif ykey == 'tafel':
+                yvals= np.array(  [  float(df.loc[ df['metal'] == metal, ykey].iloc[0])  for metal in metals ] )
+                ylabel=r'$\Delta \Omega_{\text{Tafel}} ^{\ddagger}$ [eV] '
+            
+            elif ykey == 'heyrovsky':
+                print('TEST heyrovsky {}'.format(ykey))
+                yvals= np.array(  [ float(df.loc[ df['metal'] == metal, ykey].iloc[0])  for metal in metals ] )
+                ylabel=r'$\Delta\Omega_{\text{Heyrovsky}}^{\ddagger}$ [eV] '
+                print(ykey)
+                print(yvals)
+            
+            elif ykey == 'i0':
+                yvals= np.array(  [float(df.loc[ df['metal'] == metal, ykey].iloc[0])  for metal in metals ] )
                 ylabel=r'log($|j_0|$/(mA cm$^{-2}$))'
             
             elif ykey == 'PZC':
-                yvals= np.array(  [df.loc[ df['metal'] == metal, ykey]  for metal in metals ] )
+                yvals= np.array(  [float(df.loc[ df['metal'] == metal, ykey].iloc[0])  for metal in metals ] )
                 ylabel=r'PZC [V]'
             
             elif ykey == 'vac_Htop':
-                yvals= np.array(  [df.loc[ df['metal'] == metal, ykey]  for metal in metals ] )
+                yvals= np.array(  [float(df.loc[ df['metal'] == metal, ykey].iloc[0])  for metal in metals ] )
                 ylabel=r'$\Delta$G$_{\text{H}}^{\text{top}}$ [eV]' #vac, Dipam, free energy.
             
             elif ykey == 'vac_HBE':
-                yvals= np.array(  [df.loc[ df['metal'] == metal, ykey]  for metal in metals ] )
+                yvals= np.array(  [float(df.loc[ df['metal'] == metal, ykey].iloc[0])  for metal in metals ] )
                 ylabel=r'$\Delta$G$_{\text{H}}^{\text{fcc}}$ [eV]' #vac, Dipam, free energy
             
             elif ykey == 'Htop-Hfcc':
-                htops= np.array(  [df.loc[ df['metal'] == metal, 'vac_Htop']  for metal in metals ] )
-                hfccs= np.array(  [df.loc[ df['metal'] == metal, 'vac_HBE']  for metal in metals ] )
+                htops= np.array(  [float(df.loc[ df['metal'] == metal, 'vac_Htop'].iloc[0])  for metal in metals ] )
+                hfccs= np.array(  [float(df.loc[ df['metal'] == metal, 'vac_HBE'].iloc[0])  for metal in metals ] )
                 yvals = htops - hfccs  #vac, Dipam, free energy
                 ylabel=r'$\Delta$G$_{\text{H}}^{\text{top}}$-$\Delta$G$_{\text{H}}^{\text{fcc}}$ [eV]' #vac
             
@@ -259,16 +280,16 @@ if __name__ == "__main__":
                 yvals=WF
             
             elif ykey == 'vsquaredREL':
-                yvals  = np.array(  [TM.loc[ TM['metal'] == metal, ykey]  for metal in metals ] )
+                yvals  = np.array(  [float(TM.loc[ TM['metal'] == metal, ykey].iloc[0]) for metal in metals ] )
                 ylabel=r'|V$_{ad}$|$^2$ [Rel. Cu]' 
             
 
             elif ykey == 'dbandcenter': 
-                yvals  = np.array(  [TM.loc[ TM['metal'] == metal, ykey]  for metal in metals ] )
+                yvals  = np.array(  [float(TM.loc[ TM['metal'] == metal, ykey].iloc[0])  for metal in metals ] )
                 ylabel=r'd-band center $\epsilon_d$ [eV]'
         
             elif ykey == 'dbandupperedge':   
-                yvals= np.array(  [TM.loc[ TM['metal'] == metal, ykey]  for metal in metals ] )
+                yvals= np.array(  [ float(TM.loc[ TM['metal'] == metal, ykey].iloc[0])  for metal in metals ] )
                 ylabel=r'd-band upper edge [eV]'
             
             elif ykey == 'dbandcenterVoj': 
@@ -285,6 +306,7 @@ if __name__ == "__main__":
                 dedges = dcenters + dwidths/2
                 yvals = dedges
                 ylabel=r'd-band upper edge [eV]'
+            
             elif ykey == 'dbandwidthVoj':   
                 mcns= np.array(  [Voj.loc[ Voj['metal'] == metal, 'mcn']  for metal in metals ] )
                 dwidths = 4*np.sqrt(mcns)
