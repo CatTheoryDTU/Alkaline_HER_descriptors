@@ -104,7 +104,7 @@ def plot_array(dd,labels):
     SKregression = True
     sp=0.5
     #optional CURATE A SUBSET.
-    subset  =[]
+    subset  = range(len(dd['metal']))
     excluded_from_regression=[]
     exclude = [] #['Al','Zn']
     show_equation=True 
@@ -121,27 +121,18 @@ def plot_array(dd,labels):
 
     for ykey in ['i0']: 
         for xkey in [dd.keys()[1]]:
-            
+            print('ykey {}, xkey {}'.format(ykey,xkey))
+
             ax.set_box_aspect(1)
             ax.tick_params(axis='y',direction='in',which='both',left=True, right=False, labelleft='on')
             ax.tick_params(axis='x',direction='in',which='both',bottom=True, top=False, labelbottom='on')
-            
-            
             plt.subplots_adjust(left=None, bottom=None, right=None, top=None, wspace=sp, hspace=sp)
             
-            xvals=dd[xkey]
-            yvals=dd[ykey]
-            print('xvals arer {}'.format(xvals))
-            #yvals= yvals.reshape((-1, 1))
-            #xvals = xvals.reshape((-1, 1))
-            print('xvals shape {}'.format(xvals.shape))
-            
-
+            xvals=dd[xkey].to_numpy().reshape((-1, 1))
+            yvals=dd[ykey].to_numpy().reshape((-1, 1))
             ax.scatter(xvals, yvals,s=5, color='black')
-    
-            for i in range(len(dd['metal'])): 
-                ax.annotate('{}'.format(dd['metal'][i]), xy = (xvals+dx, yvals+dy), fontsize=arsize,ha='center',textcoords='data', color="k",annotation_clip=False)                      
-            
+            for i in range(len(dd['metal'].tolist())): 
+                ax.annotate('{}'.format(dd['metal'].tolist()[i]), xy = (xvals[i]+dx, yvals[i]+dy), fontsize=arsize,ha='center',textcoords='data', color="k",annotation_clip=False)                      
             if SKregression: 
                 LR = LinearRegression().fit(xvals[subset],yvals[subset])
                 r_sq = LR.score(xvals[subset],yvals[subset]) 
@@ -153,6 +144,7 @@ def plot_array(dd,labels):
                 sorted_xvals = np.sort( np.array([xvals[i][0] for i in subset])).reshape(-1, 1)
                 y_pred = LR.predict(sorted_xvals)
                 ax.plot(sorted_xvals,y_pred,lw=1, linestyle='--',color='black',zorder=0 )
+            
             ax.set_xlabel(labels[xkey],fontsize=fs) 
             ax.set_ylabel(labels[ykey],fontsize=fs) 
     
