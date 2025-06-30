@@ -16,7 +16,7 @@ import math
 from matplotlib import rcParams
 import matplotlib.ticker as ticker   
 from sklearn.linear_model import LinearRegression
-
+import string
 
 
 
@@ -88,6 +88,7 @@ def parse_results():
 def plot_array(dd,labels):
 
     lrbt=[0.3,0.9,0.2,0.95]
+    lrbt=[0.25,0.95,0.2,0.95]
     rcParams['figure.subplot.left'] = lrbt[0]  
     rcParams['figure.subplot.right'] = lrbt[1] 
     rcParams['figure.subplot.bottom'] = lrbt[2]
@@ -99,10 +100,10 @@ def plot_array(dd,labels):
     
     #general parameters 
     fs=9
-    arsize=7
-    fsize = 8 #arsize
+    arsize=9
+    fsize = 9 #arsize
     SKregression = True
-    sp=0.5
+    sp=0.1
     #optional CURATE A SUBSET.
     subset  = range(len(dd['metal']))
     excluded_from_regression=[]
@@ -113,16 +114,104 @@ def plot_array(dd,labels):
 
     #dx,dy=(0.1,0.01)
     dx,dy=(0.0,0.03)
-    capcoord=(-0.2,-0.3)
-    r2duplet=(0.85,1.05)
-    r3duplet=(0.2,1.05)
+    capcoord=(-0.3,1.1)
+    r2duplet=(0.85,1.1)
+    r3duplet=(0.2,1.1)
 
-    fig, ax = plt.subplots(1,1, figsize=(2.5,2.5)) 
+    #fig, ax = plt.subplots(1,1, figsize=(2.5,2.5)) 
+    """ keys: 
+     'metal':metals,    0
+     'dcenter':dcenters, 1
+     'dedge':dedges,  2
+     'dwidth':dwidths, 3
+     'vad':vads, 4
+     'pzc':pzcs, 5
+     'wf':wfs,  6
+     'htop':htops, 7
+     'hfcc':hfccs, 8
+     'hdiff':hdiffs, 9
+     'volmer':volmers, 10
+     'heyrovsky':heyrovskys, 11
+     'tafel':tafels,  12
+     'i0':i0s    13
+    """
 
-    for ykey in ['i0']: 
-        for xkey in [dd.keys()[1]]:
+    Nkeys = len(dd.keys())
+    
+    for v in [1,2,3,4,5,6]: #versions.
+
+        if v ==1:
+            #Version 1
+            Nrows = 4
+            Ncols = 3
+            figsize = (7,9)
+            ykeys = ['i0']*12 #dd.keys()
+            xkeys = ['volmer','heyrovsky','tafel'] + [dd.keys().to_list()[i] for i in [7,8,9,1,2,3,4,5]] +['pzc']
+            hidden_axes = [11]
+            figname='i0_vs_descriptors'
+            
+            
+        elif v==2:
+            #Version 2
+            Nrows = 2
+            Ncols = 4
+            figsize = (9,5)
+            ykeys = ['volmer']*9 #dd.keys()
+            xkeys = [dd.keys().to_list()[i] for i in [7,8,9,5,1,2,3,4]]
+            hidden_axes = []
+            figname='volmer_vs_descriptors'
+        
+        elif v==3:
+            #Version 2
+            Nrows = 2
+            Ncols = 4
+            figsize = (9,5)
+            ykeys = ['heyrovsky']*9 #dd.keys()
+            xkeys = [dd.keys().to_list()[i] for i in [7,8,9,5,1,2,3,4]]
+            hidden_axes = []
+            figname='heyrovsky_vs_descriptors'
+        elif v==4:
+            #Version 2
+            Nrows = 2
+            Ncols = 4
+            figsize = (9,5)
+            ykeys = ['tafel']*9 #dd.keys()
+            xkeys = [dd.keys().to_list()[i] for i in [7,8,9,5,1,2,3,4]]
+            hidden_axes = []
+            figname='tafel_vs_descriptors'
+        
+        elif v==5:
+            #Version 2
+            Nrows = 3
+            Ncols = 4
+            figsize = (9,7)
+            ykeys = ['hfcc']*4 +['htop']*4 +['hdiff']*4 #dd.keys()
+            xkeys = [dd.keys().to_list()[i] for i in [1,2,3,4,5]]*3
+            hidden_axes = []
+            figname='hbe_vs_descriptors'
+        
+        elif v==6:
+            #Version 2
+            Nrows = 2
+            Ncols = 4
+            figsize = (9,5)
+            ykeys = ['dcenter','dcenter','dwidth','dedge','pzc','pzc','pzc','pzc']  #*4 +['htop']*4 #dd.keys()
+            xkeys = ['dedge',  'dwidth' , 'vad', 'dwidth','dedge','dwidth','pzc','pzc'] #dd.keys().to_list()[i] for i in [1,2,3,4,5]]
+            hidden_axes = [6,7]
+            figname='electronic_descriptors'
+        
+    
+    
+    
+    
+        iss = range(Nrows*Ncols)
+    
+        fig, axs = plt.subplots(nrows=Nrows, ncols=Ncols, figsize=figsize )
+    
+        for ax, ykey,xkey,icap in zip(axs.flat, ykeys,xkeys,iss):
+            print(ax)
             print('ykey {}, xkey {}'.format(ykey,xkey))
-
+    
             ax.set_box_aspect(1)
             ax.tick_params(axis='y',direction='in',which='both',left=True, right=False, labelleft='on')
             ax.tick_params(axis='x',direction='in',which='both',bottom=True, top=False, labelbottom='on')
@@ -139,21 +228,31 @@ def plot_array(dd,labels):
                 stringlabel=r'R$^2$:'+' {}'.format(round(r_sq,2))
                 ax.annotate('{}'.format(stringlabel), xy=r2duplet,ha='center', xycoords = ('axes fraction'), textcoords=('axes fraction'), color="blue",fontsize=fsize,annotation_clip=False)     
                 if show_equation:
-                    string2label='y={}x+{}'.format(round(LR.coef_[0][0],2), round(LR.intercept_[0],2))
+                    if LR.intercept_[0]>=0:  intercept ='+{}'.format(round(LR.intercept_[0],2))
+                    elif LR.intercept_[0]<0:  intercept ='{}'.format(round(LR.intercept_[0],2))
+                    string2label='y={}x{}'.format(round(LR.coef_[0][0],2), intercept)
                     ax.annotate('{}'.format(string2label), xy=r3duplet,ha='center', xycoords = ('axes fraction'), textcoords=('axes fraction'), color="blue",annotation_clip=False, fontsize=fsize)
                 sorted_xvals = np.sort( np.array([xvals[i][0] for i in subset])).reshape(-1, 1)
                 y_pred = LR.predict(sorted_xvals)
                 ax.plot(sorted_xvals,y_pred,lw=1, linestyle='--',color='black',zorder=0 )
+                    
+            ax.annotate('{})'.format(string.ascii_lowercase[icap]), xy=capcoord,ha='center', xycoords = ('axes fraction'), textcoords=('axes fraction'), color="black",annotation_clip=False, fontsize=fsize)
             
             ax.set_xlabel(labels[xkey],fontsize=fs) 
             ax.set_ylabel(labels[ykey],fontsize=fs) 
-    
-   
-    figname='testarray'
+       
+            if icap in hidden_axes: 
+                ax.axis('off') 
+                ax.set_axis_off()
+                ax.set_visible(False)
 
-    print(figname)
-    plt.savefig('output/'+figname+'.png',dpi=300)
-#    plt.savefig('output/'+figname+'.pdf',dpi=300)
+       
+        plt.tight_layout()
+        #plt.show()
+    
+        print(figname)
+        plt.savefig('output/'+figname+'.png',dpi=300)
+        plt.savefig('output/'+figname+'.pdf',dpi=300)
 
     return None
 
