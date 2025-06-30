@@ -201,8 +201,15 @@ if __name__ == "__main__":
     df = parse_results()
     
     #load elementary descriptors
+    #Hammer_Norskov2000 parameters
     TM = pd.read_csv('CSV/TM_parameters.csv')
-    
+   
+
+    #Vojvodic 2013 parameters
+    Voj = pd.read_csv('CSV/Vojvodic_parsed_to_excel.csv',converters={"metal": str, 'termination': str})
+
+
+
     metals = df['metal'].tolist()
     terminations = []
     for metal in metals:
@@ -214,27 +221,35 @@ if __name__ == "__main__":
             termination='111'
         terminations.append(termination)
 
+    #for ykey in ['dbandcenterVoj','dbandupperedgeVoj','dbandwidthVoj','vsquaredRELVoj']:
+    #    for xkey in ['dbandcenter','dbandupperedge','vsquaredREL','vsquaredRELVoj']:
 
-    for ykey in ['i0','PZC','vac_Htop','vac_HBE','WF','Htop-Hfcc']: 
-        for xkey in ['Htop-Hfcc','vac_HBE','vac_Htop','PZC','vsquaredREL','WF', 'dbandcenter','dbandupperedge']:  
-        
+    for ykey in ['i0','PZC','vac_Htop','vac_HBE','WF','Htop-Hfcc','dbandcenterVoj','dbandupperedgeVoj','dbandwidthVoj']: 
+        #for xkey in ['Htop-Hfcc','vac_HBE','vac_Htop','PZC','vsquaredREL','WF', 'dbandcenter','dbandupperedge']:  
+        for xkey in ['Htop-Hfcc','vac_HBE','vac_Htop','PZC','WF', 'dbandcenterVoj','dbandupperedgeVoj','dbandwidthVoj','vsquaredRELVoj']:
+
             if ykey == 'i0':
                 yvals= np.array(  [df.loc[ df['metal'] == metal, ykey]  for metal in metals ] )
                 ylabel=r'log($|j_0|$/(mA cm$^{-2}$))'
+            
             elif ykey == 'PZC':
                 yvals= np.array(  [df.loc[ df['metal'] == metal, ykey]  for metal in metals ] )
                 ylabel=r'PZC [V]'
+            
             elif ykey == 'vac_Htop':
                 yvals= np.array(  [df.loc[ df['metal'] == metal, ykey]  for metal in metals ] )
-                ylabel=r'$\Delta$G$_{\text{H}}^{\text{top}}$ [eV]' #vac
+                ylabel=r'$\Delta$G$_{\text{H}}^{\text{top}}$ [eV]' #vac, Dipam, free energy.
+            
             elif ykey == 'vac_HBE':
                 yvals= np.array(  [df.loc[ df['metal'] == metal, ykey]  for metal in metals ] )
-                ylabel=r'$\Delta$G$_{\text{H}}^{\text{fcc}}$ [eV]' #vac
+                ylabel=r'$\Delta$G$_{\text{H}}^{\text{fcc}}$ [eV]' #vac, Dipam, free energy
+            
             elif ykey == 'Htop-Hfcc':
                 htops= np.array(  [df.loc[ df['metal'] == metal, 'vac_Htop']  for metal in metals ] )
                 hfccs= np.array(  [df.loc[ df['metal'] == metal, 'vac_HBE']  for metal in metals ] )
-                yvals = htops - hfccs
+                yvals = htops - hfccs  #vac, Dipam, free energy
                 ylabel=r'$\Delta$G$_{\text{H}}^{\text{top}}$-$\Delta$G$_{\text{H}}^{\text{fcc}}$ [eV]' #vac
+            
             elif ykey == 'WF':   
                 ylabel=r'WF $\phi_{Exp.}$ [eV]'
                 WF = []
@@ -243,18 +258,43 @@ if __name__ == "__main__":
                 WF = np.array(WF)
                 yvals=WF
             
+            elif ykey == 'vsquaredREL':
+                yvals  = np.array(  [TM.loc[ TM['metal'] == metal, ykey]  for metal in metals ] )
+                ylabel=r'|V$_{ad}$|$^2$ [Rel. Cu]' 
+            
+
             elif ykey == 'dbandcenter': 
                 yvals  = np.array(  [TM.loc[ TM['metal'] == metal, ykey]  for metal in metals ] )
                 ylabel=r'd-band center $\epsilon_d$ [eV]'
         
             elif ykey == 'dbandupperedge':   
                 yvals= np.array(  [TM.loc[ TM['metal'] == metal, ykey]  for metal in metals ] )
-                ylabel=r'$\epsilon_d$ upper edge [eV]'
                 ylabel=r'd-band upper edge [eV]'
             
-            elif ykey == 'vsquaredREL':
-                yvals  = np.array(  [TM.loc[ TM['metal'] == metal, ykey]  for metal in metals ] )
+            elif ykey == 'dbandcenterVoj': 
+                yvals  = np.array(  [Voj.loc[ Voj['metal'] == metal, 'ed']  for metal in metals ] )
+                ylabel=r'd-band center $\epsilon_d$ [eV]'
+        
+            elif ykey == 'dbandupperedgeVoj':   
+                
+                dcenters = np.array(  [Voj.loc[ Voj['metal'] == metal, 'ed']  for metal in metals ] )
+                
+                mcns= np.array(  [Voj.loc[ Voj['metal'] == metal, 'mcn']  for metal in metals ] )
+                
+                dwidths = 4*np.sqrt(mcns)
+                dedges = dcenters + dwidths/2
+                yvals = dedges
+                ylabel=r'd-band upper edge [eV]'
+            elif ykey == 'dbandwidthVoj':   
+                mcns= np.array(  [Voj.loc[ Voj['metal'] == metal, 'mcn']  for metal in metals ] )
+                dwidths = 4*np.sqrt(mcns)
+                yvals = dwidths
+                ylabel=r'd-band width [eV]'
+            
+            elif ykey == 'vsquaredRELVoj':
+                yvals  = np.array(  [Voj.loc[ Voj['metal'] == metal, 'vad']  for metal in metals ] )
                 ylabel=r'|V$_{ad}$|$^2$ [Rel. Cu]' 
+            
              
 
 
@@ -267,12 +307,15 @@ if __name__ == "__main__":
          
                 WF = np.array(WF)
                 xvals=WF
+            
             elif xkey == 'vac_HBE':
                 xvals= np.array(  [df.loc[ df['metal'] == metal, xkey]  for metal in metals ] )
                 xlabel=r'$\Delta$G$_{\text{H}}^{\text{fcc}}$ [eV]' #vac
+            
             elif xkey == 'vac_Htop':
                 xvals= np.array(  [df.loc[ df['metal'] == metal, xkey]  for metal in metals ] )
                 xlabel=r'$\Delta$G$_{\text{H}}^{\text{top}}$ [eV]' #vac
+            
             elif xkey == 'Htop-Hfcc':
                 htops= np.array(  [df.loc[ df['metal'] == metal, 'vac_Htop']  for metal in metals ] )
                 hfccs= np.array(  [df.loc[ df['metal'] == metal, 'vac_HBE']  for metal in metals ] )
@@ -287,9 +330,38 @@ if __name__ == "__main__":
                 xvals= np.array(  [TM.loc[ TM['metal'] == metal, xkey]  for metal in metals ] )
                 xlabel=r'd-band upper edge [eV]'
             
+
+            elif xkey == 'dbandcenterVoj': 
+                xvals  = np.array(  [Voj.loc[ Voj['metal'] == metal, 'ed']  for metal in metals ] )
+                xlabel=r'd-band center $\epsilon_d$ [eV]'
+        
+            elif xkey == 'dbandupperedgeVoj':   
+                
+                dcenters = np.array(  [Voj.loc[ Voj['metal'] == metal, 'ed']  for metal in metals ] )
+                
+                mcns= np.array(  [Voj.loc[ Voj['metal'] == metal, 'mcn']  for metal in metals ] )
+                
+                dwidths = 4*np.sqrt(mcns)
+                dedges = dcenters + dwidths/2
+                xvals = dedges
+                xlabel=r'd-band upper edge [eV]'
+            
+            elif xkey == 'vsquaredRELVoj':
+                xvals  = np.array(  [Voj.loc[ Voj['metal'] == metal, 'vad']  for metal in metals ] )
+                xlabel=r'|V$_{ad}$|$^2$ [Rel. Cu]' 
+            
+
             elif xkey == 'vsquaredREL':
                 xvals  = np.array(  [TM.loc[ TM['metal'] == metal, xkey]  for metal in metals ] )
                 xlabel=r'|V$_{ad}$|$^2$ [Rel. Cu]' 
+            
+            
+            elif xkey == 'dbandwidthVoj':   
+                mcns= np.array(  [Voj.loc[ Voj['metal'] == metal, 'mcn']  for metal in metals ] )
+                dwidths = 4*np.sqrt(mcns)
+                xvals = dwidths
+                xlabel=r'd-band width [eV]'
+            
             elif xkey == 'PZC':
                 xvals= np.array(  [df.loc[ df['metal'] == metal, xkey]  for metal in metals ] )
                 xlabel=r'PZC [V]'
