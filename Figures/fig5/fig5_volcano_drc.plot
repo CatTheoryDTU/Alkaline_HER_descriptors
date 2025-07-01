@@ -4,7 +4,7 @@ set ytics nomirror
 set terminal epslatex color size 6in,6in "cmss,10" standalone
 set output "Volcano_Figure5.tex"
 set print '/dev/null'
-set multiplot layout 2,2 margins 0.125, 0.85, 0.20, 0.95# spacing 0.0,0.15 
+set multiplot layout 2,2 margins 0.125, 0.85, 0.10, 0.925# spacing 0.0,0.15 
 set pm3d map interpolate 2,2 noborder
 #unset surface; 
 set pm3d at b;
@@ -27,10 +27,12 @@ unset colorbox
 #set label 3 at graph 0.4,0.2 '\large{Volmer-Limited}' front
 #set label 4 at graph 0.02,0.87 '\large{Tafel-Limited}' front
 #set label 5 at graph 0.52,0.92 '\large{H}' front
+set label 1 at graph -0.15,1.1 '\large{a)}' front
 splot  \
 	"volcano_hbepzc.txt" using 1:2:(-1*$3) with pm3d notitle, \
 	"<(paste ../combined_descriptor.txt ../Hdiff.txt)" using 1:2:(0.1):(0.125) with circles linecolor 'black' notitle, \
 	"<(paste ../combined_descriptor.txt ../Hdiff.txt ../metals.txt)" using 1:2:(0.1):(sprintf("%s",stringcolumn(3))) with labels notitle
+set label 1 at graph -0.15,1.1 '\large{b)}' front
 set colorbox
 #set xlabel '$\Delta G^{top}_H$ (eV)'# offset 0,screen 0.05
 set xrange [-0.28:1.3]
@@ -41,6 +43,7 @@ splot  \
 	"volcano_htop.txt" using 1:2:(-1*$3) with pm3d notitle, \
 	"<(paste ../vac_Htops.txt ../Hdiff.txt)" using 1:2:(0.1):(0.09) with circles linecolor 'black' notitle, \
 	"<(paste ../vac_Htops.txt ../Hdiff.txt ../metals.txt)" using 1:2:(0.1):(sprintf("%s",stringcolumn(3))) with labels notitle
+set label 1 at graph -0.15,1.1 '\large{c)}' front
 load '../bentcoolwarm.pal'
 unset colorbox
 set xlabel '$\Delta G^{fcc}_H-0.91U_{PZC}$ (eV)'# offset 0,screen 0.05
@@ -57,6 +60,7 @@ splot  \
 	"drc_hbepzc.txt" using 1:2:3 with pm3d notitle, \
 	"<(paste ../combined_descriptor.txt ../Hdiff.txt)" using 1:2:(0.1):(0.125) with circles linecolor 'black' notitle, \
 	"<(paste ../combined_descriptor.txt ../Hdiff.txt ../metals.txt)" using 1:2:(0.1):(sprintf("%s",stringcolumn(3))) with labels notitle
+set label 1 at graph -0.15,1.1 '\large{d)}' front
 set cbtics out nomirror
 set cbtics format '%1.1f' #font ticsfont
 set cblabel 'Volmer Degree of Rate Control' offset graph 0.075,0
