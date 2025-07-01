@@ -137,7 +137,7 @@ def plot_array(dd,labels,flag):
 
     Nkeys = len(dd.keys())
     
-    for v in [1,2,3,4,5,6]: #versions.
+    for v in [1,2,3,4,5,6,7,8]: #versions.
 
         if v ==1:
             #Version 1
@@ -182,18 +182,8 @@ def plot_array(dd,labels,flag):
             figname='tafel_vs_descriptors'
             show_equation=True 
         
-        elif v==5:
-            #Version 
-            Nrows = 3
-            Ncols = 5
-            figsize = (10,6)
-            ykeys = ['hfcc']*Ncols +['htop']*Ncols +['hdiff']*Ncols #dd.keys()
-            xkeys = [dd.keys().to_list()[i] for i in [1,2,3,4,5]]*3
-            hidden_axes = []
-            figname='hbe_vs_descriptors'
-            show_equation=False 
         
-        elif v==6:
+        elif v==5:
             #Version 
             Nrows = 2
             Ncols = 4
@@ -204,6 +194,36 @@ def plot_array(dd,labels,flag):
             figname='electronic_descriptors'
             show_equation=True 
         
+        elif v==6:
+            #Version 
+            Nrows = 2
+            Ncols = 4
+            figsize = (9,5)
+            ykeys = ['hfcc']*8 #Ncols +['htop']*Ncols +['hdiff']*Ncols #dd.keys()
+            xkeys = [dd.keys().to_list()[i] for i in [1,2,3,4,5]]*2
+            figname='hfcc_vs_descriptors'
+            show_equation=True
+            hidden_axes = [5,6,7]
+        elif v==7:
+            #Version 
+            Nrows = 2
+            Ncols = 4
+            figsize = (9,5)
+            ykeys = ['htop']*8 #Ncols +['htop']*Ncols +['hdiff']*Ncols #dd.keys()
+            xkeys = [dd.keys().to_list()[i] for i in [1,2,3,4,5]]*2
+            figname='htop_vs_descriptors'
+            show_equation=True
+            hidden_axes = [5,6,7]
+        elif v==8:
+            #Version 
+            Nrows = 2
+            Ncols = 4
+            figsize = (9,5)
+            ykeys = ['hdiff']*8 #Ncols +['htop']*Ncols +['hdiff']*Ncols #dd.keys()
+            xkeys = [dd.keys().to_list()[i] for i in [1,2,3,4,5]]*2
+            figname='hdiff_vs_descriptors'
+            show_equation=True
+            hidden_axes = [5,6,7]
     
     
     
