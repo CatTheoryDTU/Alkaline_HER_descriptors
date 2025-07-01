@@ -21,6 +21,7 @@ set ytics format "%1.2f"
 set xlabel 'U vs SHE (V)'
 set label 1 '$U_{\mathrm{PZC}}$' at -1.5, 0.75 textcolor 'dark-green' front
 set label 2 '$\Delta G^{\mathrm{top}}_\mathrm{H}$' at -2,0.99 textcolor 'blue' front
+set label 3 '$\sigma_d$' at -0.2,0.50 textcolor 'pink' front right
 set label 4 '\large a) Volmer' at -2,-0. textcolor 'black' front
 #set label 3 at graph -0.15,1.05 'a)' front
 #'$|V|^2$','$\Delta G^{fcc}_H-\Delta G^{top}_H$'
@@ -30,12 +31,16 @@ plot \
 	"<paste fig5x.txt fig5a.txt" u 1:5 w l lc 'dark-red' lw 3.0 notitle, \
 	"<paste fig5x.txt fig5a.txt" u 1:4 w l lc 'blue' lw 3.0 notitle, \
 	"<paste fig5x.txt fig5a.txt" u 1:6 w l lc 'purple' lw 3.0 notitle, \
-	"<paste fig5x.txt fig5a.txt" u 1:7 w l lc 'dark-goldenrod' lw 3.0 notitle
+	"<paste fig5x.txt fig5a.txt" u 1:7 w l lc 'dark-goldenrod' lw 3.0 notitle, \
+	"<paste fig5x.txt fig5a.txt" u 1:8 w l lc 'pink' lw 3.0 notitle, \
+	"<paste fig5x.txt fig5a.txt" u 1:9 w l lc 'light-green' lw 3.0 notitle
+unset label
 set ylabel ""
 set ytics format ""
+set label 3 '$d_{edge}$' at -0.4,0.85 textcolor 'light-green' front
 set label 4 '\large b) Heyrovsky' at 0,-0. textcolor 'black' front right
 set label 1 '$\Delta G^{\mathrm{fcc}}_\mathrm{H}-0.91eU_{\mathrm{PZC}}$' at -1.9, 0.98 textcolor 'dark-red' front
-set label 2 '$\Delta G^{\mathrm{fcc}}_\mathrm{H}$' at -0.5,0.825 textcolor 'black' front
+set label 2 '$\Delta G^{\mathrm{fcc}}_\mathrm{H}$' at -0.5,0.725 textcolor 'black' front
 #set label 3 at graph -0.15,1.05 'b)' front
 plot \
 	"<paste fig5x.txt fig5b.txt" u 1:3 w l lc 'black' lw 3.0 notitle, \
@@ -43,7 +48,10 @@ plot \
 	"<paste fig5x.txt fig5b.txt" u 1:5 w l lc 'dark-red' lw 3.0 notitle, \
 	"<paste fig5x.txt fig5b.txt" u 1:4 w l lc 'blue' lw 3.0 notitle, \
 	"<paste fig5x.txt fig5b.txt" u 1:6 w l lc 'purple' lw 3.0 notitle, \
-	"<paste fig5x.txt fig5b.txt" u 1:7 w l lc 'dark-goldenrod' lw 3.0 notitle
+	"<paste fig5x.txt fig5b.txt" u 1:7 w l lc 'dark-goldenrod' lw 3.0 notitle, \
+	"<paste fig5x.txt fig5b.txt" u 1:8 w l lc 'pink' lw 3.0 notitle, \
+	"<paste fig5x.txt fig5b.txt" u 1:9 w l lc 'light-green' lw 3.0 notitle
+unset label 3
 set label 1 '$|V_{ad}|^2$' at -1, 0.88 textcolor 'purple' front
 set label 2 '$\Delta G^{\mathrm{top}}_\mathrm{H}-\Delta G^{\mathrm{fcc}}_\mathrm{H}$' at -1.5,0.75 textcolor 'dark-goldenrod' front
 set label 4 '\large c) Tafel' at -2,1. textcolor 'black' front left
@@ -54,5 +62,7 @@ plot \
 	"<paste fig5x.txt fig5c.txt" u 1:5 w l lc 'dark-red' lw 3.0 notitle, \
 	"<paste fig5x.txt fig5c.txt" u 1:4 w l lc 'blue' lw 3.0 notitle, \
 	"<paste fig5x.txt fig5c.txt" u 1:6 w l lc 'purple' lw 3.0 notitle, \
-	"<paste fig5x.txt fig5c.txt" u 1:7 w l lc 'dark-goldenrod' lw 3.0 notitle
+	"<paste fig5x.txt fig5c.txt" u 1:7 w l lc 'dark-goldenrod' lw 3.0 notitle, \
+	"<paste fig5x.txt fig5c.txt" u 1:8 w l lc 'pink' lw 3.0 notitle, \
+	"<paste fig5x.txt fig5c.txt" u 1:9 w l lc 'light-green' lw 3.0 notitle
 unset multiplot
