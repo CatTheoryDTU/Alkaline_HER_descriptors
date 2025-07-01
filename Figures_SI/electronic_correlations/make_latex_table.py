@@ -45,6 +45,7 @@ if __name__ == "__main__":
     #Vojvodic 2014 parameters
     Voj = pd.read_csv('CSV/Vojvodic_parsed_to_excel.csv',converters={"metal": str, 'termination': str})
 
+    Xin = pd.read_csv('CSV/Xin2014_edges.csv',converters={"metal": str})
 
     metals = df['metal'].tolist()
     
@@ -52,7 +53,9 @@ if __name__ == "__main__":
  
     mcns= np.array( [float(Voj.loc[ Voj['metal'] == metal, 'mcn'].iloc[0])  for metal in metals ] )
     dwidths = 4*np.sqrt(mcns)
-    dedges = dcenters + dwidths/2
+    #dedges = dcenters + dwidths/2
+    
+    dedges= np.array(  [float(Xin.loc[ Xin['metal'] == metal, 'dedge'].iloc[0])  for metal in metals ] )
     
     vads  =  np.array( [float(Voj.loc[ Voj['metal'] == metal, 'vad'].iloc[0])  for metal in metals ] )
     
