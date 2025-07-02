@@ -106,6 +106,7 @@ def plot_array(dd,labels,flag):
     rcParams['figure.subplot.right'] = lrbt[1] 
     rcParams['figure.subplot.bottom'] = lrbt[2]
     rcParams['figure.subplot.top'] = lrbt[3] #
+    rcParams['font.size'] = 8.0                     
 
 
     print('number of columns: {}'.format(len(dd.keys())))
@@ -239,15 +240,19 @@ def plot_array(dd,labels,flag):
         
         elif v==9:
             #Version 
-            Nrows = 1
-            Ncols = 4
-            figsize = (9,2.5)
+            Nrows = 2
+            Ncols = 2
+            figsize = (4,4)
             ykeys = ['hdiff']*4 
             xkeys = ['dcenter','dedge','vad','pzc'] 
             figname='hdiff_vs_descriptors'
             show_equation=False
             hidden_axes = []
-    
+            fs=8
+            arsize=6
+            fsize = 8 #arsize
+            rcParams['font.size'] = 8.0                     
+            plt.subplots_adjust(hspace=1)
     
     
     
@@ -303,6 +308,8 @@ def plot_array(dd,labels,flag):
                 ax.set_visible(False)
 
        
+        if v==9: plt.subplots_adjust(hspace=0.6)
+        #else:
         plt.tight_layout()
         #plt.show()
     
