@@ -241,7 +241,7 @@ def plot_array(dd,labels,flag):
             #Version 
             Nrows = 1
             Ncols = 4
-            figsize = (9,4)
+            figsize = (9,2.5)
             ykeys = ['hdiff']*4 
             xkeys = ['dcenter','dedge','vad','pzc'] 
             figname='hdiff_vs_descriptors'
