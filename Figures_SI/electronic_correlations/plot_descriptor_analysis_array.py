@@ -137,7 +137,7 @@ def plot_array(dd,labels,flag):
 
     Nkeys = len(dd.keys())
     
-    for v in [1,2,3,4,5,6,7,8]: #versions.
+    for v in [1,2,3,4,5,6,7,8,9]: #versions.
 
         if v ==1:
             #Version 1
@@ -221,9 +221,20 @@ def plot_array(dd,labels,flag):
             figsize = (9,5)
             ykeys = ['hdiff']*8 #Ncols +['htop']*Ncols +['hdiff']*Ncols #dd.keys()
             xkeys = [dd.keys().to_list()[i] for i in [1,2,3,4,5]]*2
-            figname='hdiff_vs_descriptors'
+            figname='hdiff_vs_descriptors_full'
             show_equation=True
             hidden_axes = [5,6,7]
+        
+        elif v==9:
+            #Version 
+            Nrows = 1
+            Ncols = 4
+            figsize = (9,4)
+            ykeys = ['hdiff']*4 #Ncols +['htop']*Ncols +['hdiff']*Ncols #dd.keys()
+            xkeys = ['dcenter','dedge','vad','pzc'] #dd.keys().to_list()[i] for i in [1,2,3,4,5]]*2
+            figname='hdiff_vs_descriptors'
+            show_equation=False
+            hidden_axes = []
     
     
     
@@ -321,11 +332,14 @@ if __name__ == "__main__":
     
 
     metals = df['metal'].tolist()
+    
+    #Vojvodic2014:
     dcenters  = np.array([float(Voj.loc[ Voj['metal'] == metal, 'ed'].iloc[0])  for metal in metals ] )
     
     mcns= np.array( [float(Voj.loc[ Voj['metal'] == metal, 'mcn'].iloc[0])  for metal in metals ] )
     dwidths = 4*np.sqrt(mcns)
 
+    #Vojvodic2014, same as HammerNorskov2000
     vads  =  np.array( [float(Voj.loc[ Voj['metal'] == metal, 'vad'].iloc[0])  for metal in metals ] )
     pzcs=np.array([float(df.loc[ df['metal'] == metal, 'PZC'].iloc[0])  for metal in metals ] )
     wfs = []
@@ -345,11 +359,16 @@ if __name__ == "__main__":
     #edge_flag = 'Voj'
     #edge_flag = 'Xin'
     #edge_flag = 'MP'
-        if edge_flag == 'Voj': dedges = dcenters + dwidths/2
+        if edge_flag == 'Voj': 
+            #Vojvodic2014
+            dedges = dcenters + dwidths/2
         elif edge_flag == 'Xin': 
+            #Xin2014
             dedges =  np.array( [float(Xin.loc[ Xin['metal'] == metal, 'dedge'].iloc[0])  for metal in metals ] )
             edge_flag=''
-        elif edge_flag == 'MP': dedges=np.array(  [float( TM.loc[ TM['metal'] == metal, 'dbandupperedge' ].iloc[0]) for metal in metals]  )
+        elif edge_flag == 'MP':
+            #estimates from Materials  Project 
+            dedges=np.array(  [float( TM.loc[ TM['metal'] == metal, 'dbandupperedge' ].iloc[0]) for metal in metals]  )
 
         dd = pd.DataFrame({
                            'metal':metals,
