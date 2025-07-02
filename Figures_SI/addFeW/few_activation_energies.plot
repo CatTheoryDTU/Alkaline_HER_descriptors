@@ -30,7 +30,7 @@ do for [i=1:10]{
 	coeffs_b[i]=b
 }
 set xlabel "U vs SHE (V)" #offset 0,screen 0.075
-set ylabel 'Free Energy $\Delta G$ (eV)'
+set ylabel '$\Delta \Omega^\ddag$ (eV)'
 set key at screen 0.8,screen 0.125 maxrows 2
 set xrange [-2.5:0.5]
 plot for [i=1:10] "../../data/volmer/".elements[i]."/barriers.txt" u ($1-4.44):2 ps 2 pointtype numbers[i] title elements[i], \

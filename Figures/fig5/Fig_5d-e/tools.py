@@ -20,7 +20,7 @@ def collect_data(metal_order=['Ni', 'Pd', 'Ir', 'Rh', 'Pt', 'Cu', 'Ag', 'Au']):
 
     """
     # Read in the data
-    data = np.loadtxt('data')
+    data = np.loadtxt('data.new')
     dat_dict = {'hfcc': data[:, 0], 'htop': data[:, 1], 'Volmer': data[:, 2],
                 'Heyrovsky': data[:, 3], 'Tafel': data[:, 4],
                 'metal': metal_order
@@ -44,9 +44,10 @@ def collect_data(metal_order=['Ni', 'Pd', 'Ir', 'Rh', 'Pt', 'Cu', 'Ag', 'Au']):
        quants.append(val)
       dat_dict[quant] = np.array(quants)
 
-    dat_dict['PZC'] = np.array([
-        5.02015, 4.81861, 5.12015, 4.57793, 5.45706,
-        4.29556, 3.95333, 4.69770])-4.44
+    dat_dict['PZC'] = np.loadtxt('../../PZCs.txt')-4.44
+    #array([
+#        5.02015, 4.81861, 5.12015, 4.57793, 5.45706,
+#        4.29556, 3.95333, 4.69770])-4.44
     dat_dict['hfcc-pzc'] = dat_dict['hfcc'] - 0.91*dat_dict['PZC']
     dat_dict['htop-hfcc'] = dat_dict['htop'] - dat_dict['hfcc']
 
@@ -57,7 +58,7 @@ def collect_data(metal_order=['Ni', 'Pd', 'Ir', 'Rh', 'Pt', 'Cu', 'Ag', 'Au']):
 
 def plot_volcano(data, rxns_long=['Volmer','Heyrovsky','Tafel','Activity'],
                 descriptors=['htop', 'hfcc'],
-                 metal_order=['Ni', 'Pd', 'Ir', 'Rh', 'Pt', 'Cu', 'Ag', 'Au'],
+                metal_order = ['Ag', 'Au', 'Cu', 'Ir', 'Ni', 'Pd', 'Pt', 'Rh'],
                  extend_axes=(0.2, 0.2, 0.2, 0.2),
                  only_activity=False
                  ):
@@ -169,21 +170,21 @@ def plot_volcano(data, rxns_long=['Volmer','Heyrovsky','Tafel','Activity'],
                        vmin=0.4, vmax=1.3,cmap='RdYlGn_r', interpolation='nearest')
 
         extent=[min(ranges[0]), max(ranges[0]),min(ranges[1]),max(ranges[1])]
-        #f=open(f'heat_{iax}.txt','w')
-        #for i,row in enumerate(all_dats[iax][3]):
-        #    f.write("\n")
-        #    yval=extent[2]+i*(extent[3]-extent[2])/(row.size-1)
-        #    for j,cval in enumerate(row):
-        #        xval=extent[0]+j*(extent[1]-extent[0])/(row.size-1)
-        #        f.write(f'{xval:1.5f} {yval:1.5f} {cval:1.5f}\n')
-        #f.close()
-        #f=open(f'points_{iax}.txt','w')
+        f=open(f'heat_{iax}.txt','w')
+        for i,row in enumerate(all_dats[iax][3]):
+            f.write("\n")
+            yval=extent[2]+i*(extent[3]-extent[2])/(row.size-1)
+            for j,cval in enumerate(row):
+                xval=extent[0]+j*(extent[1]-extent[0])/(row.size-1)
+                f.write(f'{xval:1.5f} {yval:1.5f} {cval:1.5f}\n')
+        f.close()
+        f=open(f'points_{iax}.txt','w')
         for i in range(len(data[descriptors[iax][0]])):
             ax.annotate(metal_order[i],
                         xy=(xs[iax][i],ys[iax][i]),
                         fontsize=20,ha='center', va='center')
-        #    f.write(f'{xs[iax][i]:1.5f} {ys[iax][i]:1.5f} {metal_order[i]}\n')
-        #f.close()
+            f.write(f'{xs[iax][i]:1.5f} {ys[iax][i]:1.5f} {metal_order[i]}\n')
+        f.close()
 
         ax.plot(xs[iax],ys[iax], 'ko', markeredgecolor='k', markersize=30, markerfacecolor='none')
         ax.set_xlim(min(ranges[0]), max(ranges[0]))
@@ -193,7 +194,7 @@ def plot_volcano(data, rxns_long=['Volmer','Heyrovsky','Tafel','Activity'],
         pos = ax.get_position()
         ax.set_position([pos.x0+0.06*iax, pos.y0, pos.width * 1.12, pos.height])
     cbar_ax = fig.add_axes([0.88, 0.17, 0.03, 0.78])  # [left, bottom, width, height]
-    cbar = plt.colorbar(im, cax=cbar_ax, orientation='vertical', label=r'$\Delta$G$^\ddagger$  (eV)')
+    cbar = plt.colorbar(im, cax=cbar_ax, orientation='vertical', label=r'$\Delta$G$^\ddag$  (eV)')
     #fig.colorbar(im,label=r'$\Delta$G$^\ddagger$  (eV)', orientation='vertical')
     plt.tight_layout()
     if len(axs) > 1:

@@ -60,8 +60,8 @@ set multiplot layout 2,2 margins 0.15, 0.95, 0.15, 0.94 spacing 0.05,0.15 # titl
 #vac_HBEs
 set xlabel '$\Delta G^{\mathrm{fcc}}_\mathrm{H}$ (eV)'# offset 0,screen 0.05
 #set title "Thermodynamic" #offset 0,graph -0.05
-set label 1 at  -0.28, -8 sprintf('\small \shortstack[c]{Theory: {$R^2$=%1.2f} \\ {\tiny y=±%1.2f(x+%1.2f)$%1.2f$}}',HMIN_correlation**2,r,q,n) front
-set label 3 at  0.28, -0 sprintf('\small \shortstack[c]{Exp: {$R^2$=%1.2f} \\ {\tiny y=±%1.2f(x+%1.2f)$%1.2f$}}',exp_HMIN_correlation**2,expr,expq,expn) textcolor 'blue' front
+set label 1 at  -0.28, -8 sprintf('\small \shortstack[c]{Theory: {$R^2$=%1.2f} \\ {\tiny y=±%1.2f|x+%1.2f|$%1.2f$}}',HMIN_correlation**2,r,q,n) front
+set label 3 at  0.28, -0 sprintf('\small \shortstack[c]{Exp: {$R^2$=%1.2f} \\ {\tiny y=±%1.2f|x+%1.2f|$%1.2f$}}',exp_HMIN_correlation**2,expr,expq,expn) textcolor 'blue' front
 set label 2 at graph -0.15,1.1 'a)' front
 
 set label 4 at -0.09,0.8 'Pt' center front
@@ -146,8 +146,8 @@ set xrange [-0.3:1.2]
 set xtics 0,.25,1.0
 set xlabel '$\Delta G^{\mathrm{top}}_\mathrm{H}$ (eV)'# offset 0,screen 0.05
 #set title "Thermodynamic" #offset 0,graph -0.05
-set label 1 at  -.25, -8 sprintf('\small \shortstack[c]{{Theory: $R^2$=%1.2f} \\ {\tiny y=±%1.2f(x+%1.2f)$%1.2f$}}',HTOP_correlation**2,g,d,h) front
-set label 3 at  .55, -0 sprintf('\small \shortstack[c]{{Exp: $R^2$=%1.2f} \\ {\tiny y=±%1.2f(x+%1.2f)+$%1.2f$}}',exp_HTOP_correlation**2,expg,expd,exph) textcolor 'blue' front
+set label 1 at  -.25, -8 sprintf('\small \shortstack[c]{{Theory: $R^2$=%1.2f} \\ {\tiny y=±%1.2f|x+%1.2f|$%1.2f$}}',HTOP_correlation**2,g,d,h) front
+set label 3 at  .55, -0 sprintf('\small \shortstack[c]{{Exp: $R^2$=%1.2f} \\ {\tiny y=±%1.2f|x+%1.2f|+$%1.2f$}}',exp_HTOP_correlation**2,expg,expd,exph) textcolor 'blue' front
 
 set label 4 at -0.1,0.8 'Pt' center front
 set label 5 at -0.1,-2.4 'Ir' center front

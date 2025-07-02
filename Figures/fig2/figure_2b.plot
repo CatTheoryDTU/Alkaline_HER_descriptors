@@ -3,7 +3,7 @@ set ytics nomirror
 set y2tics
 #set logscale y2
 set xlabel "U vs RHE (V)"
-set ylabel r"$\\Delta G^{\\ddag}$ (eV)" offset graph 0,0.2
+set ylabel r"$\\Delta \\Omega^{\\ddag}$ (eV)" offset graph 0,0.2
 set y2label r"$\\theta_\\mathrm{H}$" offset graph 0,0.05
 set xtics nomirror
 set terminal epslatex color colortext size 5in,3in font "cmss,10" standalone
