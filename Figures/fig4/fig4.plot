@@ -35,8 +35,8 @@ stats "<paste ../PZCs.txt ../vac_HBEs.txt ../tafels.txt" using (h2($1,$2)):3 pre
 set xrange [-0.35:0.65]
 set xtics -0.25,0.25,0.5
 set yrange [0.2:1.5]
-set multiplot layout 2,2 margins 0.15, 0.95, 0.15, 0.925 spacing 0.025,0.1 # title "Activation Energies at -1 V vs SHE" font titlefont
-set key at screen 0.8,screen 0.05 maxrows 2
+set multiplot layout 2,2 margins 0.15, 0.95, 0.10, 0.875 spacing 0.025,0.1 # title "Activation Energies at -1 V vs SHE" font titlefont
+set key at screen 0.8,screen 0.99 maxrows 2
 set title font subtitlefont
 set label 1 sprintf('\small{Volmer $R^2=%1.2f$}',hbevol_correlation**2) at 0.18,0.97 rotate by 25.0 font subtitlefont textcolor 'black' front
 set label 2 sprintf('\small{Heyrovsky $R^2=%1.2f$}',hbehey_correlation**2) at 0.15,0.75 rotate by -40.0 font subtitlefont textcolor lt 7 front

@@ -1,7 +1,5 @@
 set encoding utf8
 set ylabel 'Free Energy $\Delta G$ (eV)'
-set terminal svg enhanced size 1000,500
-set output "HBE_Electronic_Descriptors.svg"
 set terminal epslatex color colortext size 6in,4in "cmss" standalone
 set output "HBE_Electronic_Descriptors.tex"
 set xtics nomirror

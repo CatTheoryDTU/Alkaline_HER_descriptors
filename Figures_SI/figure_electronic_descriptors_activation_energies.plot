@@ -32,9 +32,9 @@ array numbers[8]
 stats FILE u (numbers[int($0+1)] = $1) 
 array elements = ["Ag","Au","Cu","Ir","Ni","Pd","Pt","Rh"]
 set key at screen 0.8,screen 0.125 maxrows 2
-set label 1 sprintf('\small{Volmer, $R^2 = %1.2f$}',dbandvol_correlation**2) at -3.2,0.5 rotate by 0 textcolor 'black' front
-set label 2 sprintf('\small{Heyrovsky, $R^2 = %1.2f$}',dbandhey_correlation**2) at -3.2,0.4 rotate by 0 textcolor lt 7 front
-set label 3 sprintf('\small{Tafel, $R^2 = %1.2f$}',dbandtaf_correlation**2) at -3.2,0.3 rotate by 0 textcolor lt 6 front
+set label 1 sprintf('\small{Volmer, $R^2 = %1.2f$}',dbandvol_correlation**2) at -3.8,0.5 rotate by 0 textcolor 'black' front
+set label 2 sprintf('\small{Heyrovsky, $R^2 = %1.2f$}',dbandhey_correlation**2) at -3.8,0.4 rotate by 0 textcolor lt 7 front
+set label 3 sprintf('\small{Tafel, $R^2 = %1.2f$}',dbandtaf_correlation**2) at -3.8,0.3 rotate by 0 textcolor lt 6 front
 plot \
 	'<paste dbandcenters.txt volmers.txt numbers.txt' u 1:2:3 with points lc 'black' pointtype variable ps 2 notitle, \
 	'<paste dbandcenters.txt heyrovskys.txt numbers.txt' u 1:2:3 w points ps 2 pt variable lc 7 notitle, \
@@ -49,9 +49,9 @@ set xlabel "$|V_{ad}|^2$"
 set xtics 1,1,4
 set ylabel ""
 set ytics format ""
-set label 1 sprintf('\small{Volmer, $R^2 = %1.2f$}',coupvol_correlation**2) at 1.0,0.7 rotate by 0 textcolor 'black' front
-set label 2 sprintf('\small{Heyrovsky, $R^2 = %1.2f$}',couphey_correlation**2) at 1.0,0.6 rotate by 0 textcolor lt 7 front
-set label 3 sprintf('\small{Tafel, $R^2 = %1.2f$}',couptaf_correlation**2) at 1.0,0.5 rotate by 0 textcolor lt 6 front
+set label 1 sprintf('\small{Volmer, $R^2 = %1.2f$}',coupvol_correlation**2) at 0.9,0.5 rotate by 0 textcolor 'black' front
+set label 2 sprintf('\small{Heyrovsky, $R^2 = %1.2f$}',couphey_correlation**2) at 0.9,0.35 rotate by 0 textcolor lt 7 front
+set label 3 sprintf('\small{Tafel, $R^2 = %1.2f$}',couptaf_correlation**2) at 0.9,0.25 rotate by 0 textcolor lt 6 front
 plot \
 	'<paste couplings.txt volmers.txt numbers.txt' u 1:2:3 with points lc 'black' pointtype variable ps 2 notitle, \
 	'<paste couplings.txt heyrovskys.txt numbers.txt' u 1:2:3 w points ps 2 pt variable lc 7 notitle, \
@@ -62,7 +62,7 @@ plot \
 set xrange[-0.3:0.9]
 set xtics -0.4,0.4,0.8
 set xlabel '$\Delta G^{top}_{H} - \Delta G^{fcc}_{H}$'
-set label 1 sprintf('\small{Volmer, $R^2 = %1.2f$}',hdiffvol_correlation**2) at -.2,0.45 rotate by 0 textcolor 'black' front
+set label 1 sprintf('\small{Volmer, $R^2 = %1.2f$}',hdiffvol_correlation**2) at -.2,0.55 rotate by 0 textcolor 'black' front
 set label 2 sprintf('\small{Heyrovsky, $R^2 = %1.2f$}',hdiffhey_correlation**2) at -.2,0.35 rotate by 0 textcolor lt 7 front
 set label 3 sprintf('\small{Tafel, $R^2 = %1.2f$}',hdifftaf_correlation**2) at -.2,0.25 rotate by 0 textcolor lt 6 front
 plot \

@@ -4,7 +4,7 @@
 set encoding utf8
 set ylabel 'Descriptor Strength, $R^2$ '
 set terminal epslatex color colortext size 6in,3in "cmss,10" standalone
-set output "Figure_5.tex"
+set output "Figure_4_efg.tex"
 set xtics nomirror
 set ytics nomirror
 set ytics (0,0.25,0.5,0.75,1)
@@ -19,9 +19,9 @@ set xrange[-2.1:0.1]
 set yrange[-0.05:1.05]
 set ytics format "%1.2f"
 set xlabel 'U vs SHE (V)'
-set label 1 '$U_{\mathrm{PZC}}$' at -1.5, 0.75 textcolor 'dark-green' front
+set label 1 '$U_{\mathrm{PZC}}$' at -1.5, 0.85 textcolor 'dark-green' front
 set label 2 '$\Delta G^{\mathrm{top}}_\mathrm{H}$' at -2,0.99 textcolor 'blue' front
-set label 3 '$\sigma_d$' at -0.2,0.50 textcolor 'pink' front right
+set label 3 'd-edge' at -1.5,0.70 textcolor 'light-green' front
 set label 4 '\large e) Volmer' at -2,-0. textcolor 'black' front
 #set label 3 at graph -0.15,1.05 'a)' front
 #'$|V|^2$','$\Delta G^{fcc}_H-\Delta G^{top}_H$'
@@ -37,7 +37,7 @@ plot \
 unset label
 set ylabel ""
 set ytics format ""
-set label 3 '$d_{edge}$' at -0.4,0.85 textcolor 'light-green' front
+set label 3 '$\epsilon_d$' at -1.75,0.425 textcolor 'pink' front right
 set label 4 '\large f) Heyrovsky' at 0,-0. textcolor 'black' front right
 set label 1 '$\Delta G^{\mathrm{fcc}}_\mathrm{H}-0.91eU_{\mathrm{PZC}}$' at -1.9, 0.98 textcolor 'dark-red' front
 set label 2 '$\Delta G^{\mathrm{fcc}}_\mathrm{H}$' at -0.5,0.725 textcolor 'black' front

@@ -41,7 +41,7 @@ do for [i=1:8]{
 	coeffs_a[i]=a
 	coeffs_b[i]=b
 }
-set ylabel '$\Delta \Omega^\ddag$ (eV)' offset 0,0
+set ylabel '$\Delta \Omega_V^{\ddag}$ (eV)' offset 0,0
 set xrange [-2.5:0.5]
 set ytics format '%1.1f'
 plot for [i=1:8] "../../data/volmer/".elements[i]."/free_energy.txt" u ($1-0):2 ls i ps 2 pointtype numbers[i] title elements[i], \
@@ -49,6 +49,7 @@ plot for [i=1:8] "../../data/volmer/".elements[i]."/free_energy.txt" u ($1-0):2 
 unset xrange
 unset key
 set title "\\large c) Heyrovsky"
+set ylabel '$\Delta \Omega_{Hey}^{\ddag}$ (eV)' offset 0,0
 array coeffs_a[8]
 array coeffs_b[8]
 do for [i=1:8]{
@@ -61,6 +62,7 @@ plot for [i=1:8] "../../data/heyrovsky/".elements[i]."/free_energy.txt" u ($1-0)
      for [i=1:8] coeffs_a[i]*x+coeffs_b[i] ls i lw 2 dt 2 notitle
 unset xrange
 set title "\\large d) Tafel"
+set ylabel '$\Delta \Omega_{T}^{\ddag}$ (eV)' offset 0,0
 array coeffs_a[8]
 array coeffs_b[8]
 do for [i=1:8]{
