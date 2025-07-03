@@ -134,9 +134,9 @@ def plot_array(dd,labels,flag):
 
     Nkeys = len(dd.keys())
     
-    for v in [1]: 
+    for v in [1,2]: 
         
-        elif v==1:
+        if v==1:
             #Version 
             Nrows = 2
             Ncols = 2
@@ -151,13 +151,29 @@ def plot_array(dd,labels,flag):
             fsize = 8 #arsize
             rcParams['font.size'] = 8.0                     
             plt.subplots_adjust(hspace=1)
-    
+            use_label=True
+        elif v==2:
+            #Version 
+            Nrows = 1
+            Ncols = 3
+            figsize = (6,2)
+            ykeys = ['hfcc']*3
+            xkeys = ['pzc']*3
+            figname='hfcc_vs_pzc'
+            show_equation=False
+            hidden_axes = [0,2]
+            fs=8
+            arsize=6
+            fsize = 8 #arsize
+            rcParams['font.size'] = 8.0                     
+            plt.subplots_adjust(hspace=1)
+            use_label=False
     
     
         iss = range(Nrows*Ncols)
     
         fig, axs = plt.subplots(nrows=Nrows, ncols=Ncols, figsize=figsize )
-    
+
         for ax, ykey,xkey,icap in zip(axs.flat, ykeys,xkeys,iss):
             print(ax)
             print('ykey {}, xkey {}'.format(ykey,xkey))
@@ -192,7 +208,7 @@ def plot_array(dd,labels,flag):
                 y_pred = LR.predict(sorted_xvals)
                 ax.plot(sorted_xvals,y_pred,lw=1, linestyle='--',color='black',zorder=0 )
                     
-            ax.annotate('{})'.format(string.ascii_lowercase[icap]), xy=capcoord,
+            if use_label: ax.annotate('{})'.format(string.ascii_lowercase[icap]), xy=capcoord,
                                      ha='center', xycoords = ('axes fraction'), 
                                      textcoords=('axes fraction'), color="black",
                                      annotation_clip=False, fontsize=fsize)
