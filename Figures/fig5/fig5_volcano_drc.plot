@@ -5,7 +5,7 @@ set terminal epslatex color size 6in,6in "cmss,10" standalone
 set output "Volcano_Figure5.tex"
 set print '/dev/null'
 set multiplot layout 2,2 margins 0.125, 0.85, 0.10, 0.925# spacing 0.0,0.15 
-set pm3d map interpolate 2,2 noborder
+set pm3d map interpolate 1,1 noborder
 #unset surface; 
 set pm3d at b;
 set view map
