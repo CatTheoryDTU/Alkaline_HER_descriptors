@@ -42,8 +42,6 @@ def parse_results(path):
         #'heyrovskys.txt'
              ]
     
-    #path='../addFeW/'
-    
     data = []
     for i in range(len(filenames)):
         vals=[]
@@ -114,19 +112,21 @@ if __name__ == "__main__":
     pd.set_option('display.max_colwidth', None)
 
 
-    #LOAD DATA 
-    #df = pd.read_csv('CSV/results.csv')
+    #Load our calculations 
     path = '../addFeW/'
     df = parse_results(path)
 
+    #Load Vojvodic 2014 parameters
     Voj = pd.read_csv('CSV/Vojvodic_parsed_to_excel.csv',converters={"metal": str, 'termination': str})
 
+    #Load Xin 2014 parameters
     Xin = pd.read_csv('CSV/Xin2014_edges.csv',converters={"metal": str})
 
     metals = df['metal'].tolist()
     
     dcenters  = np.array([float(Voj.loc[ Voj['metal'] == metal, 'ed'].iloc[0])  for metal in metals ] )
- 
+
+    #Vojvodic2014 d-upper-edge estimates
     #mcns= np.array( [float(Voj.loc[ Voj['metal'] == metal, 'mcn'].iloc[0])  for metal in metals ] )
     #dwidths = 4*np.sqrt(mcns)
     #dedges = dcenters + dwidths/2
@@ -151,6 +151,7 @@ if __name__ == "__main__":
     #use Vojvodic2014 couplings (same as Hammer2000) 
     vads  =  np.array( [float(Voj.loc[ Voj['metal'] == metal, 'vad'].iloc[0])  for metal in metals ] )
     
+    #our calculations
     pzcs=np.array([float(df.loc[ df['metal'] == metal, 'PZC'].iloc[0])  for metal in metals ] )
     
     hfccs = np.array(  [float(df.loc[ df['metal'] == metal, 'vac_HBE'].iloc[0])  for metal in metals ] )
@@ -164,7 +165,6 @@ if __name__ == "__main__":
     fname = 'electronic_parameters_table'
     df_table = pd.DataFrame({
                              'metal':metals,'dbandcenter':dcenters,'dupperedge':dedges,
-                             #'dwidth':dwidths,'vad':vads,'PZC':pzcs
                              'vad':vads,'PZC':pzcs
                              })
     

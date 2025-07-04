@@ -131,114 +131,12 @@ def plot_array(dd,labels,flag):
     r2duplet=(0.8,1.1)
     r3duplet=(0.2,1.1)
 
-    """ keys: 
-     'metal':metals,    0
-     'dcenter':dcenters, 1
-     'dedge':dedges,  2
-     'dwidth':dwidths, 3
-     'vad':vads, 4
-     'pzc':pzcs, 5
-     'wf':wfs,  6
-     'htop':htops, 7
-     'hfcc':hfccs, 8
-     'hdiff':hdiffs, 9
-     'volmer':volmers, 10
-     'heyrovsky':heyrovskys, 11
-     'tafel':tafels,  12
-     'i0':i0s    13
-    """
 
     Nkeys = len(dd.keys())
     
-    for v in [9]: #[1,2,3,4,5,6,7,8,9]: #versions.
-
-        if v ==1:
-            #Version 1
-            Nrows = 4
-            Ncols = 3
-            figsize = (7,9)
-            ykeys = ['i0']*12 #dd.keys()
-            xkeys = ['volmer','heyrovsky','tafel'] + [dd.keys().to_list()[i] for i in [7,8,9,1,2,3,4,5]] +['pzc']
-            hidden_axes = [11]
-            figname='i0_vs_descriptors'
-            show_equation=True 
-            
-            
-        elif v==2:
-            #Version 2
-            Nrows = 2
-            Ncols = 4
-            figsize = (9,5)
-            ykeys = ['volmer']*9 #dd.keys()
-            xkeys = [dd.keys().to_list()[i] for i in [7,8,9,5,1,2,3,4]]
-            hidden_axes = []
-            figname='volmer_vs_descriptors'
-            show_equation=True 
+    for v in [1,2]: 
         
-        elif v==3:
-            Nrows = 2
-            Ncols = 4
-            figsize = (9,5)
-            ykeys = ['heyrovsky']*9 #dd.keys()
-            xkeys = [dd.keys().to_list()[i] for i in [7,8,9,5,1,2,3,4]]
-            hidden_axes = []
-            figname='heyrovsky_vs_descriptors'
-            show_equation=True 
-        elif v==4:
-            #Version 
-            Nrows = 2
-            Ncols = 4
-            figsize = (9,5)
-            ykeys = ['tafel']*9 #dd.keys()
-            xkeys = [dd.keys().to_list()[i] for i in [7,8,9,5,1,2,3,4]]
-            hidden_axes = []
-            figname='tafel_vs_descriptors'
-            show_equation=True 
-        
-        
-        elif v==5:
-            #Version 
-            Nrows = 2
-            Ncols = 4
-            figsize = (9,5)
-            ykeys = ['dcenter','dcenter','dwidth','dedge','pzc','pzc','pzc','pzc']  
-            xkeys = ['dedge',  'dwidth' , 'vad', 'dwidth','dedge','dwidth','pzc','pzc'] 
-            hidden_axes = [6,7]
-            figname='electronic_descriptors'
-            show_equation=True 
-        
-        elif v==6:
-            #Version 
-            Nrows = 2
-            Ncols = 4
-            figsize = (9,5)
-            ykeys = ['hfcc']*8 
-            xkeys = [dd.keys().to_list()[i] for i in [1,2,3,4,5]]*2
-            figname='hfcc_vs_descriptors'
-            show_equation=True
-            hidden_axes = [5,6,7]
-        elif v==7:
-            #Version 
-            Nrows = 2
-            Ncols = 4
-            figsize = (9,5)
-            ykeys = ['htop']*8 
-            xkeys = [dd.keys().to_list()[i] for i in [1,2,3,4,5]]*2
-            figname='htop_vs_descriptors'
-            show_equation=True
-            hidden_axes = [5,6,7]
-        elif v==8:
-            #Version 
-            Nrows = 2
-            Ncols = 4
-            figsize = (9,5)
-            ykeys = ['hdiff']*8 
-            xkeys = [dd.keys().to_list()[i] for i in [1,2,3,4,5]]*2
-            figname='hdiff_vs_descriptors_full'
-            show_equation=True
-            hidden_axes = [5,6,7]
-        
-        elif v==9:
+        if v==1:
             #Version 
             Nrows = 2
             Ncols = 2
@@ -253,13 +151,29 @@ def plot_array(dd,labels,flag):
             fsize = 8 #arsize
             rcParams['font.size'] = 8.0                     
             plt.subplots_adjust(hspace=1)
-    
+            use_label=True
+        elif v==2:
+            #Version 
+            Nrows = 1
+            Ncols = 3
+            figsize = (6,2)
+            ykeys = ['hfcc']*3
+            xkeys = ['pzc']*3
+            figname='hfcc_vs_pzc'
+            show_equation=False
+            hidden_axes = [0,2]
+            fs=8
+            arsize=6
+            fsize = 8 #arsize
+            rcParams['font.size'] = 8.0                     
+            plt.subplots_adjust(hspace=1)
+            use_label=False
     
     
         iss = range(Nrows*Ncols)
     
         fig, axs = plt.subplots(nrows=Nrows, ncols=Ncols, figsize=figsize )
-    
+
         for ax, ykey,xkey,icap in zip(axs.flat, ykeys,xkeys,iss):
             print(ax)
             print('ykey {}, xkey {}'.format(ykey,xkey))
@@ -294,7 +208,7 @@ def plot_array(dd,labels,flag):
                 y_pred = LR.predict(sorted_xvals)
                 ax.plot(sorted_xvals,y_pred,lw=1, linestyle='--',color='black',zorder=0 )
                     
-            ax.annotate('{})'.format(string.ascii_lowercase[icap]), xy=capcoord,
+            if use_label: ax.annotate('{})'.format(string.ascii_lowercase[icap]), xy=capcoord,
                                      ha='center', xycoords = ('axes fraction'), 
                                      textcoords=('axes fraction'), color="black",
                                      annotation_clip=False, fontsize=fsize)
@@ -330,13 +244,10 @@ if __name__ == "__main__":
     pd.set_option('display.max_colwidth', None)
 
 
-    #LOAD DATA 
+    #Load calculations 
     path='../'
     df = parse_results(path)
     
-    #load elementary descriptors
-    #Hammer_Norskov2000 parameters
-    TM = pd.read_csv('CSV/TM_parameters.csv')
 
     #Vojvodic 2014 parameters
     Voj = pd.read_csv('CSV/Vojvodic_parsed_to_excel.csv',converters={"metal": str, 'termination': str})
@@ -368,11 +279,9 @@ if __name__ == "__main__":
 
     #Vojvodic2014, same as HammerNorskov2000
     vads  =  np.array( [float(Voj.loc[ Voj['metal'] == metal, 'vad'].iloc[0])  for metal in metals ] )
+    
+    #our calculations
     pzcs=np.array([float(df.loc[ df['metal'] == metal, 'PZC'].iloc[0])  for metal in metals ] )
-    wfs = []
-    for i in range(len(metals)):
-        wfs.append(  float( TM.loc[ TM['metal'] == metals[i], 'WF{}'.format(terminations[i] ) ].iloc[0])  )
-    wfs = np.array(wfs)
     hfccs = np.array(  [float(df.loc[ df['metal'] == metal, 'vac_HBE'].iloc[0])  for metal in metals ] )
     htops = np.array(  [float(df.loc[ df['metal'] == metal, 'vac_Htop'].iloc[0]) for metal in metals ] )
     hdiffs = htops - hfccs  
@@ -382,10 +291,7 @@ if __name__ == "__main__":
     i0s= np.array(  [float(df.loc[ df['metal'] == metal, 'i0'].iloc[0])  for metal in metals ] )
     
 
-    for edge_flag in ['Xin']: #,'Voj','MP',]:
-    #edge_flag = 'Voj'
-    #edge_flag = 'Xin'
-    #edge_flag = 'MP'
+    for edge_flag in ['Xin']: 
         if edge_flag == 'Voj': 
             #Vojvodic2014
             dedges = dcenters + dwidths/2
@@ -393,9 +299,6 @@ if __name__ == "__main__":
             #Xin2014
             dedges =  np.array( [float(Xin.loc[ Xin['metal'] == metal, 'dedge'].iloc[0])  for metal in metals ] )
             edge_flag=''
-        elif edge_flag == 'MP':
-            #estimates from Materials  Project 
-            dedges=np.array(  [float( TM.loc[ TM['metal'] == metal, 'dbandupperedge' ].iloc[0]) for metal in metals]  )
 
         dd = pd.DataFrame({
                            'metal':metals,
@@ -404,7 +307,6 @@ if __name__ == "__main__":
                            'dwidth':dwidths,
                            'vad':vads,
                            'pzc':pzcs,
-                           'wf':wfs,
                            'htop':htops,
                            'hfcc':hfccs,
                            'hdiff':hdiffs,
