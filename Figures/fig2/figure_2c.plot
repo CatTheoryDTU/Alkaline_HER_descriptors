@@ -41,7 +41,7 @@ s2 = 5
 # heler function for getting the rotation angle of the labels in degree
 deg(x) = x/pi*180.0
 r(x) = deg(atan(s1*s2*x))
-set label 9 at screen 0.05,0.95 '\huge{c)}' front
+set label 9 at screen 0.05,0.95 'c)' front
 set label 1 sprintf('\small Ag %3.0f mV/dec',1000/Ag_slope) at -0.60,10**(-0.55+(-0.60)*Ag_slope+Ag_intercept) rotate by r(Ag_slope)-10 center textcolor lt 1
 set label 2 sprintf('\small Au %3.0f mV/dec',1000/Au_slope) at -0.45,10**(0.50+(-0.45)*Au_slope+Au_intercept) rotate by r(Au_slope)-6 center textcolor lt 2
 set label 3 sprintf('\small Cu %3.0f mV/dec',1000/Cu_slope) at -0.65,10**(-0.60+(-0.65)*Cu_slope+Cu_intercept) rotate by r(Cu_slope)-10 center textcolor lt 3

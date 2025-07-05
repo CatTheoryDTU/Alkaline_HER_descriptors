@@ -25,7 +25,7 @@ set palette negative
 unset cbtics
 set x2label r"$\\theta_\\mathrm{H}$" offset screen 0.02,0
 set x2tics ("0.01" 10, "1" 0.1, "0.1" 1) offset graph 0,-0.03
-set label 2 at screen 0.07,0.92 '\huge{a)}' front font "Times-New_Roman,30" textcolor 'black'
+set label 2 at screen 0.07,0.92 'a)' front font "Times-New_Roman,30" textcolor 'black'
 plot x palette notitle # dummy plot
 unset x2label
 unset x2tics
