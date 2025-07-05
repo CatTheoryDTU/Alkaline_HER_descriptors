@@ -14,7 +14,7 @@ stats FILE u (numbers[int($0+1)] = $1)
 array elements = ["Ag","Au","Cu","Ir","Ni","Pd","Pt","Rh"]
 set multiplot layout 4,1 margins 0.20, 0.95, 0.125, 0.975 spacing 0.0,0.05 # title "Activation Energies at -1 V vs SHE" font titlefont
 set key at screen 1.0,screen 0.05 maxrows 2
-set yrange [-0.5:1.5]
+set yrange [-1.0:1.5]
 set ytics 
 set style line 5 linecolor 'green'
 set title "\\large a) Hydrogen Adsorption" offset -13,graph -0.25 left
