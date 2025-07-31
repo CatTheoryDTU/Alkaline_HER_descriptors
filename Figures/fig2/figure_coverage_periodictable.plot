@@ -92,30 +92,30 @@ splot "../../results/Pt/coverage.dat" using 1:2:3 with pm3d notitle
 #
 set cbrange [1e-10:1e-4]
 load '../ylgnbu.pal'
-#Ag
+#Cu
 unset xlabel
 set format x ''
 set arrow 1 from -0.413,7 to -0.826,14 nohead lc 'black' lw 5 dt 2 front
 set label 1 '\small{0V vs RHE}'  at -0.5195,10.5 textcolor 'black' rotate by atan(3.5*1.75*-0.42)/pi*180+3 center front #font ticsfont
-set title 'Ag' offset -6.6,-2.5 textcolor 'black' left
-splot "../../results/Ag/coverage.dat" using 1:2:3 with pm3d notitle
+set title 'Cu' offset -6.6,-2.5 textcolor 'black' left
+splot "../../results/Cu/coverage.dat" using 1:2:3 with pm3d notitle
 unset label 1
-#Au
-set title 'Au' offset -6.6,-2.5 textcolor 'black' left
+#Ag
+set title 'Ag' offset -6.6,-2.5 textcolor 'black' left
 set arrow 1 from -0.413,7 to -0.826,14 nohead lc 'black' lw 5 front
-splot "../../results/Au/coverage.dat" using 1:2:3 with pm3d notitle
-#Cu
+splot "../../results/Ag/coverage.dat" using 1:2:3 with pm3d notitle
+#Au
 set xlabel "U vs SHE (V)"
 set xtics -1.5,0.5,-0.5
 set format x "%1.1f"
-set title 'Cu' offset -6.6,-2.5 textcolor 'black' left
+set title 'Au' offset -6.6,-2.5 textcolor 'black' left
 set arrow 1 from -0.413,7 to -0.826,14 nohead lc 'black' lw 5 front
 set colorbox front user origin 0.87,0.15 size 0.02,0.80
 set cbtics  1e-8,1e2,1e-4 offset screen -0.01,0 nomirror out
 unset mcbtics
 set cblabel r"$\\theta_{\\mathrm{H}}$" offset screen -0.02,0.04
 #set format x '';
-splot "../../results/Cu/coverage.dat" using 1:2:3 with pm3d notitle
+splot "../../results/Au/coverage.dat" using 1:2:3 with pm3d notitle
 unset multiplot
 
 #pause -1

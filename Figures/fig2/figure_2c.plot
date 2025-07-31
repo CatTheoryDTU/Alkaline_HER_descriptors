@@ -2,7 +2,7 @@ set encoding utf8
 set fit quiet
 set fit logfile '/dev/null'
 set print '/dev/null'
-set terminal epslatex color colortext size 2.5in,5in font "cmss,10" standalone
+set terminal epslatex color colortext size 2.5in,4.8in font "cmss,10" standalone
 set output "Figure_2C.tex"
 set xlabel "U vs RHE (V)" offset 0,screen 0 #font labelfont
 set ylabel "-j (mA/cm$^2$)" offset graph 0.02,0#font labelfont
@@ -23,7 +23,7 @@ stats "<awk '$2==13.0 && $1<-1.000' ../../results/Rh/current.dat" using ($1-pH):
 save var 'fit_lsv.dat'
 a=1.0
 set xrange [-1.0:0.25]
-set yrange [1e-8:1e8]
+set yrange [1e-8:1e7]
 set format y ""
 set ytics  1e-8,1e2,1e8
 set ytics add ('10$^{-8}$' 1e-8, '10$^{-4}$' 1e-4,'10$^{-0}$' 1e-0,'10$^4$' 1e4,'10$^8$' 1e8 )

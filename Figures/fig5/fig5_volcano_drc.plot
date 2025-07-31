@@ -28,10 +28,13 @@ unset colorbox
 #set label 4 at graph 0.02,0.87 '\large{Tafel-Limited}' front
 #set label 5 at graph 0.52,0.92 '\large{H}' front
 set label 1 at graph 0.05,0.95 '\large{a)}' textcolor rgb "white" front
+set style line 2 linecolor "white"
 splot  \
 	"volcano_hbepzc.txt" using 1:2:(-1*$3) with pm3d notitle, \
 	"<(paste ../combined_descriptor.txt ../Hdiff.txt)" using 1:2:(0.1):(0.125) with circles linecolor 'black' notitle, \
-	"<(paste ../combined_descriptor.txt ../Hdiff.txt ../metals.txt)" using 1:2:(0.1):(sprintf("%s",stringcolumn(3))) with labels notitle
+	"<(paste ../combined_descriptor.txt ../Hdiff.txt| sed -n '4p;7p;' )" using 1:2:(0.1):(0.125):(2) with circles linecolor variable notitle, \
+	"<(paste ../combined_descriptor.txt ../Hdiff.txt ../metals.txt)" using 1:2:(0.1):(sprintf("%s",stringcolumn(3))) with labels notitle, \
+	"<(paste ../combined_descriptor.txt ../Hdiff.txt ../metals.txt | sed -n '4p;7p;')" using 1:2:(0.1):(sprintf("%s",stringcolumn(3))) with labels textcolor rgb "white" notitle
 set label 1 at graph 0.05,0.95 '\large{b)}' textcolor rgb "white" front
 set colorbox
 #set xlabel '$\Delta G^{top}_H$ (eV)'# offset 0,screen 0.05
@@ -42,7 +45,9 @@ set xtics 0.0,.5,1.0
 splot  \
 	"volcano_htop.txt" using 1:2:(-1*$3) with pm3d notitle, \
 	"<(paste ../vac_Htops.txt ../Hdiff.txt)" using 1:2:(0.1):(0.09) with circles linecolor 'black' notitle, \
-	"<(paste ../vac_Htops.txt ../Hdiff.txt ../metals.txt)" using 1:2:(0.1):(sprintf("%s",stringcolumn(3))) with labels notitle
+	"<(paste ../vac_Htops.txt ../Hdiff.txt| sed -n '4p;7p;' )" using 1:2:(0.1):(0.09):(2) with circles linecolor variable notitle, \
+	"<(paste ../vac_Htops.txt ../Hdiff.txt ../metals.txt)" using 1:2:(0.1):(sprintf("%s",stringcolumn(3))) with labels notitle, \
+	"<(paste ../vac_Htops.txt ../Hdiff.txt ../metals.txt | sed -n '4p;7p;')" using 1:2:(0.1):(sprintf("%s",stringcolumn(3))) with labels textcolor rgb "white" notitle
 set label 1 at graph 0.05,0.95 '\large{c)}' textcolor rgb "white" front
 load '../bentcoolwarm.pal'
 unset colorbox
