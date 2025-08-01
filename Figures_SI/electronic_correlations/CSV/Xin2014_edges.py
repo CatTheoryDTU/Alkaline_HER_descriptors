@@ -33,5 +33,5 @@ ud = {
 
 df = pd.DataFrame(ud.items(), columns=['metal','dedge'])
 
-df.to_csv('CSV/Xin2014_edges.csv',index=False)
+df.to_csv('Xin2014_edges.csv',index=False)
 

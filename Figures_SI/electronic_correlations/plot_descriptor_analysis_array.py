@@ -1,11 +1,25 @@
 
 """
 subplot array
-
 Y correlate with descriptors X
 
+sources of electronic parameters used in descriptor analysis:
+
+    D-band centers[all metals] and d-band upper edges[Fe,W only] are from
+        Vojvodic et al 2014, DOI https://doi.org/10.1007/s11244-013-0159-2
+    
+    D-band upper edges [all metal except Fe,W] are from
+        Xin et al 2014, DOI https://doi.org/10.1103/PhysRevB.89.115114
+    
+    Couplings vad [all metals] are from
+        Vojvodic et al 2014, DOI https://doi.org/10.1007/s11244-013-0159-2
+        which are taken originally from
+        Hammer et al 2000, DOI: https://doi.org/10.1016/S0360-0564(02)45013-4
+
+    PZC: this work.
 
 """
+
 
 
 import numpy as np
@@ -21,7 +35,7 @@ import string
 
 
 
-def parse_results():
+def parse_results(path):
     """
     parse .txt files to dataframe
     """
@@ -36,7 +50,6 @@ def parse_results():
         'heyrovskys.txt'
              ]
     
-    path='../'
     
     data = []
     for i in range(len(filenames)):
@@ -80,7 +93,7 @@ def parse_results():
     df = pd.DataFrame(rlist)
     print(df)
 
-    df.to_csv('CSV/results.csv',index=False)
+    #df.to_csv('CSV/results.csv',index=False)
 
     return df
 
@@ -93,6 +106,7 @@ def plot_array(dd,labels,flag):
     rcParams['figure.subplot.right'] = lrbt[1] 
     rcParams['figure.subplot.bottom'] = lrbt[2]
     rcParams['figure.subplot.top'] = lrbt[3] #
+    rcParams['font.size'] = 8.0                     
 
 
     print('number of columns: {}'.format(len(dd.keys())))
@@ -117,121 +131,49 @@ def plot_array(dd,labels,flag):
     r2duplet=(0.8,1.1)
     r3duplet=(0.2,1.1)
 
-    #fig, ax = plt.subplots(1,1, figsize=(2.5,2.5)) 
-    """ keys: 
-     'metal':metals,    0
-     'dcenter':dcenters, 1
-     'dedge':dedges,  2
-     'dwidth':dwidths, 3
-     'vad':vads, 4
-     'pzc':pzcs, 5
-     'wf':wfs,  6
-     'htop':htops, 7
-     'hfcc':hfccs, 8
-     'hdiff':hdiffs, 9
-     'volmer':volmers, 10
-     'heyrovsky':heyrovskys, 11
-     'tafel':tafels,  12
-     'i0':i0s    13
-    """
 
     Nkeys = len(dd.keys())
     
-    for v in [1,2,3,4,5,6,7,8]: #versions.
-
-        if v ==1:
-            #Version 1
-            Nrows = 4
-            Ncols = 3
-            figsize = (7,9)
-            ykeys = ['i0']*12 #dd.keys()
-            xkeys = ['volmer','heyrovsky','tafel'] + [dd.keys().to_list()[i] for i in [7,8,9,1,2,3,4,5]] +['pzc']
-            hidden_axes = [11]
-            figname='i0_vs_descriptors'
-            show_equation=True 
-            
-            
-        elif v==2:
-            #Version 2
-            Nrows = 2
-            Ncols = 4
-            figsize = (9,5)
-            ykeys = ['volmer']*9 #dd.keys()
-            xkeys = [dd.keys().to_list()[i] for i in [7,8,9,5,1,2,3,4]]
-            hidden_axes = []
-            figname='volmer_vs_descriptors'
-            show_equation=True 
+    for v in [1,2]: 
         
-        elif v==3:
-            Nrows = 2
-            Ncols = 4
-            figsize = (9,5)
-            ykeys = ['heyrovsky']*9 #dd.keys()
-            xkeys = [dd.keys().to_list()[i] for i in [7,8,9,5,1,2,3,4]]
-            hidden_axes = []
-            figname='heyrovsky_vs_descriptors'
-            show_equation=True 
-        elif v==4:
+        if v==1:
             #Version 
             Nrows = 2
-            Ncols = 4
-            figsize = (9,5)
-            ykeys = ['tafel']*9 #dd.keys()
-            xkeys = [dd.keys().to_list()[i] for i in [7,8,9,5,1,2,3,4]]
-            hidden_axes = []
-            figname='tafel_vs_descriptors'
-            show_equation=True 
-        
-        
-        elif v==5:
-            #Version 
-            Nrows = 2
-            Ncols = 4
-            figsize = (9,5)
-            ykeys = ['dcenter','dcenter','dwidth','dedge','pzc','pzc','pzc','pzc']  #*4 +['htop']*4 #dd.keys()
-            xkeys = ['dedge',  'dwidth' , 'vad', 'dwidth','dedge','dwidth','pzc','pzc'] #dd.keys().to_list()[i] for i in [1,2,3,4,5]]
-            hidden_axes = [6,7]
-            figname='electronic_descriptors'
-            show_equation=True 
-        
-        elif v==6:
-            #Version 
-            Nrows = 2
-            Ncols = 4
-            figsize = (9,5)
-            ykeys = ['hfcc']*8 #Ncols +['htop']*Ncols +['hdiff']*Ncols #dd.keys()
-            xkeys = [dd.keys().to_list()[i] for i in [1,2,3,4,5]]*2
-            figname='hfcc_vs_descriptors'
-            show_equation=True
-            hidden_axes = [5,6,7]
-        elif v==7:
-            #Version 
-            Nrows = 2
-            Ncols = 4
-            figsize = (9,5)
-            ykeys = ['htop']*8 #Ncols +['htop']*Ncols +['hdiff']*Ncols #dd.keys()
-            xkeys = [dd.keys().to_list()[i] for i in [1,2,3,4,5]]*2
-            figname='htop_vs_descriptors'
-            show_equation=True
-            hidden_axes = [5,6,7]
-        elif v==8:
-            #Version 
-            Nrows = 2
-            Ncols = 4
-            figsize = (9,5)
-            ykeys = ['hdiff']*8 #Ncols +['htop']*Ncols +['hdiff']*Ncols #dd.keys()
-            xkeys = [dd.keys().to_list()[i] for i in [1,2,3,4,5]]*2
+            Ncols = 2
+            figsize = (4,4)
+            ykeys = ['hdiff']*4 
+            xkeys = ['dcenter','dedge','vad','pzc'] 
             figname='hdiff_vs_descriptors'
-            show_equation=True
-            hidden_axes = [5,6,7]
-    
-    
+            show_equation=False
+            hidden_axes = []
+            fs=8
+            arsize=6
+            fsize = 8 #arsize
+            rcParams['font.size'] = 8.0                     
+            plt.subplots_adjust(hspace=1)
+            use_label=True
+        elif v==2:
+            #Version 
+            Nrows = 1
+            Ncols = 3
+            figsize = (6,2)
+            ykeys = ['hfcc']*3
+            xkeys = ['pzc']*3
+            figname='hfcc_vs_pzc'
+            show_equation=False
+            hidden_axes = [0,2]
+            fs=8
+            arsize=6
+            fsize = 8 #arsize
+            rcParams['font.size'] = 8.0                     
+            plt.subplots_adjust(hspace=1)
+            use_label=False
     
     
         iss = range(Nrows*Ncols)
     
         fig, axs = plt.subplots(nrows=Nrows, ncols=Ncols, figsize=figsize )
-    
+
         for ax, ykey,xkey,icap in zip(axs.flat, ykeys,xkeys,iss):
             print(ax)
             print('ykey {}, xkey {}'.format(ykey,xkey))
@@ -245,22 +187,31 @@ def plot_array(dd,labels,flag):
             yvals=dd[ykey].to_numpy().reshape((-1, 1))
             ax.scatter(xvals, yvals,s=5, color='black')
             for i in range(len(dd['metal'].tolist())): 
-                ax.annotate('{}'.format(dd['metal'].tolist()[i]), xy = (xvals[i]+dx, yvals[i]+dy), fontsize=arsize,ha='center',textcoords='data', color="k",annotation_clip=False)                      
+                ax.annotate('{}'.format(dd['metal'].tolist()[i]), 
+                            xy = (xvals[i]+dx, yvals[i]+dy), fontsize=arsize,
+                            ha='center',textcoords='data', color="k",annotation_clip=False)    
             if SKregression: 
                 LR = LinearRegression().fit(xvals[subset],yvals[subset])
                 r_sq = LR.score(xvals[subset],yvals[subset]) 
                 stringlabel=r'R$^2$:'+' {}'.format(round(r_sq,2))
-                ax.annotate('{}'.format(stringlabel), xy=r2duplet,ha='center', xycoords = ('axes fraction'), textcoords=('axes fraction'), color="blue",fontsize=fsize,annotation_clip=False)     
+                ax.annotate('{}'.format(stringlabel), xy=r2duplet,ha='center', 
+                            xycoords = ('axes fraction'), textcoords=('axes fraction'), 
+                            color="blue",fontsize=fsize,annotation_clip=False)     
                 if show_equation:
                     if LR.intercept_[0]>=0:  intercept ='+{}'.format(round(LR.intercept_[0],2))
                     elif LR.intercept_[0]<0:  intercept ='{}'.format(round(LR.intercept_[0],2))
                     string2label='y={}x{}'.format(round(LR.coef_[0][0],2), intercept)
-                    ax.annotate('{}'.format(string2label), xy=r3duplet,ha='center', xycoords = ('axes fraction'), textcoords=('axes fraction'), color="blue",annotation_clip=False, fontsize=fsize)
+                    ax.annotate('{}'.format(string2label), xy=r3duplet,ha='center', 
+                                xycoords = ('axes fraction'), textcoords=('axes fraction'), 
+                                color="blue",annotation_clip=False, fontsize=fsize)
                 sorted_xvals = np.sort( np.array([xvals[i][0] for i in subset])).reshape(-1, 1)
                 y_pred = LR.predict(sorted_xvals)
                 ax.plot(sorted_xvals,y_pred,lw=1, linestyle='--',color='black',zorder=0 )
                     
-            ax.annotate('{})'.format(string.ascii_lowercase[icap]), xy=capcoord,ha='center', xycoords = ('axes fraction'), textcoords=('axes fraction'), color="black",annotation_clip=False, fontsize=fsize)
+            if use_label: ax.annotate('{})'.format(string.ascii_lowercase[icap]), xy=capcoord,
+                                     ha='center', xycoords = ('axes fraction'), 
+                                     textcoords=('axes fraction'), color="black",
+                                     annotation_clip=False, fontsize=fsize)
             
             ax.set_xlabel(labels[xkey],fontsize=fs) 
             ax.set_ylabel(labels[ykey],fontsize=fs) 
@@ -271,6 +222,8 @@ def plot_array(dd,labels,flag):
                 ax.set_visible(False)
 
        
+        if v==9: plt.subplots_adjust(hspace=0.6)
+        #else:
         plt.tight_layout()
         #plt.show()
     
@@ -291,13 +244,10 @@ if __name__ == "__main__":
     pd.set_option('display.max_colwidth', None)
 
 
-    #LOAD DATA 
-    df = parse_results()
+    #Load calculations 
+    path='../'
+    df = parse_results(path)
     
-    #load elementary descriptors
-    #Hammer_Norskov2000 parameters
-    TM = pd.read_csv('CSV/TM_parameters.csv')
-   
 
     #Vojvodic 2014 parameters
     Voj = pd.read_csv('CSV/Vojvodic_parsed_to_excel.csv',converters={"metal": str, 'termination': str})
@@ -317,21 +267,21 @@ if __name__ == "__main__":
         terminations.append(termination)
 
 
-    #ake a master df, then simply plot columns.
-    
+    #make a master df, then plot columns.
 
     metals = df['metal'].tolist()
+    
+    #Vojvodic2014:
     dcenters  = np.array([float(Voj.loc[ Voj['metal'] == metal, 'ed'].iloc[0])  for metal in metals ] )
     
     mcns= np.array( [float(Voj.loc[ Voj['metal'] == metal, 'mcn'].iloc[0])  for metal in metals ] )
     dwidths = 4*np.sqrt(mcns)
 
+    #Vojvodic2014, same as HammerNorskov2000
     vads  =  np.array( [float(Voj.loc[ Voj['metal'] == metal, 'vad'].iloc[0])  for metal in metals ] )
+    
+    #our calculations
     pzcs=np.array([float(df.loc[ df['metal'] == metal, 'PZC'].iloc[0])  for metal in metals ] )
-    wfs = []
-    for i in range(len(metals)):
-        wfs.append(  float( TM.loc[ TM['metal'] == metals[i], 'WF{}'.format(terminations[i] ) ].iloc[0])  )
-    wfs = np.array(wfs)
     hfccs = np.array(  [float(df.loc[ df['metal'] == metal, 'vac_HBE'].iloc[0])  for metal in metals ] )
     htops = np.array(  [float(df.loc[ df['metal'] == metal, 'vac_Htop'].iloc[0]) for metal in metals ] )
     hdiffs = htops - hfccs  
@@ -341,15 +291,14 @@ if __name__ == "__main__":
     i0s= np.array(  [float(df.loc[ df['metal'] == metal, 'i0'].iloc[0])  for metal in metals ] )
     
 
-    for edge_flag in ['Xin']: #,'Voj','MP',]:
-    #edge_flag = 'Voj'
-    #edge_flag = 'Xin'
-    #edge_flag = 'MP'
-        if edge_flag == 'Voj': dedges = dcenters + dwidths/2
+    for edge_flag in ['Xin']: 
+        if edge_flag == 'Voj': 
+            #Vojvodic2014
+            dedges = dcenters + dwidths/2
         elif edge_flag == 'Xin': 
+            #Xin2014
             dedges =  np.array( [float(Xin.loc[ Xin['metal'] == metal, 'dedge'].iloc[0])  for metal in metals ] )
             edge_flag=''
-        elif edge_flag == 'MP': dedges=np.array(  [float( TM.loc[ TM['metal'] == metal, 'dbandupperedge' ].iloc[0]) for metal in metals]  )
 
         dd = pd.DataFrame({
                            'metal':metals,
@@ -358,7 +307,6 @@ if __name__ == "__main__":
                            'dwidth':dwidths,
                            'vad':vads,
                            'pzc':pzcs,
-                           'wf':wfs,
                            'htop':htops,
                            'hfcc':hfccs,
                            'hdiff':hdiffs,
@@ -385,11 +333,6 @@ if __name__ == "__main__":
               'i0':       r'log($|j_0|$/(mA cm$^{-2}$))'
              }
         
-        #Now plot arrays.
-        #first array: exchange current vs descriptors
-        #second array: barriers vs descriptors
-        #third: HBE vs descriptors
-        #fourth: descriptors vs. themselves
 
         plot_array(dd,labels,edge_flag)
 

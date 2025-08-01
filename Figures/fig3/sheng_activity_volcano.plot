@@ -62,7 +62,7 @@ set xlabel '$\Delta G^{\mathrm{fcc}}_\mathrm{H}$ (eV)'# offset 0,screen 0.05
 #set title "Thermodynamic" #offset 0,graph -0.05
 set label 1 at  -0.28, -8 sprintf('\small \shortstack[c]{Theory: {$R^2$=%1.2f} \\ {\tiny y=±%1.2f|x+%1.2f|$%1.2f$}}',HMIN_correlation**2,r,q,n) front
 set label 3 at  0.28, -0 sprintf('\small \shortstack[c]{Exp: {$R^2$=%1.2f} \\ {\tiny y=±%1.2f|x+%1.2f|$%1.2f$}}',exp_HMIN_correlation**2,expr,expq,expn) textcolor 'blue' front
-set label 2 at graph -0.15,1.1 'a)' front
+set label 2 at graph -0.15,1.1 '\large{a)}' front
 
 set label 4 at -0.09,0.8 'Pt' center front
 set label 5 at 0.03,-0.6 'Ir' center front
@@ -85,7 +85,7 @@ unset ylabel
 set format y ''
 
 # PZC
-set label 2 at graph -0.1,1.1 'b)' front
+set label 2 at graph -0.1,1.1 '\large{b)}' front
 #set title "Electrostatic" #offset 0,graph -0.05
 set xlabel '$U_{\mathrm{PZC}}$ vs SHE (V)'
 set xrange [-1.0:1.0]
@@ -111,35 +111,37 @@ plot \
 	exp_PZC_slope * x + exp_PZC_intercept ls 4
 
 #Combined
-set label 2 at graph -0.15,1.1 'c)' front
+set label 2 at graph -0.15,1.1 '\large{c)}' front
 set ylabel 'log($|j_0|$/(mA cm$^{-2}$))'
 unset format y
 set xrange [-10:2]
+set xrange [-2:10]
 set xtics -10,2,2
+set xtics -2,2,10
 #set title "Combined" #offset 0,graph -0.05
 set xlabel '$a\Delta G^{\mathrm{fcc}}_\mathrm{H}+b(\mathrm{e}U_{\mathrm{PZC}})+c$  (eV)'
-set label 1 at  -3.4, -8.3 sprintf('\small \shortstack[c]{{Theory: $R^2$=%1.2f} \\ {\tiny a=%1.2f, b=%1.2f, c=%1.2f}}',DESC_correlation**2,a,b,c) front
-set label 3 at  -9.6, 0 \
-    sprintf('\small \shortstack[c]{{Exp: $R^2$=%1.2f } \\ {\tiny a=%1.2f, b=%1.2f, c=%1.2f}}',exp_DESC_correlation**2,expa,expb,expc)  textcolor 'blue' front
+set label 1 at  -0.4, -8.3 sprintf('\small \shortstack[c]{{Theory: $R^2$=%1.2f} \\ {\tiny a=%1.2f, b=%1.2f, c=%1.2f}}',DESC_correlation**2,-1*a,-1*b,-1*c) front
+set label 3 at  4.6, 0 \
+    sprintf('\small \shortstack[c]{{Exp: $R^2$=%1.2f } \\ {\tiny a=%1.2f, b=%1.2f, c=%1.2f}}',exp_DESC_correlation**2,-1*expa,-1*expb,-1*expc)  textcolor 'blue' front
 
 set label 4 at 0.,0.8 'Pt' center front
-set label 5 at -2.3,-0.6 'Ir' center front
-set label 6 at -4.9,-4.1 'Rh' center front
-set label 7 at -3.3,-4.9 'Ni' center front
-set label 8 at -2.2,-4. 'Pd' center front
-set label 9 at -7.3,-6.5 'Cu' center front
-set label 10 at -6.5,-8.4 'Au' center front
-set label 11 at -9.2,-7.7 'Ag' center front
+set label 5 at 2.3,-0.6 'Ir' center front
+set label 6 at 4.9,-4.1 'Rh' center front
+set label 7 at 3.3,-4.9 'Ni' center front
+set label 8 at 2.2,-4. 'Pd' center front
+set label 9 at 7.3,-6.5 'Cu' center front
+set label 10 at 6.5,-8.4 'Au' center front
+set label 11 at 9.2,-7.7 'Ag' center front
 
 plot \
-	"<paste ../PZCs.txt ../vac_HBEs.txt ../i0s.txt ../metals.txt" using (f($1,$2)):(1*($3-amps)):(sprintf("%s",stringcolumn(4))) \
+	"<paste ../PZCs.txt ../vac_HBEs.txt ../i0s.txt ../metals.txt" using (-1*f($1,$2)):(1*($3-amps)):(sprintf("%s",stringcolumn(4))) \
         ls 1,\
-	'../sheng_i0s.txt' u (f($2,$1)):(1*($5-amps)):6 w errorbars ls 3, \
-	DESC_slope * x + DESC_intercept ls 2, \
-	exp_DESC_slope * x + exp_DESC_intercept ls 4
+	'../sheng_i0s.txt' u (-1*f($2,$1)):(1*($5-amps)):6 w errorbars ls 3, \
+	DESC_slope * -x + DESC_intercept ls 2, \
+	exp_DESC_slope * -x + exp_DESC_intercept ls 4
 
 #vac_Htop
-set label 2 at graph -0.1,1.1 'd)' front
+set label 2 at graph -0.1,1.1 '\large{d)}' front
 unset ylabel
 set format y ''
 set xrange [-0.3:1.2]

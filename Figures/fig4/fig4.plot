@@ -35,13 +35,13 @@ stats "<paste ../PZCs.txt ../vac_HBEs.txt ../tafels.txt" using (h2($1,$2)):3 pre
 set xrange [-0.35:0.65]
 set xtics -0.25,0.25,0.5
 set yrange [0.2:1.5]
-set multiplot layout 2,2 margins 0.15, 0.95, 0.15, 0.925 spacing 0.025,0.1 # title "Activation Energies at -1 V vs SHE" font titlefont
-set key at screen 0.8,screen 0.05 maxrows 2
+set multiplot layout 2,2 margins 0.15, 0.95, 0.10, 0.875 spacing 0.025,0.1 # title "Activation Energies at -1 V vs SHE" font titlefont
+set key at screen 0.8,screen 0.95 maxrows 2
 set title font subtitlefont
 set label 1 sprintf('\small{Volmer $R^2=%1.2f$}',hbevol_correlation**2) at 0.18,0.97 rotate by 25.0 font subtitlefont textcolor 'black' front
 set label 2 sprintf('\small{Heyrovsky $R^2=%1.2f$}',hbehey_correlation**2) at 0.15,0.75 rotate by -40.0 font subtitlefont textcolor lt 7 front
 set label 3 sprintf('\small{Tafel $R^2=%1.2f$}',hbetaf_correlation**2) at 0.25,0.910 rotate by 0 font subtitlefont textcolor lt 6 front
-set label 4 at graph -0.15,1.1 '\large{a)}' front
+set label 4 at graph 0.05,0.1 '\large{a)}' front
 FILE = "../numbers.txt"
 array numbers[8]
 stats FILE u (numbers[int($0+1)] = $1)
@@ -63,7 +63,7 @@ set xlabel '$U_{PZC}$ vs SHE (V)'
 set label 1 sprintf('\small{Volmer $R^2=%1.2f$}',pzcvol_correlation**2) at -0.9,1.4 rotate by atan(2*pzcvol_slope/1.3)/pi*180.0 font subtitlefont textcolor 'black' front
 set label 2 sprintf('\small{Heyrovsky $R^2=%1.2f$}',pzchey_correlation**2) at 0.1,0.95 rotate by atan(2*pzchey_slope/1.3)/pi*180.0-5 font subtitlefont textcolor lt 7 front
 set label 3 sprintf('\small{Tafel $R^2=%1.2f$}',pzctaf_correlation**2) at 0.215,0.855 rotate by atan(2*pzctaf_slope/1.3)/pi*180.0+2 font subtitlefont textcolor lt 6 front
-set label 4 at graph -0.1,1.1 '\large{b)}' front
+set label 4 at graph 0.05,0.1 '\large{b)}' front
 unset key
 plot \
 	'<paste ../PZCs.txt ../volmers.txt ../numbers.txt' u ($1-4.44):2:3 w points lc 'black' ps 2 pt variable notitle, \
@@ -83,7 +83,7 @@ set style textbox 1 transparent fc rgb 0xffff00 border lc "black" lw 5
 set label 1 sprintf('\small{Volmer $R^2=%1.2f$}',VOLM_correlation**2) at 0.35,1.05 rotate by atan(3.6*f22/1.3)/pi*180-15 font subtitlefont textcolor 'black' front
 set label 2 sprintf('\small{Heyrovsky $R^2=%1.2f$}',HEY_correlation**2) at 0.32,0.78 rotate by atan(3.6*g22/1.3)/pi*180+12 font subtitlefont textcolor lt 7 front
 set label 3 sprintf('\small{Tafel $R^2=%1.2f$}',TAF_correlation**2) at 0.4,0.93 rotate by atan(3.6*h22/1.3)/pi*180-2 font subtitlefont textcolor lt 6 front
-set label 4 at graph -0.15,1.1 '\large{c)}' front
+set label 4 at graph 0.05,0.1 '\large{c)}' front
 plot \
 	"<paste ../PZCs.txt ../vac_HBEs.txt ../volmers.txt ../numbers.txt" using (-0.91*($1-4.44)+$2):3:4 w points lc 'black' ps 2 pt variable notitle, \
 	"<paste ../PZCs.txt ../vac_HBEs.txt ../heyrovskys.txt ../numbers.txt" using (-0.91*($1-4.44)+$2):3:4 w points ps 2 pt variable lc 7 notitle, \
@@ -100,7 +100,7 @@ set ylabel ""
 set label 1 sprintf('\small{Volmer $R^2=%1.2f$}',htopvol_correlation**2) at 0.525,1.05 rotate by atan(2*htopvol_slope/1.3)/pi*180.0-8 font subtitlefont textcolor 'black' front
 set label 2 sprintf('\small{Heyrovsky $R^2=%1.2f$}',htophey_correlation**2) at 0.45,0.75 rotate by atan(2*htophey_slope/1.3)/pi*180.0+10 font subtitlefont textcolor lt 7 front
 set label 3 sprintf('\small{Tafel $R^2=%1.2f$}',htoptaf_correlation**2) at -0.35,0.84 rotate by atan(2*htoptaf_slope/1.3)/pi*180.0-10 font subtitlefont textcolor lt 6 front
-set label 4 at graph -0.1,1.1 '\large{d)}' front
+set label 4 at graph 0.05,0.1 '\large{d)}' front
 unset key
 plot \
 	'<paste ../vac_Htops.txt ../volmers.txt ../numbers.txt' u 1:2:3 with points lc 'black' pointtype variable ps 2 notitle, \

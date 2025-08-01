@@ -2,7 +2,7 @@ set encoding utf8
 set xtics nomirror #offset 0,graph 0.025 nomirror
 set ytics nomirror
 set terminal epslatex color size 6in,3in "cmss,10" standalone
-set output "Figure_5de.tex"
+set output "Figure_5_Volcano_Supp.tex"
 set print '/dev/null'
 set multiplot layout 1,2 margins 0.125, 0.875, 0.20, 0.85 spacing 0.05,0.15 # title "Activation Energies at -1 V vs SHE" font titlefont
 f2(x,y)=f22*x+f21*y+f23
@@ -25,7 +25,7 @@ set xrange [-0.9:1.4]
 set xtics -1.0,.5,1.0
 set yrange [-0.3:0.85]
 #set yrange [-10:2]
-set label 2 at graph -0.15,1.1 '\large{d)}' front
+set label 2 at graph -0.15,1.1 '\large{a)}' front
 fit f2(x,y) "<paste ../../PZCs.txt data.new" u ($2-0.91*($1-4.44)):($3-$2):4 via f21,f22,f23
 fit g2(x,y) "<paste ../../PZCs.txt data.new" u ($2-0.91*($1-4.44)):($3-$2):5 via g21,g22,g23
 fit h2(x,y) "<paste ../../PZCs.txt data.new" u ($2-0.91*($1-4.44)):($3-$2):6 via h21,h22,h23
@@ -43,7 +43,7 @@ set xlabel '$\Delta G^{top}_H$ (eV)'# offset 0,screen 0.05
 set format y ''
 set xrange [-0.28:1.3]
 set xtics 0.0,.5,1.0
-set label 2 at graph -0.15,1.1 '\large{e)}' front
+set label 2 at graph -0.15,1.1 '\large{b)}' front
 set colorbox
 nf2(x,y)=nf22*x+nf21*y+nf23
 ng2(x,y)=ng22*x+ng21*y+ng23

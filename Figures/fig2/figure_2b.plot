@@ -14,7 +14,7 @@ set y2range [0:1]
 set output "Figure_2B.tex"
 pH=13*-0.059
 set key textcolor variable
-set label 2 at screen 0.05,0.95 '\huge{b)}' front
+set label 2 at screen 0.05,0.95 'b)' front
 set label 1 at graph 0.8,graph 0.58 '\large{Volmer}' rotate by 28 textcolor 'black' front
 set label 3 at graph 0.85,graph 0.46 '\large{Tafel}' textcolor ls 6 front
 plot "< paste ../pt_coverages.txt  ../activation_forward.txt" using ($1-pH):3 axis x1y1 w l lw 3.0 lc 'black' notitle, \
