@@ -28,16 +28,18 @@ set multiplot layout 3,3 columnsfirst margins 0.10, 0.85, 0.2, 0.925 spacing 0.0
 ##First panel only showing colorbar####
 CBHeight = 0.20
 CBWidth  = 0.05
-CBPosX   = 0.15
+CBPosX   = 0.2
 CBPosY   = 0.70
 set origin CBPosX,CBPosY
 set size nosquare CBWidth,CBHeight
 set lmargin 0; set tmargin 0; set rmargin 0; set bmargin 0
 set colorbox user origin graph 0, graph 0 size graph 1, graph 1
 unset xtics; unset ytics
-set x2label "log(r_{Taf} / r_{Hey})" offset screen 0.03,0 font labelfont
+set x2label "log(r_{Taf} / r_{Hey})" offset screen 0.0,0.01 font labelfont
+set label 2 "Tafel\n dominates" at graph -0.1, graph 0.95 right font labelfont textcolor 'black'
+set label 3 "Heyrovsky\n dominates" at graph -0.1, graph 0.15 right font labelfont textcolor 'black'
 plot x palette notitle # dummy plot
-unset x2label
+unset x2label; unset label 2; unset label 3
 ##############
 
 set pm3d map interpolate 5,5
