@@ -1,3 +1,4 @@
+#! gnuplot
 set encoding utf8
 set terminal epslatex color colortext size 3in,8in "cmss, 10" standalone
 set output "All_Activation_Energies.tex"
@@ -12,10 +13,10 @@ FILE = "numbers.txt"
 array numbers[8]
 stats FILE u (numbers[int($0+1)] = $1)
 array elements = ["Ag","Au","Cu","Ir","Ni","Pd","Pt","Rh"]
-set multiplot layout 4,1 margins 0.20, 0.95, 0.125, 0.975 spacing 0.0,0.05 # title "Activation Energies at -1 V vs SHE" font titlefont
+set multiplot layout 4,1 margins 0.20, 0.95, 0.125, 0.975 spacing 0.0,0.01 # title "Activation Energies at -1 V vs SHE" font titlefont
 set key at screen 1.0,screen 0.05 maxrows 2
-set yrange [-0.45:1.25]
-set ytics 0,0.5,2.0
+set yrange [-0.45:1.]
+set ytics -0.4,0.4,1.
 set style line 5 linecolor 'green'
 set title "\\large a) Hydrogen Adsorption" offset -13,graph -0.25 left
 array coeffs_a[8]
@@ -27,13 +28,15 @@ do for [i=1:8]{
 	coeffs_a[i]=a
 	coeffs_b[i]=b
 }
-set xrange [-2.5:0.5]
-set ylabel '$\Delta \Omega_H-eU_{RHE}$ (eV)' #offset char 1,0
+set xrange [-2.1:0.5]
+set format x ""
+set ylabel '$\Delta \Omega_H-eU_{RHE}$ (eV)' offset char 1,0
 plot for [i=1:8] "../../data/hydrogen/".elements[i]."_diff.txt" u ($1-4.4):($2-free_energy_corrections[i]) ls i ps 2 pointtype numbers[i] title elements[i], \
      for [i=1:8] coeffs_a[i]*x+coeffs_b[i] ls i lw 2 dt 2 notitle
-unset xrange
+#unset xrange
+set yrange [0.0:2.2]
+set ytics 0,0.5,2.
 set title '\large{ b) Volmer}' offset -13,graph -0.25 left
-set yrange [0.0:2.0]
 array coeffs_a[8]
 array coeffs_b[8]
 do for [i=1:8]{
@@ -43,11 +46,9 @@ do for [i=1:8]{
 	coeffs_b[i]=b
 }
 set ylabel '$\Delta \Omega_V^{\ddag}$ (eV)' offset 0,0
-set xrange [-2.5:0.5]
 set ytics format '%1.1f'
 plot for [i=1:8] "../../data/volmer/".elements[i]."/free_energy.txt" u ($1-0):2 ls i ps 2 pointtype numbers[i] title elements[i], \
      for [i=1:8] coeffs_a[i]*x+coeffs_b[i] ls i lw 2 dt 2 notitle
-unset xrange
 unset key
 set title "\\large c) Heyrovsky"
 set ylabel '$\Delta \Omega_{Hey}^{\ddag}$ (eV)' offset 0,0
@@ -58,10 +59,8 @@ do for [i=1:8]{
 	coeffs_a[i]=a
 	coeffs_b[i]=b
 }
-set xrange [-2.5:0.5]
 plot for [i=1:8] "../../data/heyrovsky/".elements[i]."/free_energy.txt" u ($1-0):2 ls i ps 2 pointtype numbers[i] title elements[i], \
      for [i=1:8] coeffs_a[i]*x+coeffs_b[i] ls i lw 2 dt 2 notitle
-unset xrange
 set title "\\large d) Tafel"
 set ylabel '$\Delta \Omega_{T}^{\ddag}$ (eV)' offset 0,0
 array coeffs_a[8]
@@ -71,7 +70,7 @@ do for [i=1:8]{
 	coeffs_a[i]=a
 	coeffs_b[i]=b
 }
-set xrange [-2.5:0.5]
+set format x "%1.1f"
 set xlabel "U vs SHE (V)" #offset 0,screen 0.075
 plot for [i=1:8] "../../data/tafel/".elements[i]."/free_energy.txt" u ($1-0):2 ls i ps 2 pointtype numbers[i] title elements[i], \
      for [i=1:8] coeffs_a[i]*-1+coeffs_b[i] ls i lw 2 dt 2 notitle
