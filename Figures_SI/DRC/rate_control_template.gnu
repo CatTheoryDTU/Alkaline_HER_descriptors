@@ -14,7 +14,6 @@ set xrange [-1.99:-0.01]
 set xtics -1.8,0.5,0
 set cbrange [-1:1]
 set cbtics left
-set output "rate_control_heyrovsky.png"
 
 set macros
 TMARGIN = "set tmargin at screen 0.95; set bmargin at screen 0.15"
@@ -53,46 +52,3 @@ set arrow 1 from -0.413,7 to -0.5605,9.5 nohead lc 'black' lw 2 dt 3 front
 set label 1 'RHE'  at -0.73,11.25 textcolor 'black' font ticsfont rotate by -77.5 front
 set arrow 2 from -0.693,11.75 to -0.826,14 nohead lc 'black' lw 2 dt 2 front
 ##
-
-#Rh
-set title 'Rh' offset elemxoff, elemyoff textcolor 'black' font elementfont
-splot "../results/Rh/rate_control.dat" using 1:2:10 with pm3d notitle
-
-#Ir
-set format x "%1.1f"
-set title 'Ir' offset elemxoff, elemyoff textcolor 'black' font elementfont
-splot "../results/Ir/rate_control.dat" using 1:2:10 with pm3d notitle
-
-#Ni
-unset xlabel; set format x ''
-set format y '%2.0f';
-set title 'Ni' offset elemxoff, elemyoff textcolor 'black' font elementfont
-splot "../results/Ni/rate_control.dat" using 1:2:10 with pm3d notitle
-
-#Pd
-unset ylabel; set format y ''
-set title 'Pd' offset elemxoff, elemyoff textcolor 'black'
-splot "../results/Pd/rate_control.dat" using 1:2:10 with pm3d notitle
-
-set xlabel "Potential vs SHE" font elementfont offset 0,-1
-#Pt
-set title 'Pt' offset elemxoff, elemyoff textcolor 'black'
-#unset colorbox
-set format x "%1.1f"
-splot "../results/Pt/rate_control.dat" using 1:2:10 with pm3d notitle
-
-#Cu
-unset xlabel; set format x ''
-set title 'Cu' offset elemxoff, elemyoff textcolor 'black'
-splot "../results/Cu/rate_control.dat" using 1:2:10 with pm3d notitle
-
-#Ag
-set title 'Ag' offset elemxoff, elemyoff textcolor 'black'
-splot "../results/Ag/rate_control.dat" using 1:2:10 with pm3d notitle
-
-#Au
-set format x '%1.1f' ;
-set title 'Au' offset elemxoff, elemyoff textcolor 'black'
-splot "../results/Au/rate_control.dat" using 1:2:10 with pm3d notitle
-
-unset multiplot
