@@ -42,9 +42,10 @@ for idx,element in enumerate(elements):
         #ax.set_ylabel('Energy [eV]')
     if idx>5:
         ax.set_xlabel('Relative reaction path')
+    ax.set_ylim([-1.0,1.5])
+    ax.set_yticks([0,1])
     ax.set_xlim([0,1])
     ax.set_xticks([0.2,0.4,0.6,0.8])
-    ax.set_yticks([0,1,2])
     ax.text(0.15, 0.8, element,transform=ax.transAxes,fontsize=12)
     #plt.tight_layout()
 ax.legend(bbox_to_anchor=(0.75,4.5),ncols=3)
