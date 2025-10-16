@@ -1,7 +1,0 @@
-Ag
-Cu
-Ir
-Ni
-Pd
-Pt
-Rh

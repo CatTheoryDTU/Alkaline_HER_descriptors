@@ -11,18 +11,6 @@ potentials=np.linspace(2.40,4.40,5)
 potentials_interp=np.insert(potentials,[1,2],[2.65,3.15])
 G_H=-8.028954481677093/2
 G_OH=-27.292351322074335-G_H
-#vib_H=0.134 #checked, it's difference between initial heyrovsky zpe and initial volmer zpe
-#Zero-point energy: 0.433 eV TS
-#Zero-point energy: 0.660 eV IS
-#vib_volmer=0.433-0.660
-#Zero-point energy: 0.230 eV TS
-#Zero-point energy: 0.338 eV IS
-#vib_tafel=0.230-0.338
-#Zero-point energy: 0.673 eV TS
-#Zero-point energy: 0.794 eV IS
-#vib_heyrovsky=0.673-0.794
-#vib_heyrovsky=0.673-0.660
-#vib_heyrovsky=-0.8
 #new vibrations from Pt
 #slab 0.632
 #Hads 0.729 
@@ -35,8 +23,6 @@ vib_tafel=0.918-0.632
 vib_heyrovsky=0.605-0.632
 vib_OH=0.972-0.632
 #process and fit
-#coverage_params=np.loadtxt('interactions_diff.txt')
-#coverage_params=np.loadtxt('interactions.txt')
 coverage_params=np.loadtxt('33_interactions_diff.txt')
 for idx,metal in enumerate(surfaces):
     volmerIS=np.loadtxt('data/volmer/%s/IS.txt'%metal)
@@ -100,13 +86,7 @@ for idx,metal in enumerate(surfaces):
         volmerTSfit=linregress(pot_volmer[0:5],volmer_barrier)
         np.savetxt('data/volmer/%s/free_energy.txt'%metal,np.vstack(
             (pot_volmer[0:5],volmer_barrier[0:5])).transpose())
-#
    # cov=coverage_params[idx] # use normal values
-   # cov=coverage_params[6] #use Pt for all
-   # if metal == 'Ni':
-   #     cov=[0.9,3.1] # fit into top sites
-   # if metal == 'Ir':
-   #     cov=[0.9,1.0] # fit into fcc sites
     cov=[0.0,0.188] # Katharina
     #confusing, barrier in jsons are actually activation free energies, leaving as is
     results_dictionary= {

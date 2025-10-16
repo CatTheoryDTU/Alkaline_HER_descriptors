@@ -23,7 +23,7 @@ for metal in [surfaces[division]]:
     model = ReactionModel(setup_file = f'results/{metal}/input.mkm')
     model.output_variables+=['production_rate', 'free_energy','coverage','rate_control']
     model.run()
-    if True:
+    if False:
         mm=analyze.MatrixMap(model)
         mm.plot_variable = 'rate_control' #tell the model which output to plot
         mm.include_indices=list(range(50000))
@@ -31,7 +31,7 @@ for metal in [surfaces[division]]:
         mm.min = -2 #minimum rate to plot
         mm.max = 2 #maximum rate to plot
         mm.plot(save='%s_rate_control.png'%metal)
-    if True:
+    if False:
         ma = analyze.MechanismAnalysis(model)
         ma.energy_type = 'free_energy' #can also be free_energy/potential_energy
         ma.pressure_correction = False #assume all pressures are 1 bar (so that energies are the same as from DFT)

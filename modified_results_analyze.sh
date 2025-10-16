@@ -37,9 +37,8 @@ gnuplot polarization.plot
 gnuplot betas.plot
 grep ".._intercept =" fit_lsv.dat | awk '{print $3}' > i0s.txt
 grep ".._slope =" fit_lsv.dat | awk '{print 1000/$3}' > tafel_slopes.txt
-gnuplot barriers.plot
-gnuplot barrier_volcano.plot
 gnuplot activity_volcano.plot
+gnuplot coverage.plot
 cd ../
 display plots/Activity_volcano.png &
 #display plots/LSVs.png &
