@@ -58,9 +58,7 @@ species_definitions['H_a']={'sigma_params':[0.0, 0.0]}
 species_definitions['a']['interaction_response_parameters'] = {'cutoff':$cutoff,'smoothing':0.1} 
 species_definitions['H_a']={'sigma_params':[0.0, 0.0],'self_interaction_parameter':[$interaction]}
 species_definitions['H-H_a']={'n_sites':2,'sigma_params':[0*$beta_tafel,0]}
-#species_definitions['H_a']['cross_interaction_parameters']={'H2O-ele_a':[0.285*$interaction],'H-H_a':[-0.285*$interaction],'H2OHele_a':[-0.14*$interaction]}
 species_definitions['H_a']['cross_interaction_parameters']={'H2O-ele_a':[0.19],'H-H_a':[-0.1],'H2OHele_a':[-0.14]}
-#species_definitions['H_a']['cross_interaction_parameters']={'H2O-ele_a':[0.2],'H-H_a':[-0.2]}
 
 data_file = 'results/$surf/data.pkl'
 
