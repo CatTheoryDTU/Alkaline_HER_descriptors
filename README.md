@@ -1,7 +1,7 @@
 Improved hydrogen evolution activity descriptors from first-principles electrochemical kinetics
 =====================================
 
-[![DOI](https://img.shields.io/badge/DOI-10.5281/zenodo.14889760-14b8a6.svg)](https://doi.org/10.1016/j.electacta.2025.147476)
+[![DOI](https://img.shields.io/badge/DOI-10.1016%2Fj.electacta.2025.147476-blue)](https://doi.org/10.1016/j.electacta.2025.147476)
 
 This repo contains the data and scripts associated with the paper: 
 [Improved hydrogen evolution activity descriptors from first-principles electrochemical kinetics](https://www.sciencedirect.com/science/article/pii/S001346862501833X)
